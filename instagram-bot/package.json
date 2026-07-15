@@ -1,0 +1,16 @@
+{
+  "name": "j4k-instagram-bot",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "J4K (Just4Keepers Japan) Instagram auto-poster: picks the next queued image, generates a caption with Claude, and publishes via the Instagram Graph API.",
+  "scripts": {
+    "post": "node post.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.68.0"
+  }
+}

@@ -1,0 +1,50 @@
+name: J4K Instagram daily post
+
+on:
+  schedule:
+    # 毎日 UTC 00:00 = 日本時間(JST) 09:00 に実行
+    - cron: "0 0 * * *"
+  workflow_dispatch: {} # 手動実行も可能
+
+permissions:
+  contents: write # queue.json の更新をコミットするために必要
+
+concurrency:
+  group: instagram-daily
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install dependencies
+        working-directory: instagram-bot
+        run: npm install
+
+      - name: Publish next post
+        working-directory: instagram-bot
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+        run: npm run post
+
+      - name: Commit updated queue
+        run: |
+          if git diff --quiet -- instagram-bot/content/queue.json; then
+            echo "No queue changes to commit."
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add instagram-bot/content/queue.json
+            git commit -m "chore: mark queued post as published [skip ci]"
+            git push
+          fi
