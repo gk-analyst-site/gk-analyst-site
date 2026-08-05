@@ -3,6 +3,7 @@ name: 楽天ROOM 売れ筋を毎朝あつめる
 # このワークフロー(自動作業員)がやること:
 #   毎朝きまった時間に、楽天の売れ筋を集めて「今日の投稿リスト」を作り直します。
 #   あなたは何もしなくてOK。あとはスマホで output/today.html を開いて投稿するだけ。
+#   （鍵3つ: RAKUTEN_APP_ID / RAKUTEN_AFFILIATE_ID / RAKUTEN_ACCESS_KEY をSecretsに設定）
 
 on:
   schedule:
