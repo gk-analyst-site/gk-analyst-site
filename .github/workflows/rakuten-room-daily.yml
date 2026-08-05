@@ -1,0 +1,45 @@
+name: 楽天ROOM 売れ筋を毎朝あつめる
+
+# このワークフロー(自動作業員)がやること:
+#   毎朝きまった時間に、楽天の売れ筋を集めて「今日の投稿リスト」を作り直します。
+#   あなたは何もしなくてOK。あとはスマホで output/today.html を開いて投稿するだけ。
+
+on:
+  schedule:
+    # 毎日 UTC 21:00 = 日本時間 朝6:00 に自動で動きます
+    - cron: "0 21 * * *"
+  workflow_dispatch: {}   # 「今すぐ動かす」ボタンからも実行できるようにする
+
+permissions:
+  contents: write          # 出力ファイルをコミット(保存)するために必要
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリを取得
+        uses: actions/checkout@v4
+
+      - name: Python を用意
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 売れ筋を集めて投稿リストを作る
+        env:
+          # ↓ この2つは GitHub の Secrets に登録した「鍵」を読み込みます(READMEで説明)
+          RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
+          RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
+        run: python3 rakuten-room/fetch_products.py
+
+      - name: できたリストを保存(コミット)する
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add rakuten-room/output/today.html rakuten-room/output/today.json
+          if git diff --staged --quiet; then
+            echo "変更なし。コミットしません。"
+          else
+            git commit -m "chore: 今日の楽天ROOM売れ筋リストを更新"
+            git push
+          fi

@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>今日の楽天ROOM投稿リスト</title>
+<style>
+  body { font-family: -apple-system, "Hiragino Kaku Gothic ProN", sans-serif;
+         margin:0; background:#f5f5f7; color:#222; }
+  header { background:#bf0000; color:#fff; padding:16px; text-align:center; }
+  header h1 { margin:0; font-size:18px; }
+  header p { margin:6px 0 0; font-size:12px; opacity:.9; }
+  .wrap { max-width:520px; margin:0 auto; padding:12px; }
+  .card { background:#fff; border-radius:14px; padding:14px; margin-bottom:14px;
+          box-shadow:0 1px 4px rgba(0,0,0,.08); }
+  .badge { display:inline-block; background:#ffe4e4; color:#bf0000; font-size:12px;
+           font-weight:bold; padding:3px 10px; border-radius:20px; }
+  .card img, .noimg { width:100%; height:220px; object-fit:contain; margin:10px 0;
+                      background:#fafafa; border-radius:10px; }
+  .noimg { display:flex; align-items:center; justify-content:center; color:#aaa; }
+  .card h3 { font-size:15px; margin:6px 0; line-height:1.4; }
+  .price { color:#bf0000; font-weight:bold; margin:2px 0 10px; }
+  textarea { width:100%; height:120px; box-sizing:border-box; border:1px solid #ddd;
+             border-radius:8px; padding:8px; font-size:13px; line-height:1.5; resize:vertical; }
+  .btns { display:flex; gap:8px; margin-top:10px; }
+  button, .link { flex:1; text-align:center; padding:11px; border-radius:10px; font-size:14px;
+                  font-weight:bold; border:none; cursor:pointer; text-decoration:none; }
+  button { background:#bf0000; color:#fff; }
+  .link { background:#fff; color:#bf0000; border:2px solid #bf0000; line-height:1.2; }
+  .done { background:#2a8f3c !important; }
+</style></head><body>
+<header>
+  <h1>🛒 今日の楽天ROOM投稿リスト</h1>
+  <p>2026年08月05日 22:23 時点の売れ筋 / 全 3 件 ・ コピーして楽天ROOMに貼るだけ</p>
+</header>
+<div class="wrap">
+  
+        <div class="card">
+          <div class="badge">総合・1位</div>
+          <div class="noimg">画像なし（デモ）</div>
+          <h3>【楽天1位】ふわふわ タオル 5枚セット 今治産</h3>
+          <p class="price">2,480円</p>
+          <textarea id="cap0" readonly>今みんなが買ってる話題のアイテム✨
+
+【【楽天1位】ふわふわ タオル 5枚セット 今治産】
+💰 2,480円（送料などは商品ページで確認してね）
+
+気になった人はプロフィールのリンクからチェック👀
+
+#楽天ROOM #楽天お買い物マラソン #楽天room初心者 #おすすめ商品 #ポチったもの</textarea>
+          <div class="btns">
+            <button onclick="copyCap(0)">📋 投稿文をコピー</button>
+            <a class="link" href="https://item.rakuten.co.jp/demo/towel/" target="_blank" rel="noopener">🔗 商品ページ</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="badge">美容・コスメ・香水・2位</div>
+          <div class="noimg">画像なし（デモ）</div>
+          <h3>薬用 リップクリーム 高保湿 無香料 3本セット</h3>
+          <p class="price">980円</p>
+          <textarea id="cap1" readonly>自分にごほうび、毎日のケアに💄
+
+【薬用 リップクリーム 高保湿 無香料 3本セット】
+💰 980円（送料などは商品ページで確認してね）
+
+気になった人はプロフィールのリンクからチェック👀
+
+#楽天ROOM #コスメ好きさんと繋がりたい #楽天お買い物マラソン #楽天room初心者 #おすすめ商品 #ポチったもの</textarea>
+          <div class="btns">
+            <button onclick="copyCap(1)">📋 投稿文をコピー</button>
+            <a class="link" href="https://item.rakuten.co.jp/demo/lip/" target="_blank" rel="noopener">🔗 商品ページ</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="badge">食品・3位</div>
+          <div class="noimg">画像なし（デモ）</div>
+          <h3>北海道 チーズ お取り寄せ 詰め合わせ</h3>
+          <p class="price">3,200円</p>
+          <textarea id="cap2" readonly>おうち時間がちょっと幸せになる一品🍽️
+
+【北海道 チーズ お取り寄せ 詰め合わせ】
+💰 3,200円（送料などは商品ページで確認してね）
+
+気になった人はプロフィールのリンクからチェック👀
+
+#楽天ROOM #お取り寄せグルメ #楽天お買い物マラソン #楽天room初心者 #おすすめ商品 #ポチったもの</textarea>
+          <div class="btns">
+            <button onclick="copyCap(2)">📋 投稿文をコピー</button>
+            <a class="link" href="https://item.rakuten.co.jp/demo/cheese/" target="_blank" rel="noopener">🔗 商品ページ</a>
+          </div>
+        </div>
+</div>
+<script>
+  function copyCap(i) {
+    var t = document.getElementById('cap'+i);
+    navigator.clipboard.writeText(t.value).then(function() {
+      var b = event.target;
+      var old = b.textContent;
+      b.textContent = '✅ コピーしました！';
+      b.classList.add('done');
+      setTimeout(function(){ b.textContent = old; b.classList.remove('done'); }, 1500);
+    });
+  }
+</script>
+</body></html>
