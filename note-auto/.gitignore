@@ -1,0 +1,6 @@
+# 秘密情報・生成物はコミットしない
+.env
+state.json
+out/
+__pycache__/
+*.pyc

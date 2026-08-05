@@ -1,0 +1,56 @@
+# note 自動投稿システムの定期実行（ひな型）
+#
+# 注意:
+# - note のログイン状態（state.json）が必要です。GitHub Actions で動かす場合は
+#   ローカルで作った state.json を Secrets（NOTE_STATE_JSON）に入れて復元します。
+# - まずはローカルの cron 実行を推奨します。Actions は動作確認後に有効化してください。
+# - 手動実行（workflow_dispatch）でのテストから始めるのが安全です。
+
+name: note-auto
+
+on:
+  workflow_dispatch: {}
+  # 有効化する場合はコメントアウトを外す（例: 毎週月曜 09:00 JST = 00:00 UTC）
+  # schedule:
+  #   - cron: "0 0 * * 1"
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: note-auto
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          python -m playwright install --with-deps chromium
+
+      - name: Restore note login state
+        env:
+          NOTE_STATE_JSON: ${{ secrets.NOTE_STATE_JSON }}
+        run: |
+          if [ -n "$NOTE_STATE_JSON" ]; then
+            printf '%s' "$NOTE_STATE_JSON" > state.json
+          fi
+
+      - name: Run
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          NOTE_AUTO_MODEL: ${{ vars.NOTE_AUTO_MODEL }}
+        run: python -m note_auto.main run
+
+      # 投稿済みステータス（topics.yaml）の変更をコミットして残す場合
+      - name: Commit updated topics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add topics.yaml
+          git commit -m "chore: mark posted topics" || echo "no changes"
+          git push || echo "push skipped"
