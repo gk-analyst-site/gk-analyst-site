@@ -1,0 +1,6 @@
+# 楽天の鍵ファイル（絶対にGitHubに上げない）
+rakuten-room/keys.local
+
+# Python
+__pycache__/
+*.pyc

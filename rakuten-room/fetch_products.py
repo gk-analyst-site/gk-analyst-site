@@ -32,6 +32,30 @@ from datetime import datetime, timezone, timedelta
 # 楽天の「鍵」を環境変数から読み込みます（後述のREADMEで取り方を説明）
 #   RAKUTEN_APP_ID       … 楽天Developersの applicationId（売れ筋データを取るのに必要）
 #   RAKUTEN_AFFILIATE_ID … 楽天アフィリエイトID（報酬が入るリンクを作るのに必要）
+#
+# 鍵のセット方法は2つ（どちらでもOK）:
+#   A) 同じフォルダに「keys.local」というファイルを作り、次のように書くだけ:
+#        RAKUTEN_APP_ID=あなたのapplicationId
+#        RAKUTEN_AFFILIATE_ID=0a0d370d.2e0b70f8.0a0d370e.fc9426b6
+#   B) 環境変数（export）で渡す（GitHub Actionsではこちら）
+# ※keys.local は .gitignore で除外されるので、GitHubには上がりません（安心）。
+
+def _load_local_keys():
+    """同じフォルダの keys.local から鍵を読み込む（環境変数が無いとき用）。"""
+    path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "keys.local")
+    if not os.path.exists(path):
+        return
+    with open(path, encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#") or "=" not in line:
+                continue
+            key, _, value = line.partition("=")
+            # 環境変数が優先。ファイルの値は環境変数が空のときだけ使う
+            os.environ.setdefault(key.strip(), value.strip())
+
+_load_local_keys()
+
 RAKUTEN_APP_ID = os.environ.get("RAKUTEN_APP_ID", "").strip()
 RAKUTEN_AFFILIATE_ID = os.environ.get("RAKUTEN_AFFILIATE_ID", "").strip()
 

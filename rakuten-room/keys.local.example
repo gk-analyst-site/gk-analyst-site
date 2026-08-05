@@ -1,0 +1,10 @@
+# === 鍵の記入見本 ===
+# このファイルをコピーして「keys.local」という名前にして、
+# 下の右側（=の後ろ）をあなたの値に書き換えてください。
+# ※ keys.local はGitHubには上がりません（.gitignoreで除外済み）。
+
+# 楽天Developersで発行する applicationId（数字の長い列）
+RAKUTEN_APP_ID=ここにapplicationIdを貼る
+
+# 楽天アフィリエイトID（あなたのはもう分かっています）
+RAKUTEN_AFFILIATE_ID=0a0d370d.2e0b70f8.0a0d370e.fc9426b6
