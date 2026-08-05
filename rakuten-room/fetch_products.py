@@ -59,6 +59,9 @@ _load_local_keys()
 
 RAKUTEN_APP_ID = os.environ.get("RAKUTEN_APP_ID", "").strip()
 RAKUTEN_AFFILIATE_ID = os.environ.get("RAKUTEN_AFFILIATE_ID", "").strip()
+# 新しい楽天API（openapi.rakuten.co.jp）では、アプリIDに加えて
+# 「アクセスキー」も必要です。Rakuten Developersのアプリ画面に表示されます。
+RAKUTEN_ACCESS_KEY = os.environ.get("RAKUTEN_ACCESS_KEY", "").strip()
 
 # どのジャンルの売れ筋を集めるか。genreId=0 は「総合ランキング」。
 # 他のジャンルを足したいときは (ジャンルID, "表示名") を追加してください。
@@ -97,6 +100,9 @@ def fetch_ranking(genre_id):
         "genreId": genre_id,
         "format": "json",
     }
+    # 新APIはアクセスキーも必須
+    if RAKUTEN_ACCESS_KEY:
+        params["accessKey"] = RAKUTEN_ACCESS_KEY
     # アフィリエイトIDがあれば、APIが「報酬つきリンク」も一緒に返してくれる
     if RAKUTEN_AFFILIATE_ID:
         params["affiliateId"] = RAKUTEN_AFFILIATE_ID

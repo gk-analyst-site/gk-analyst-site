@@ -3,8 +3,11 @@
 # 下の右側（=の後ろ）をあなたの値に書き換えてください。
 # ※ keys.local はGitHubには上がりません（.gitignoreで除外済み）。
 
-# 楽天Developersで発行する applicationId（数字の長い列）
-RAKUTEN_APP_ID=ここにapplicationIdを貼る
+# 楽天Developersのアプリ画面「アプリケーションID」（UUID形式）
+RAKUTEN_APP_ID=ここにアプリケーションIDを貼る
+
+# 楽天Developersのアプリ画面「アクセスキー」（目のマークで表示→コピー）
+RAKUTEN_ACCESS_KEY=ここにアクセスキーを貼る
 
 # 楽天アフィリエイトID（Rakuten Developersのアプリ画面に表示される値）
 RAKUTEN_AFFILIATE_ID=565ae11c.a4a96be2.565ae11d.fa900aba

@@ -37,6 +37,7 @@ jobs:
           # ↓ この2つは GitHub の Secrets に登録した「鍵」を読み込みます(READMEで説明)
           RAKUTEN_APP_ID: ${{ secrets.RAKUTEN_APP_ID }}
           RAKUTEN_AFFILIATE_ID: ${{ secrets.RAKUTEN_AFFILIATE_ID }}
+          RAKUTEN_ACCESS_KEY: ${{ secrets.RAKUTEN_ACCESS_KEY }}
         run: python3 rakuten-room/fetch_products.py
 
       - name: できたリストを保存(コミット)する
