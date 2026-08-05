@@ -110,8 +110,10 @@ def fetch_ranking(genre_id):
     url = RANKING_API + "?" + urllib.parse.urlencode(params)
     req = urllib.request.Request(url, headers={
         "User-Agent": "rakuten-room-helper/1.0",
-        # アプリ登録の「許可されたWebサイト」に合わせておく（弾かれ防止）
+        # 新APIは Referer と Origin の両方で「許可されたWebサイト」を確認する。
+        # アプリ登録の room.rakuten.co.jp に合わせておく（403リファラー対策）。
         "Referer": "https://room.rakuten.co.jp/",
+        "Origin": "https://room.rakuten.co.jp",
     })
     try:
         with urllib.request.urlopen(req, timeout=20) as res:
