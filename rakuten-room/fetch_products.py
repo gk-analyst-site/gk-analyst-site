@@ -186,6 +186,15 @@ def collect_posts():
             print(f"  × ジャンル『{genre_name}』の取得に失敗（スキップします）: {e}")
             continue
 
+        # 新APIは順位の降順(30→1)で返すことがあるので、1位から順に並べ直す
+        def _rank_of(wrap):
+            it = wrap.get("Item", wrap)
+            try:
+                return int(it.get("rank", 9999))
+            except (ValueError, TypeError):
+                return 9999
+        items.sort(key=_rank_of)
+
         picked = 0
         for wrap in items:
             item = wrap.get("Item", wrap)  # APIは {"Item": {...}} の形
