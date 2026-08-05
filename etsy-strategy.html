@@ -1,0 +1,590 @@
+<title>TheJapaneseArtPrints｜Etsy 売上改善戦略</title>
+<style>
+  :root {
+    /* washi / sumi / ai / shu — grounded in Japanese woodblock-print palette */
+    --paper:      #F1EADB;
+    --paper-2:    #E9E0CE;
+    --paper-card: #F6F0E4;
+    --ink:        #211C17;
+    --ink-soft:   #4A4238;
+    --muted:      #8A8073;
+    --hairline:   #D8CDB8;
+    --ai:         #244B72;   /* indigo — structural */
+    --ai-soft:    #3E689230;
+    --shu:        #BE4128;   /* vermilion seal — accent, used sparingly */
+    --moss:       #6E7A4B;   /* semantic: good */
+    --shadow:     18px 24px 60px -32px rgba(33,28,23,.45);
+
+    --serif: "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", "Noto Serif JP", "Songti SC", "Shippori Mincho", serif;
+    --sans:  "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", "Noto Sans JP", "Meiryo", system-ui, sans-serif;
+    --mono:  "SFMono-Regular", "SF Mono", "JetBrains Mono", "Roboto Mono", "Consolas", monospace;
+
+    --maxw: 74ch;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:      #17140F;
+      --paper-2:    #1E1A14;
+      --paper-card: #201C15;
+      --ink:        #EDE4D2;
+      --ink-soft:   #C4B9A4;
+      --muted:      #938974;
+      --hairline:   #362F24;
+      --ai:         #7FA8CE;
+      --ai-soft:    #7FA8CE24;
+      --shu:        #E0694B;
+      --moss:       #A6B27B;
+      --shadow:     18px 24px 60px -30px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="light"] {
+    --paper:#F1EADB; --paper-2:#E9E0CE; --paper-card:#F6F0E4;
+    --ink:#211C17; --ink-soft:#4A4238; --muted:#8A8073; --hairline:#D8CDB8;
+    --ai:#244B72; --ai-soft:#3E689230; --shu:#BE4128; --moss:#6E7A4B;
+    --shadow:18px 24px 60px -32px rgba(33,28,23,.45);
+  }
+  :root[data-theme="dark"] {
+    --paper:#17140F; --paper-2:#1E1A14; --paper-card:#201C15;
+    --ink:#EDE4D2; --ink-soft:#C4B9A4; --muted:#938974; --hairline:#362F24;
+    --ai:#7FA8CE; --ai-soft:#7FA8CE24; --shu:#E0694B; --moss:#A6B27B;
+    --shadow:18px 24px 60px -30px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    line-height: 1.85;
+    font-size: 17px;
+    letter-spacing: .01em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 28px 120px; }
+
+  /* ---------- Hero with seigaiha (青海波) wave motif ---------- */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--hairline);
+    background: var(--paper-2);
+  }
+  .hero .seigaiha {
+    position: absolute; inset: 0;
+    opacity: .5;
+    background-image:
+      radial-gradient(circle at 50% 100%, transparent 20px, var(--ai) 20.5px, var(--ai) 22px, transparent 22.5px, transparent 32px, var(--ai) 32.5px, var(--ai) 34px, transparent 34.5px, transparent 44px, var(--ai) 44.5px, var(--ai) 46px, transparent 46.5px);
+    background-size: 88px 30px;
+    background-position: 0 0;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.28), transparent 78%);
+            mask-image: linear-gradient(to bottom, rgba(0,0,0,.28), transparent 78%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; max-width: 980px; margin: 0 auto; padding: 74px 28px 60px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px; letter-spacing: .34em; text-transform: uppercase;
+    color: var(--shu); font-weight: 600;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .eyebrow::before { content: ""; width: 26px; height: 1px; background: var(--shu); display: inline-block; }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(2.2rem, 6vw, 3.7rem);
+    line-height: 1.14;
+    letter-spacing: .01em;
+    margin: 20px 0 0;
+    text-wrap: balance;
+  }
+  h1 .en { display: block; font-size: .42em; letter-spacing: .06em; color: var(--ai); margin-top: 14px; font-weight: 600; }
+
+  .meta {
+    margin-top: 26px; padding-top: 20px;
+    border-top: 1px solid var(--hairline);
+    display: flex; flex-wrap: wrap; gap: 8px 30px;
+    font-family: var(--mono); font-size: 12.5px; color: var(--muted);
+    letter-spacing: .04em;
+  }
+  .meta b { color: var(--ink-soft); font-weight: 600; }
+
+  /* ---------- Thesis (3-line conclusion) ---------- */
+  .thesis { margin-top: 34px; display: grid; gap: 14px; }
+  .thesis .line {
+    display: grid; grid-template-columns: 30px 1fr; gap: 18px; align-items: start;
+    font-family: var(--serif); font-size: clamp(1.05rem, 2.6vw, 1.4rem);
+    line-height: 1.55; color: var(--ink);
+  }
+  .thesis .n {
+    font-family: var(--mono); font-size: 13px; color: var(--shu);
+    border: 1px solid var(--shu); border-radius: 50%;
+    width: 30px; height: 30px; display: grid; place-items: center;
+    margin-top: 6px; font-weight: 600;
+  }
+  .thesis em { font-style: normal; color: var(--shu); font-weight: 600; }
+
+  /* ---------- Section scaffolding ---------- */
+  section.blk { padding-top: 66px; }
+  .kicker {
+    display: flex; align-items: baseline; gap: 16px;
+    border-bottom: 1px solid var(--hairline); padding-bottom: 14px; margin-bottom: 30px;
+  }
+  .kicker .idx {
+    font-family: var(--mono); font-size: 13px; color: var(--ai);
+    font-weight: 600; letter-spacing: .1em;
+  }
+  .kicker h2 {
+    font-family: var(--serif); font-weight: 600;
+    font-size: clamp(1.5rem, 3.6vw, 2.1rem); margin: 0; line-height: 1.2;
+    text-wrap: balance;
+  }
+  p { max-width: var(--maxw); }
+  p.lead { font-size: 1.06rem; color: var(--ink-soft); }
+  strong { color: var(--ink); font-weight: 700; }
+  a { color: var(--ai); text-underline-offset: 3px; }
+
+  /* ---------- Diagnosis funnel ---------- */
+  .diag {
+    display: grid; grid-template-columns: 1fr; gap: 0;
+    background: var(--paper-card); border: 1px solid var(--hairline);
+    border-radius: 4px; overflow: hidden; box-shadow: var(--shadow);
+    margin: 8px 0 26px;
+  }
+  .diag .row {
+    display: grid; grid-template-columns: 132px 1fr auto; align-items: center;
+    gap: 20px; padding: 20px 24px; border-bottom: 1px solid var(--hairline);
+  }
+  .diag .row:last-child { border-bottom: 0; }
+  .diag .label { font-family: var(--mono); font-size: 12px; letter-spacing: .06em; color: var(--muted); text-transform: uppercase; }
+  .diag .label b { display: block; font-family: var(--serif); font-size: 1.15rem; color: var(--ink); letter-spacing: 0; text-transform: none; margin-top: 3px; }
+  .bar { height: 16px; border-radius: 2px; background: var(--ai); }
+  .bar.ai { background: var(--ai); }
+  .bar.dead { background: repeating-linear-gradient(45deg, var(--shu), var(--shu) 6px, transparent 6px, transparent 12px); border: 1px solid var(--shu); box-sizing: border-box; }
+  .diag .val { font-family: var(--mono); font-size: 15px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .breakflag {
+    background: var(--shu); color: #fff; font-family: var(--mono); font-size: 11.5px;
+    letter-spacing: .08em; padding: 3px 9px; border-radius: 2px; white-space: nowrap;
+  }
+  @media (prefers-color-scheme: dark){ .breakflag { color: #17140F; } }
+  :root[data-theme="dark"] .breakflag { color:#17140F; }
+  :root[data-theme="light"] .breakflag { color:#fff; }
+
+  /* ---------- Priority cards ---------- */
+  .prios { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 6px; }
+  .prio {
+    background: var(--paper-card); border: 1px solid var(--hairline); border-top: 3px solid var(--ai);
+    border-radius: 3px; padding: 22px 20px;
+  }
+  .prio .p-idx { font-family: var(--mono); font-size: 12px; color: var(--shu); letter-spacing: .1em; }
+  .prio h3 { font-family: var(--serif); font-size: 1.2rem; margin: 8px 0 8px; font-weight: 600; }
+  .prio p { font-size: .93rem; color: var(--ink-soft); margin: 0; }
+
+  /* ---------- Generic content cards ---------- */
+  .card {
+    background: var(--paper-card); border: 1px solid var(--hairline);
+    border-radius: 4px; padding: 24px 26px; margin: 20px 0;
+  }
+  h3.sub { font-family: var(--serif); font-size: 1.22rem; font-weight: 600; margin: 30px 0 10px; }
+  .h-note { color: var(--muted); font-size: .85rem; font-family: var(--mono); letter-spacing: .04em; }
+
+  /* Title formula */
+  .formula {
+    font-family: var(--mono); font-size: 13.5px; line-height: 2.1; color: var(--ai);
+    background: var(--ai-soft); border-left: 3px solid var(--ai);
+    padding: 14px 18px; border-radius: 0 4px 4px 0; overflow-x: auto;
+  }
+  .example { display: grid; gap: 12px; margin: 16px 0; }
+  .ex {
+    border: 1px solid var(--hairline); border-radius: 4px; padding: 14px 16px 16px;
+    background: var(--paper);
+  }
+  .ex .tag { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; font-weight: 600; text-transform: uppercase; }
+  .ex.good { border-left: 3px solid var(--moss); }
+  .ex.good .tag { color: var(--moss); }
+  .ex.bad  { border-left: 3px solid var(--shu); }
+  .ex.bad  .tag { color: var(--shu); }
+  .ex .code { font-family: var(--mono); font-size: 13px; color: var(--ink); margin-top: 8px; line-height: 1.7; word-break: break-word; }
+  .ex .why { font-size: .86rem; color: var(--muted); margin-top: 8px; }
+
+  /* Tag chips (hanko-like) */
+  .chipgroup { margin: 18px 0; }
+  .chipgroup .gl { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft);
+    border: 1px solid var(--hairline); background: var(--paper-card);
+    padding: 5px 11px; border-radius: 3px; letter-spacing: .02em;
+  }
+  .chip.hot { border-color: var(--shu); color: var(--shu); }
+
+  /* Lists */
+  ul.clean { list-style: none; padding: 0; margin: 12px 0; display: grid; gap: 11px; max-width: var(--maxw); }
+  ul.clean li { position: relative; padding-left: 26px; color: var(--ink-soft); }
+  ul.clean li::before {
+    content: ""; position: absolute; left: 4px; top: 12px;
+    width: 7px; height: 7px; background: var(--ai); border-radius: 50%;
+  }
+  ul.clean li b { color: var(--ink); }
+
+  .dos { list-style: none; padding: 0; margin: 12px 0; display: grid; gap: 10px; }
+  .dos li { position: relative; padding-left: 30px; color: var(--ink-soft); }
+  .dos li::before {
+    content: "✕"; position: absolute; left: 2px; top: 0; color: var(--shu);
+    font-weight: 700; font-size: .95em;
+  }
+
+  /* Timeline (90-day) */
+  .timeline { display: grid; gap: 0; margin-top: 8px; }
+  .phase {
+    display: grid; grid-template-columns: 168px 1fr; gap: 26px;
+    padding: 26px 0; border-top: 1px solid var(--hairline);
+  }
+  .phase:last-child { border-bottom: 1px solid var(--hairline); }
+  .phase .ph-head .day { font-family: var(--mono); font-size: 12px; color: var(--shu); letter-spacing: .08em; }
+  .phase .ph-head h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; margin: 6px 0 0; }
+  .phase .ph-head .goal { font-size: .84rem; color: var(--muted); margin-top: 6px; }
+  .checks { list-style: none; padding: 0; margin: 0; display: grid; gap: 9px; }
+  .checks li { position: relative; padding-left: 28px; color: var(--ink-soft); font-size: .96rem; }
+  .checks li::before {
+    content: ""; position: absolute; left: 0; top: 3px; width: 15px; height: 15px;
+    border: 1.5px solid var(--ai); border-radius: 3px;
+  }
+
+  /* Table */
+  .tablewrap { overflow-x: auto; margin: 16px 0; border: 1px solid var(--hairline); border-radius: 4px; }
+  table { border-collapse: collapse; width: 100%; min-width: 620px; font-size: .9rem; }
+  th, td { text-align: left; padding: 11px 14px; border-bottom: 1px solid var(--hairline); }
+  thead th { font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ai); background: var(--paper-card); }
+  tbody tr:last-child td { border-bottom: 0; }
+  td.mono { font-family: var(--mono); font-size: .82rem; color: var(--muted); }
+
+  /* Closing / today */
+  .today {
+    background: var(--ink); color: var(--paper); border-radius: 6px;
+    padding: 40px 34px; margin-top: 20px; box-shadow: var(--shadow);
+  }
+  .today .eyebrow { color: var(--shu); }
+  .today .eyebrow::before { background: var(--shu); }
+  .today h2 { font-family: var(--serif); color: var(--paper); font-size: clamp(1.5rem,4vw,2rem); margin: 16px 0 8px; font-weight: 600; }
+  .today .three { display: grid; gap: 2px; margin-top: 24px; counter-reset: t; }
+  .today .step {
+    display: grid; grid-template-columns: 44px 1fr; gap: 16px; align-items: baseline;
+    padding: 18px 0; border-top: 1px solid rgba(255,255,255,.14);
+  }
+  .today .step .sn { font-family: var(--serif); font-size: 1.7rem; color: var(--shu); }
+  .today .step .st { color: var(--paper); }
+  .today .step .st small { display: block; color: #c9bfae; font-size: .8rem; font-family: var(--mono); margin-top: 5px; letter-spacing: .03em; }
+
+  .foot {
+    margin-top: 70px; padding-top: 22px; border-top: 1px solid var(--hairline);
+    font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: .04em;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+  .foot .seal { color: var(--shu); }
+
+  @media (max-width: 720px) {
+    body { font-size: 16px; }
+    .prios { grid-template-columns: 1fr; }
+    .phase { grid-template-columns: 1fr; gap: 14px; }
+    .diag .row { grid-template-columns: 110px 1fr; }
+    .diag .val { grid-column: 2; justify-self: start; }
+    .meta { gap: 6px 18px; }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .fade { opacity: 0; transform: translateY(14px); animation: rise .8s cubic-bezier(.2,.7,.2,1) forwards; }
+    .fade.d1{animation-delay:.05s}.fade.d2{animation-delay:.15s}.fade.d3{animation-delay:.25s}.fade.d4{animation-delay:.35s}
+    @keyframes rise { to { opacity:1; transform:none; } }
+  }
+</style>
+
+<header class="hero">
+  <div class="seigaiha" aria-hidden="true"></div>
+  <div class="hero-inner">
+    <div class="eyebrow fade d1">Etsy Growth Strategy</div>
+    <h1 class="fade d2">TheJapaneseArtPrints<br>売上改善戦略
+      <span class="en">From invisible to found — an Etsy discoverability plan</span>
+    </h1>
+    <div class="meta fade d3">
+      <span>作成 <b>2026-08-05</b></span>
+      <span>商品 <b>デジタルDL + POD</b></span>
+      <span>出品数 <b>31〜100点</b></span>
+      <span>直近30日の表示 <b>ほぼ0</b></span>
+    </div>
+
+    <div class="thesis fade d4">
+      <div class="line"><span class="n">1</span><span>今の問題は「売れない」ではなく<em>「見られていない」</em>。出品は十分あるのに表示がほぼ0 = Etsy検索にヒットしていない。</span></div>
+      <div class="line"><span class="n">2</span><span>やることは3つだけ。<em>①SEO作り直し ②Pinterestで外部流入 ③少額広告で初速</em>。</span></div>
+      <div class="line"><span class="n">3</span><span>順番が命。検索に出なければ、写真も価格も<em>0は0のまま</em>。まず流入を直す。</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- 1. DIAGNOSIS -->
+  <section class="blk">
+    <div class="kicker"><span class="idx">01</span><h2>診断：どこで止まっているか</h2></div>
+    <p class="lead">出品が31〜100点あって表示がほぼ0は、Etsyでは<strong>異常値</strong>です。普通は下手でも多少は見られます。つまり詰まっているのは「購入」の手前 — <strong>そもそも検索結果に出ていない</strong>段階です。</p>
+
+    <div class="diag" role="img" aria-label="出品数は多いが表示・購入に至っていないことを示す図">
+      <div class="row">
+        <div class="label">Step 1<b>出品数</b></div>
+        <div class="bar ai" style="width:100%"></div>
+        <div class="val">31〜100 点</div>
+      </div>
+      <div class="row">
+        <div class="label">Step 2<b>表示 (Views)</b></div>
+        <div class="bar dead" style="width:6%"></div>
+        <div class="val">≈ 0 <span class="breakflag">← ここで断絶</span></div>
+      </div>
+      <div class="row">
+        <div class="label">Step 3<b>購入 (Sales)</b></div>
+        <div class="bar dead" style="width:2%"></div>
+        <div class="val">0</div>
+      </div>
+    </div>
+
+    <p>原因はほぼ次のどれか（複数該当が普通）：タイトル/タグが検索語と<strong>不一致</strong>（日本語タイトル・抽象的な作品名・「japanese art」の一語勝負）、全出品が<strong>同じキーワードに集中</strong>して共食い、<strong>属性/カテゴリ未設定</strong>で棚に並ばない、そして<strong>外部流入ゼロ</strong>で初期評価が上がらない。</p>
+
+    <h3 class="sub">まず自己診断（15分）</h3>
+    <ul class="clean">
+      <li>Etsyの検索窓に売りたい語（例 <b>japanese wall art</b>）を打ち、出るサジェスト＝実際に検索される語。自分のタイトルの言葉が入っているか？</li>
+      <li>Shop Manager &gt; Stats &gt; <b>Search terms</b> で、実際にどの語で表示されたかを確認（数字が出ないなら不一致か新規評価の問題）。</li>
+      <li>上位表示の競合3店を開き、タイトル・タグ・価格・写真をメモ（それがそのまま正解サンプル）。</li>
+    </ul>
+  </section>
+
+  <!-- 2. THREE PRIORITIES -->
+  <section class="blk">
+    <div class="kicker"><span class="idx">02</span><h2>優先順位は3つだけ</h2></div>
+    <div class="prios">
+      <div class="prio">
+        <div class="p-idx">PRIORITY 01</div>
+        <h3>SEOの作り直し</h3>
+        <p>タイトル・タグ13個・属性を、買い手が実際に打つ<strong>英語</strong>に全面的に合わせる。一番時間をかける所。</p>
+      </div>
+      <div class="prio">
+        <div class="p-idx">PRIORITY 02</div>
+        <h3>Pinterestで流入</h3>
+        <p>アート/インテリア商材で最強の無料集客。「見られない→評価が上がらない」の悪循環を外から断つ。</p>
+      </div>
+      <div class="prio">
+        <div class="p-idx">PRIORITY 03</div>
+        <h3>少額のEtsy広告</h3>
+        <p><strong>SEOを直した後に</strong>1日$1〜3。初期の表示データとお気に入りを買い、順位づけの初速をつける。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. SEO -->
+  <section class="blk">
+    <div class="kicker"><span class="idx">03</span><h2>Etsy SEO の作り直し <span class="h-note">最優先</span></h2></div>
+    <p class="lead">Etsy検索は<strong>タイトル前半・タグ13個・属性・カテゴリ</strong>を強く見ます。日本語ではなく、買い手が実際に打つ<strong>英語</strong>に合わせるのが絶対条件です。</p>
+
+    <h3 class="sub">タイトルの型（コピペで使える）</h3>
+    <div class="formula">[メインキーワード], [作品の主題], [スタイル], [用途/部屋], [フォーマット]</div>
+    <ul class="clean">
+      <li><b>先頭60文字が最重要。</b>ここに一番検索される語を置く。</li>
+      <li>「,」で区切り、全体140文字まで使い切る。日本語タイトルにしない（説明文に併記でOK）。</li>
+    </ul>
+
+    <div class="example">
+      <div class="ex good">
+        <span class="tag">◯ 良い例</span>
+        <div class="code">Japanese Wall Art, The Great Wave Print, Ukiyo-e Poster, Vintage Woodblock Art, Japandi Home Decor, Printable Digital Download</div>
+        <div class="why">検索語で始まり、主題・スタイル・用途・形式まで網羅。複数のロングテールに同時にヒットする。</div>
+      </div>
+      <div class="ex bad">
+        <span class="tag">✕ 悪い例</span>
+        <div class="code">波 - Wave Art ／ Beautiful Japanese Art</div>
+        <div class="why">日本語＋抽象的、または一般的すぎて競合に埋もれる。英語圏の検索に出ない・クリックされない。</div>
+      </div>
+    </div>
+
+    <h3 class="sub">タグ13個は全部埋める <span class="h-note">1個も空けない</span></h3>
+    <p>2〜3語の<strong>フレーズ</strong>で埋める（Etsyはロングテールが有利）。広い語×3〜4 ＋ 具体語×9〜10 の配分。タイトルの言葉とタグを一致させると評価が上がる。<span style="color:var(--shu)">■</span> = 競合が薄く初動を取りやすい狙い目。</p>
+
+    <div class="card">
+      <div class="chipgroup">
+        <div class="gl">広め</div>
+        <div class="chips">
+          <span class="chip">japanese wall art</span><span class="chip">japanese art print</span><span class="chip">asian wall art</span><span class="chip">oriental wall art</span><span class="chip">japanese poster</span>
+        </div>
+      </div>
+      <div class="chipgroup">
+        <div class="gl">スタイル・トレンド（狙い目）</div>
+        <div class="chips">
+          <span class="chip hot">japandi wall art</span><span class="chip hot">wabi sabi art</span><span class="chip hot">zen wall art</span><span class="chip hot">boho japanese</span><span class="chip hot">japanese minimalist</span><span class="chip hot">vintage japanese art</span>
+        </div>
+      </div>
+      <div class="chipgroup">
+        <div class="gl">主題別</div>
+        <div class="chips">
+          <span class="chip">ukiyo e print</span><span class="chip">the great wave</span><span class="chip">mount fuji print</span><span class="chip">cherry blossom art</span><span class="chip">koi fish art</span><span class="chip">japanese crane art</span><span class="chip">torii gate art</span><span class="chip">sakura wall art</span>
+        </div>
+      </div>
+      <div class="chipgroup">
+        <div class="gl">フォーマット・用途</div>
+        <div class="chips">
+          <span class="chip">printable wall art</span><span class="chip">digital download art</span><span class="chip">instant download</span><span class="chip">living room decor</span><span class="chip">bedroom wall art</span><span class="chip">gallery wall set</span>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="sub">属性・カテゴリ・説明文・共食い対策</h3>
+    <ul class="clean">
+      <li><b>属性/カテゴリを全部設定。</b>色・向き・部屋・スタイルを埋めると「フィルタ検索」に出る。空欄だと絞り込みから丸ごと消える。</li>
+      <li><b>説明文の冒頭1〜2文にキーワード</b>を自然に。届くファイル形式・解像度・対応サイズ（2:3 / 3:4 / 4:5 / A系 / US）を箇条書きで明記＝印刷トラブルによる低評価を防ぐ。</li>
+      <li><b>共食い(cannibalization)を回避。</b>1商品＝1メインキーワードに割り当て、スプレッドシート（§07）で管理する。</li>
+    </ul>
+  </section>
+
+  <!-- 4. TRAFFIC -->
+  <section class="blk">
+    <div class="kicker"><span class="idx">04</span><h2>外部流入をつくる <span class="h-note">初速はここで決まる</span></h2></div>
+    <p class="lead">Etsyの検索評価は「クリック・お気に入り・購入」で上がります。<strong>見られない→評価が上がらない→もっと見られない</strong>の悪循環を、外部流入で断ち切ります。アート系はここが特に効きます。</p>
+
+    <h3 class="sub">Pinterest ── アート商材で最強・無料</h3>
+    <ul class="clean">
+      <li>Pinterestは実質「画像検索エンジン」。<b>Etsyアート勢の外部流入No.1</b>はほぼPinterest。</li>
+      <li>ビジネスアカウント作成 → 各リスティングを1枚ずつPin → Pinのタイトル/説明にも英語キーワードを入れる。</li>
+      <li><b>部屋に飾ったモックアップ</b>をPinする。ただの絵より圧倒的に保存される。1日3〜5ピンを継続。</li>
+      <li>ボードはテーマ別に（「Japandi Wall Art」「Zen Home Decor」など）。</li>
+    </ul>
+    <h3 class="sub">Instagram / TikTok（任意）と既存の人脈</h3>
+    <ul class="clean">
+      <li>「制作過程」「飾ってみた」「4枚で壁を作る」など<b>使用シーン</b>の短尺動画。英語ハッシュタグ（#japandi #wallartdecor #etsyfinds）。</li>
+      <li>既存のSNS人脈で<b>最初の数件のお気に入り・購入</b>を作ると、アルゴリズムの初速が付く。</li>
+    </ul>
+  </section>
+
+  <!-- 5. ADS + CONVERSION -->
+  <section class="blk">
+    <div class="kicker"><span class="idx">05</span><h2>広告と「買われる」ための改善</h2></div>
+
+    <h3 class="sub">少額Etsy広告 ── SEO修正の"後"に</h3>
+    <ul class="clean">
+      <li><b>順番厳守。</b>ダメなタイトルに広告を当てても金の無駄。直してから <b>1日$1〜3</b> で開始。</li>
+      <li>全商品ではなく<b>売れ筋候補5〜10点だけ</b>に配信。2週間回してStatsで切り分け。</li>
+      <li>「表示は多いがクリックされない」→サムネが弱い。「クリックはあるが買われない」→価格/説明/サイズ表記が弱い。</li>
+    </ul>
+
+    <h3 class="sub">見られた後に買われる（コンバージョン）</h3>
+    <ul class="clean">
+      <li><b>1枚目の画像＝売上の生命線。</b>検索結果は正方形で並ぶ。1枚目は必ず<b>「部屋に飾ったモックアップ」</b>。2枚目以降にサイズ例・ギャラリーウォール例・同梱内容。</li>
+      <li><b>価格。</b>デジタルは安すぎると安っぽく見える。単品 <b>$5〜12</b>、セット <b>$12〜25</b> が目安。「3枚/9枚セット」で客単価とキーワードを増やす。</li>
+      <li><b>信頼の初期構築。</b>レビュー0は最大のブレーキ。丁寧なサンクスメッセージでレビュー率UP。About・バナー・プロフィール・ポリシーの空欄をなくす。</li>
+    </ul>
+  </section>
+
+  <!-- 6. 90 DAY PLAN -->
+  <section class="blk">
+    <div class="kicker"><span class="idx">06</span><h2>90日アクションプラン</h2></div>
+    <div class="timeline">
+      <div class="phase">
+        <div class="ph-head">
+          <div class="day">DAY 1–14</div>
+          <h3>土台</h3>
+          <div class="goal">SEOと診断。検索に出る状態を作る。</div>
+        </div>
+        <ul class="checks">
+          <li>競合上位3店を分析（タイトル/タグ/価格）</li>
+          <li>検索サジェストで実キーワードを30個収集</li>
+          <li>全リスティングのタイトルを型で書き直し</li>
+          <li>タグ13個をフレーズで全て埋める</li>
+          <li>カテゴリ・属性を完全設定</li>
+          <li>説明文の冒頭にKW＋同梱内容・サイズ明記</li>
+          <li>About/バナー/プロフィール/ポリシーを完成</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="ph-head">
+          <div class="day">DAY 15–45</div>
+          <h3>流入</h3>
+          <div class="goal">外から人を呼び、初速をつける。</div>
+        </div>
+        <ul class="checks">
+          <li>Pinterestビジネス開設、全商品をモックアップでPin</li>
+          <li>1日3〜5ピンを継続</li>
+          <li>1枚目画像を全て「部屋モックアップ」に差し替え</li>
+          <li>3枚/9枚セット商品を追加</li>
+          <li>初回クーポン設定＋バナー告知</li>
+          <li>売れ筋候補5〜10点に広告$1〜3/日を開始</li>
+        </ul>
+      </div>
+      <div class="phase">
+        <div class="ph-head">
+          <div class="day">DAY 46–90</div>
+          <h3>最適化と拡大</h3>
+          <div class="goal">データに寄せ、伸びたテーマを横展開。</div>
+        </div>
+        <ul class="checks">
+          <li>Search terms/Traffic sourcesを毎週チェック</li>
+          <li>伸びた語にタイトルを微調整</li>
+          <li>CTRが低い商品はサムネ差し替え</li>
+          <li>コンバージョンが低い商品は価格/説明見直し</li>
+          <li>反応が良いテーマで新作を追加し出品数UP</li>
+          <li>レビューが付いたテーマを軸に横展開</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7. TEMPLATE -->
+  <section class="blk">
+    <div class="kicker"><span class="idx">07</span><h2>管理用テンプレ（スプレッドシート）</h2></div>
+    <p>各行＝1リスティングで管理し、共食いを防ぐ。1商品に必ず1つのメインキーワードを割り当てる。</p>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>リスティング</th><th>メインKW（1つ）</th><th>タイトル案</th><th>カテゴリ</th><th>価格</th><th>1枚目画像</th><th>状態</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Great Wave</td><td class="mono">the great wave</td><td class="mono">Japanese Wall Art, The Great Wave…</td><td class="mono">Digital Prints</td><td class="mono">$8</td><td>部屋モックアップ</td><td class="mono">済</td></tr>
+          <tr><td>Mt Fuji</td><td class="mono">mount fuji print</td><td class="mono">Mount Fuji Print, Japandi Wall Art…</td><td class="mono">Digital Prints</td><td class="mono">$8</td><td>部屋モックアップ</td><td class="mono">未</td></tr>
+          <tr><td>Sakura Set</td><td class="mono">cherry blossom art</td><td class="mono">Cherry Blossom Art, Gallery Wall Set…</td><td class="mono">Digital Prints</td><td class="mono">$18</td><td>ギャラリーウォール</td><td class="mono">未</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 8. DON'TS -->
+  <section class="blk">
+    <div class="kicker"><span class="idx">08</span><h2>やってはいけないこと</h2></div>
+    <ul class="dos">
+      <li>タイトル/タグを日本語のままにする（英語圏で検索されない）</li>
+      <li>全商品を「japanese art」だけで狙う（共食い＆超激戦）</li>
+      <li>タグを単語や1〜2語で埋める / 空欄を残す</li>
+      <li>SEOを直す前に広告に金を使う</li>
+      <li>1枚目を「絵そのまま」にする（モックアップにする）</li>
+      <li>価格を安くしすぎる（$1〜2のデジタルは逆効果）</li>
+      <li>出品して放置（PinterestとStats確認は毎週の習慣に）</li>
+    </ul>
+  </section>
+
+  <!-- 9. TODAY -->
+  <section class="blk">
+    <div class="today">
+      <div class="eyebrow">Start here</div>
+      <h2>今日やる最初の3つ</h2>
+      <p style="color:#d8cebc; max-width:60ch;">迷ったらこれだけ。「検索に出る→外から人が来る」の最小形が回り始めます。</p>
+      <div class="three">
+        <div class="step"><span class="sn">壱</span><span class="st">Etsy検索窓に売りたい語を打ち、サジェスト＆競合上位3店をメモ<small>30分 — 実際に検索されている言葉を知る</small></span></div>
+        <div class="step"><span class="sn">弐</span><span class="st">自信のある3リスティングだけ、型でタイトル・タグ・属性を作り直す<small>60分 — 一番効く作業。まずは3点から</small></span></div>
+        <div class="step"><span class="sn">参</span><span class="st">Pinterestビジネスを開設し、その3点をモックアップでPin<small>30分 — 外部流入の最小形を作る</small></span></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span class="seal">✦ TheJapaneseArtPrints — Etsy Growth Strategy</span>
+    <span>2026-08-05</span>
+  </div>
+
+</div>
