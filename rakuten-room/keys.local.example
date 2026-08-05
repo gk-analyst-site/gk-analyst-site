@@ -6,5 +6,5 @@
 # 楽天Developersで発行する applicationId（数字の長い列）
 RAKUTEN_APP_ID=ここにapplicationIdを貼る
 
-# 楽天アフィリエイトID（あなたのはもう分かっています）
-RAKUTEN_AFFILIATE_ID=0a0d370d.2e0b70f8.0a0d370e.fc9426b6
+# 楽天アフィリエイトID（Rakuten Developersのアプリ画面に表示される値）
+RAKUTEN_AFFILIATE_ID=565ae11c.a4a96be2.565ae11d.fa900aba

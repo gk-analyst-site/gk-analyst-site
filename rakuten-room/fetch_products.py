@@ -99,7 +99,11 @@ def fetch_ranking(genre_id):
         params["affiliateId"] = RAKUTEN_AFFILIATE_ID
 
     url = RANKING_API + "?" + urllib.parse.urlencode(params)
-    req = urllib.request.Request(url, headers={"User-Agent": "rakuten-room-helper/1.0"})
+    req = urllib.request.Request(url, headers={
+        "User-Agent": "rakuten-room-helper/1.0",
+        # アプリ登録の「許可されたWebサイト」に合わせておく（弾かれ防止）
+        "Referer": "https://room.rakuten.co.jp/",
+    })
     with urllib.request.urlopen(req, timeout=20) as res:
         data = json.loads(res.read().decode("utf-8"))
     return data.get("Items", [])
