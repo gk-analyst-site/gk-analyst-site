@@ -23,6 +23,7 @@ import json
 import html
 import urllib.parse
 import urllib.request
+import urllib.error
 from datetime import datetime, timezone, timedelta
 
 # ---------------------------------------------------------------------------
@@ -104,8 +105,13 @@ def fetch_ranking(genre_id):
         # アプリ登録の「許可されたWebサイト」に合わせておく（弾かれ防止）
         "Referer": "https://room.rakuten.co.jp/",
     })
-    with urllib.request.urlopen(req, timeout=20) as res:
-        data = json.loads(res.read().decode("utf-8"))
+    try:
+        with urllib.request.urlopen(req, timeout=20) as res:
+            data = json.loads(res.read().decode("utf-8"))
+    except urllib.error.HTTPError as e:
+        # エラーの本文には「何がダメか」が書いてあるので、それも一緒に見せる
+        body = e.read().decode("utf-8", "replace")[:300]
+        raise RuntimeError(f"HTTP {e.code}: {body}") from None
     return data.get("Items", [])
 
 
