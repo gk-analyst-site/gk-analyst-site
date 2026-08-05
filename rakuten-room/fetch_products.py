@@ -190,7 +190,11 @@ def collect_posts():
         for wrap in items:
             item = wrap.get("Item", wrap)  # APIは {"Item": {...}} の形
             name = item.get("itemName", "")
-            price = item.get("itemPrice", 0)
+            # 価格は文字列("2480")で返ることがあるので、数字に変換する
+            try:
+                price = int(str(item.get("itemPrice", 0)).replace(",", "").strip() or 0)
+            except (ValueError, TypeError):
+                price = 0
             rank = item.get("rank", picked + 1)
             # アフィリンクがあればそれを、無ければ通常リンクを使う
             link = item.get("affiliateUrl") or item.get("itemUrl", "")
