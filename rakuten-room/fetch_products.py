@@ -79,7 +79,9 @@ ITEMS_PER_GENRE = 5
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
 
 # 楽天 商品ランキングAPI のURL
-RANKING_API = "https://app.rakuten.co.jp/services/api/IchibaItem/Ranking/20220601"
+# ※2026年の移行で、入り口が app.rakuten.co.jp → openapi.rakuten.co.jp に変わりました。
+#   新しいUUID形式のアプリIDは、この新しい入り口でだけ有効です。
+RANKING_API = "https://openapi.rakuten.co.jp/ichibaranking/api/IchibaItem/Ranking/20220601"
 
 # 日本時間
 JST = timezone(timedelta(hours=9))
