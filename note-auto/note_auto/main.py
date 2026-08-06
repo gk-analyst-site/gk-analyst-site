@@ -101,14 +101,23 @@ def cmd_run(cfg: dict, topics_data: dict) -> int:
         print(f"生成中: {topic['title']}")
         article = generator.generate(topic, cfg)
 
-        if article.paywall_index is not None:
-            print(
-                "※ 有料note設定が有効です。価格・有料ラインの設定は現状 note 上で手動確認が"
-                "必要です（本文には区切りを反映済み）。"
+        # 有料note設定が有効で、有料ラインが生成されている場合は
+        # 無料パート／有料パートに分割し、価格つきで投稿する。
+        if cfg["sale"].get("enabled") and article.paywall_index is not None:
+            free_body = article.body[: article.paywall_index].rstrip()
+            paid_body = article.body[article.paywall_index :].lstrip()
+            price = int(cfg["sale"]["price"])
+            print(f"投稿中（有料 {price}円 / mode={mode}）...")
+            publisher.publish(
+                article.title,
+                free_body,
+                paid_body=paid_body,
+                price=price,
+                mode=mode,
             )
-
-        print(f"投稿中（mode={mode}）...")
-        publisher.publish(article.title, article.body, mode=mode)
+        else:
+            print(f"投稿中（無料 / mode={mode}）...")
+            publisher.publish(article.title, article.body, mode=mode)
 
         # 投稿できたら topics.yaml のステータスを更新
         topic["status"] = "posted"
