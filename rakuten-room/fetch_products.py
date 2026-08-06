@@ -299,24 +299,77 @@ def demo_posts():
 
 
 # ---------------------------------------------------------------------------
+# 部品3b: 売れ筋の中から「今日の推し」を選ぶ
+# ---------------------------------------------------------------------------
+def pick_todays_picks(posts, n=3):
+    """順位・価格・画像・ジャンルの多様性で採点し、今日イチ推しのn件を選ぶ。"""
+    def score(p):
+        s = 0
+        try:
+            rank = int(p.get("rank") or 30)
+        except (ValueError, TypeError):
+            rank = 30
+        s += (30 - min(rank, 30)) * 2          # 上位ほど高得点
+        pr = p.get("price") or 0
+        if 500 <= pr <= 5000:                  # 買われやすい価格帯を優遇
+            s += 12
+        elif pr <= 8000:
+            s += 5
+        if p.get("image"):
+            s += 4
+        return s
+
+    order = sorted(range(len(posts)), key=lambda i: score(posts[i]), reverse=True)
+    picks, seen = [], set()
+    for i in order:                            # まずジャンル違いで選ぶ
+        g = posts[i].get("genre")
+        if g in seen:
+            continue
+        picks.append(i)
+        seen.add(g)
+        if len(picks) >= n:
+            break
+    for i in order:                            # 足りなければ埋める
+        if len(picks) >= n:
+            break
+        if i not in picks:
+            picks.append(i)
+    return picks[:n]
+
+
+# ---------------------------------------------------------------------------
 # 部品4: スマホで見やすい「今日の投稿リスト」HTMLを書き出す
 # ---------------------------------------------------------------------------
-def write_html(posts, path):
-    now = datetime.now(JST).strftime("%Y年%m月%d日 %H:%M")
-    cards = []
-    for i, p in enumerate(posts):
-        name = html.escape(p["name"])
-        genre = html.escape(p["genre"])
-        caption = html.escape(p["caption"])
-        keywords = html.escape(p.get("keywords", ""))
-        link = html.escape(p["link"])
-        price = f'{p["price"]:,}円' if p["price"] else "価格は商品ページで"
-        img = f'<img src="{html.escape(p["image"])}" alt="" loading="lazy">' if p["image"] else \
-              '<div class="noimg">画像なし（デモ）</div>'
-        cards.append(f"""
-        <div class="card" id="card{i}" data-key="{link}">
+# PCで「楽天ROOMに投稿する」ボタンを自動で探して押す補助（ブックマークレット）
+BOOKMARKLET = (
+    "javascript:(function(){var q=document.querySelectorAll('a,button,[role=button],span,div');"
+    "var h=null,i,e,t;for(i=0;i<q.length;i++){e=q[i];t=(e.textContent||'').replace(/\\s+/g,'');"
+    "if(t&&t.length<=12&&(t.indexOf('ROOMに投稿')>=0||t.indexOf('ROOMで紹介')>=0||t.indexOf('ROOM投稿')>=0)){h=e;break;}}"
+    "if(!h){for(i=0;i<q.length;i++){var u=q[i].getAttribute&&q[i].getAttribute('href');"
+    "if(u&&/room\\.rakuten\\.co\\.jp/.test(u)){h=q[i];break;}}}"
+    "if(h){h.scrollIntoView({behavior:'smooth',block:'center'});var o=h.style.outline;"
+    "h.style.outline='4px solid #bf0000';setTimeout(function(){h.style.outline=o;},2500);"
+    "try{h.click();}catch(x){}}else{alert('「楽天ROOMに投稿する」ボタンが見つかりませんでした。"
+    "楽天市場の商品ページを開いて、ログインした状態でお試しください。');}})();"
+)
+
+
+def _render_card(i, p, featured=False):
+    name = html.escape(p["name"])
+    genre = html.escape(p["genre"])
+    caption = html.escape(p["caption"])
+    keywords = html.escape(p.get("keywords", ""))
+    link = html.escape(p["link"])
+    price = f'{p["price"]:,}円' if p["price"] else "価格は商品ページで"
+    img = f'<img src="{html.escape(p["image"])}" alt="" loading="lazy">' if p["image"] else \
+          '<div class="noimg">画像なし（デモ）</div>'
+    star = '<span class="featured">⭐ 今日の推し</span>' if featured else ''
+    fcls = ' featured' if featured else ''
+    return f"""
+        <div class="card{fcls}" id="card{i}" data-key="{link}">
           <div class="cardtop">
             <div class="badge">{genre}・{p['rank']}位</div>
+            {star}
             <span class="donetag">✅ 投稿済み</span>
           </div>
           {img}
@@ -332,7 +385,35 @@ def write_html(posts, path):
             <input type="hidden" id="kw{i}" value="{keywords}">
           </div>
           <button class="donebtn" onclick="toggleDone({i})">✓ 投稿済みにする</button>
-        </div>""")
+        </div>"""
+
+
+def write_html(posts, path):
+    now = datetime.now(JST).strftime("%Y年%m月%d日 %H:%M")
+
+    picks = pick_todays_picks(posts, 3)
+    pick_set = set(picks)
+    featured_html = "".join(_render_card(i, posts[i], True) for i in picks)
+    rest_html = "".join(_render_card(i, posts[i], False)
+                        for i in range(len(posts)) if i not in pick_set)
+    rest_n = len(posts) - len(picks)
+
+    # PC1クリック投稿の案内ブロック（f-stringの外で組み立て、波かっこ問題を回避）
+    bm_esc = html.escape(BOOKMARKLET)
+    bookmarklet_html = (
+        '<details class="bm"><summary>💻 PCで1クリック投稿する（初回だけ設定・任意）</summary>'
+        '<div class="bmbody">'
+        '<p>楽天市場の商品ページで、公式の「楽天ROOMに投稿する」ボタンを自動で探して押す補助ツールです。'
+        '（自動投稿ではなく、ボタン押しをラクにするだけの安全な補助です）</p>'
+        '<ol><li>下の「コードをコピー」を押す</li>'
+        '<li>ブラウザでブックマークを新規作成し、<b>名前</b>=「ROOM投稿」、<b>URL</b>欄に貼り付けて保存</li>'
+        '<li>商品ページを開いて、そのブックマークを1回クリック → 投稿画面へジャンプ</li></ol>'
+        '<textarea id="bmcode" readonly>' + bm_esc + '</textarea>'
+        '<button class="bmcopy" onclick="copyText('
+        "document.getElementById('bmcode').value, event.target, '✅ コピー！')"
+        '">📋 コードをコピー</button>'
+        '</div></details>'
+    )
 
     page = f"""<!doctype html>
 <html lang="ja"><head><meta charset="utf-8">
@@ -380,6 +461,22 @@ def write_html(posts, path):
   .card.done .donetag {{ display:inline; }}
   .card.done img, .card.done textarea, .card.done .steps {{ display:none; }}
   .card.done .donebtn {{ background:#2a8f3c; color:#fff; }}
+  /* 今日の推し */
+  .sec {{ font-size:16px; color:#bf0000; font-weight:bold; margin:6px 2px 10px; }}
+  .featured {{ display:inline-block; background:#fff3cd; color:#a6791a; font-size:12px;
+              font-weight:bold; padding:3px 10px; border-radius:20px; }}
+  .card.featured {{ border:2px solid #ffcc00; }}
+  /* 折りたたみ（残りの売れ筋・PC投稿の案内） */
+  details.more, details.bm {{ background:#fff; border-radius:12px; padding:2px 12px;
+              margin-bottom:14px; box-shadow:0 1px 4px rgba(0,0,0,.06); }}
+  details.more > summary, details.bm > summary {{ cursor:pointer; font-weight:bold;
+              padding:13px 2px; font-size:14px; color:#333; }}
+  .bmbody {{ padding:2px 2px 12px; font-size:13px; line-height:1.7; }}
+  .bmbody ol {{ padding-left:20px; }}
+  .bmbody textarea {{ width:100%; height:88px; box-sizing:border-box; border:1px solid #ddd;
+              border-radius:8px; padding:8px; font-size:12px; }}
+  .bmcopy {{ width:100%; margin-top:8px; padding:11px; border:none; border-radius:10px;
+              background:#333; color:#fff; font-weight:bold; font-size:14px; cursor:pointer; }}
 </style></head><body>
 <header>
   <h1>🛒 今日の楽天ROOM投稿リスト</h1>
@@ -387,7 +484,12 @@ def write_html(posts, path):
   <div class="counter" id="counter">投稿済み 0 / {len(posts)} 件</div>
 </header>
 <div class="wrap">
-  {''.join(cards)}
+  {bookmarklet_html}
+  <div class="sec">⭐ 今日の推し {len(picks)}件（まずはここから！）</div>
+  {featured_html}
+  <details class="more"><summary>▼ ほかの売れ筋も見る（残り {rest_n} 件）</summary>
+  {rest_html}
+  </details>
 </div>
 <script>
   var TOTAL = {len(posts)};
