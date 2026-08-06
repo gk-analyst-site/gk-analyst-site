@@ -1,4 +1,4 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, writeFile, readdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -7,8 +7,11 @@ import { generateCaption, mediaTypeFor } from "./lib/caption.js";
 import { publishImage } from "./lib/instagram.js";
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const QUEUE_PATH = path.join(HERE, "content", "queue.json");
 const IMAGES_DIR = path.join(HERE, "content", "images");
+const POSTED_PATH = path.join(HERE, "content", "posted.json");
+const CONTEXT_PATH = path.join(HERE, "content", "context.json");
+
+const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp"]);
 
 function requireEnv(name) {
   const value = process.env[name];
@@ -18,16 +21,21 @@ function requireEnv(name) {
   return value;
 }
 
-// Build the public raw.githubusercontent.com URL for a queued image so Meta can fetch it.
+// Build the public raw.githubusercontent.com URL for an image so Meta can fetch it.
 // Override with IMAGE_BASE_URL if you host images elsewhere.
 function buildImageUrl(filename) {
   const explicitBase = process.env.IMAGE_BASE_URL;
   if (explicitBase) {
-    return `${explicitBase.replace(/\/$/, "")}/${filename}`;
+    return `${explicitBase.replace(/\/$/, "")}/${encodeURIComponent(filename)}`;
   }
   const repo = requireEnv("GITHUB_REPOSITORY"); // "owner/repo"
   const ref = process.env.GITHUB_REF_NAME || "main";
-  return `https://raw.githubusercontent.com/${repo}/${ref}/instagram-bot/content/images/${filename}`;
+  return `https://raw.githubusercontent.com/${repo}/${ref}/instagram-bot/content/images/${encodeURIComponent(filename)}`;
+}
+
+async function readJson(filePath, fallback) {
+  if (!existsSync(filePath)) return fallback;
+  return JSON.parse(await readFile(filePath, "utf8"));
 }
 
 async function main() {
@@ -35,42 +43,52 @@ async function main() {
   const accessToken = requireEnv("IG_ACCESS_TOKEN");
   requireEnv("ANTHROPIC_API_KEY"); // used by lib/caption.js
 
-  const queue = JSON.parse(await readFile(QUEUE_PATH, "utf8"));
-  if (!Array.isArray(queue.posts)) {
-    throw new Error("queue.json must have a top-level `posts` array.");
-  }
+  // Load the record of already-posted images.
+  const postedFile = await readJson(POSTED_PATH, { posted: [] });
+  if (!Array.isArray(postedFile.posted)) postedFile.posted = [];
+  const postedNames = new Set(postedFile.posted.map((p) => p.image));
 
-  const next = queue.posts.find((p) => !p.posted);
-  if (!next) {
-    console.log("No unposted items left in the queue. Nothing to do.");
+  // Optional per-image hints: { "photo.jpg": "context text" }. Entirely optional.
+  const contextMap = await readJson(CONTEXT_PATH, {});
+
+  // Discover every image in the folder, and pick the next unposted one in name order.
+  const allFiles = await readdir(IMAGES_DIR);
+  const candidates = allFiles
+    .filter((f) => IMAGE_EXTENSIONS.has(path.extname(f).toLowerCase()))
+    .filter((f) => !postedNames.has(f))
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }));
+
+  if (candidates.length === 0) {
+    console.log("No new images to post. Add images to content/images/ to queue more.");
     return;
   }
 
-  const imagePath = path.join(IMAGES_DIR, next.image);
-  if (!existsSync(imagePath)) {
-    throw new Error(`Image not found: ${imagePath}`);
-  }
+  const nextImage = candidates[0];
+  const remaining = candidates.length - 1;
+  console.log(`Next image: ${nextImage} (${remaining} more waiting after this)`);
 
-  console.log(`Next post: ${next.image}`);
+  const imagePath = path.join(IMAGES_DIR, nextImage);
   const imageBuffer = await readFile(imagePath);
-  const mediaType = mediaTypeFor(next.image);
+  const mediaType = mediaTypeFor(nextImage);
 
   console.log("Generating caption with Claude...");
-  const caption = await generateCaption(imageBuffer, mediaType, next.context);
+  const caption = await generateCaption(imageBuffer, mediaType, contextMap[nextImage]);
   console.log(`\n--- Caption ---\n${caption}\n---------------\n`);
 
-  const imageUrl = buildImageUrl(next.image);
+  const imageUrl = buildImageUrl(nextImage);
   console.log(`Publishing to Instagram (image: ${imageUrl})...`);
   const mediaId = await publishImage({ igUserId, accessToken, imageUrl, caption });
   console.log(`Published. Media ID: ${mediaId}`);
 
-  // Record the result and persist the queue.
-  next.posted = true;
-  next.postedAt = new Date().toISOString();
-  next.caption = caption;
-  next.mediaId = mediaId;
-  await writeFile(QUEUE_PATH, JSON.stringify(queue, null, 2) + "\n", "utf8");
-  console.log("Queue updated.");
+  // Record the result so this image is not posted again.
+  postedFile.posted.push({
+    image: nextImage,
+    postedAt: new Date().toISOString(),
+    caption,
+    mediaId,
+  });
+  await writeFile(POSTED_PATH, JSON.stringify(postedFile, null, 2) + "\n", "utf8");
+  console.log("Recorded in posted.json.");
 }
 
 main().catch((err) => {

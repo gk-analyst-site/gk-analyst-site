@@ -37,14 +37,14 @@ jobs:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
         run: npm run post
 
-      - name: Commit updated queue
+      - name: Commit posted record
         run: |
-          if git diff --quiet -- instagram-bot/content/queue.json; then
-            echo "No queue changes to commit."
+          if git diff --quiet -- instagram-bot/content/posted.json; then
+            echo "No posting record changes to commit."
           else
             git config user.name "github-actions[bot]"
             git config user.email "github-actions[bot]@users.noreply.github.com"
-            git add instagram-bot/content/queue.json
-            git commit -m "chore: mark queued post as published [skip ci]"
+            git add instagram-bot/content/posted.json
+            git commit -m "chore: record published post [skip ci]"
             git push
           fi
