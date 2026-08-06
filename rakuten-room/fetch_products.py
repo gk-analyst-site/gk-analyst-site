@@ -501,7 +501,26 @@ def write_html(posts, path):
     setTimeout(function(){{ btn.textContent = old; btn.classList.remove('flash'); }}, 1400);
   }}
   function copyText(txt, btn, msg) {{
-    navigator.clipboard.writeText(txt).then(function(){{ flash(btn, msg); }});
+    function done() {{ flash(btn, msg); }}
+    // clipboard APIが使えない環境（プレビュー内など）向けの予備手段
+    function fallback() {{
+      var ta = document.createElement('textarea');
+      ta.value = txt; ta.setAttribute('readonly', '');
+      ta.style.position = 'fixed'; ta.style.top = '0'; ta.style.left = '0';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      try {{ ta.setSelectionRange(0, ta.value.length); }} catch (e) {{}}
+      var ok = false;
+      try {{ ok = document.execCommand('copy'); }} catch (e) {{}}
+      document.body.removeChild(ta);
+      flash(btn, ok ? msg : '↑の文字を長押しでコピーしてね');
+    }}
+    if (navigator.clipboard && navigator.clipboard.writeText) {{
+      navigator.clipboard.writeText(txt).then(done).catch(fallback);
+    }} else {{
+      fallback();
+    }}
   }}
   function copyCap(i) {{
     copyText(document.getElementById('cap'+i).value, event.target, '✅ 投稿文をコピー！');
