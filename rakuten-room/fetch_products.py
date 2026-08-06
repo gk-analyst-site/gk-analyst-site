@@ -160,7 +160,7 @@ def build_caption(name, price, genre_name):
     price_line = f"💰 {price:,}円（送料などは商品ページで確認してね）" if price else ""
 
     caption = f"{hook}\n\n【{short_name}】\n{price_line}\n\n" \
-              f"気になったらプロフィールのリンクから見てみてね👀\n" \
+              f"気になったら下の商品をタップしてチェックしてね👇\n" \
               f"フォローしてくれたら嬉しいです☺️\n\n" \
               + " ".join(tags)
     return caption.strip()
