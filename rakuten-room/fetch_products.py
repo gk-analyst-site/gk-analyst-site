@@ -267,16 +267,22 @@ def write_html(posts, path):
         img = f'<img src="{html.escape(p["image"])}" alt="" loading="lazy">' if p["image"] else \
               '<div class="noimg">画像なし（デモ）</div>'
         cards.append(f"""
-        <div class="card">
-          <div class="badge">{genre}・{p['rank']}位</div>
+        <div class="card" id="card{i}" data-key="{link}">
+          <div class="cardtop">
+            <div class="badge">{genre}・{p['rank']}位</div>
+            <span class="donetag">✅ 投稿済み</span>
+          </div>
           {img}
           <h3>{name}</h3>
           <p class="price">{price}</p>
           <textarea id="cap{i}" readonly>{caption}</textarea>
-          <div class="btns">
-            <button onclick="copyCap({i})">📋 投稿文をコピー</button>
-            <a class="link" href="{link}" target="_blank" rel="noopener">🔗 商品ページ</a>
+          <div class="steps">
+            <button class="step1" onclick="copyCap({i})">① 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink({i})">② 商品リンクをコピー</button>
+            <a class="step3" href="{link}" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk{i}" value="{link}">
           </div>
+          <button class="donebtn" onclick="toggleDone({i})">✓ 投稿済みにする</button>
         </div>""")
 
     page = f"""<!doctype html>
@@ -286,14 +292,20 @@ def write_html(posts, path):
 <style>
   body {{ font-family: -apple-system, "Hiragino Kaku Gothic ProN", sans-serif;
          margin:0; background:#f5f5f7; color:#222; }}
-  header {{ background:#bf0000; color:#fff; padding:16px; text-align:center; }}
+  header {{ background:#bf0000; color:#fff; padding:16px; text-align:center;
+           position:sticky; top:0; z-index:10; }}
   header h1 {{ margin:0; font-size:18px; }}
   header p {{ margin:6px 0 0; font-size:12px; opacity:.9; }}
+  .counter {{ margin-top:8px; font-size:13px; font-weight:bold;
+             background:rgba(255,255,255,.2); border-radius:20px;
+             display:inline-block; padding:4px 14px; }}
   .wrap {{ max-width:520px; margin:0 auto; padding:12px; }}
   .card {{ background:#fff; border-radius:14px; padding:14px; margin-bottom:14px;
-          box-shadow:0 1px 4px rgba(0,0,0,.08); }}
+          box-shadow:0 1px 4px rgba(0,0,0,.08); transition:opacity .2s; }}
+  .cardtop {{ display:flex; align-items:center; justify-content:space-between; }}
   .badge {{ display:inline-block; background:#ffe4e4; color:#bf0000; font-size:12px;
            font-weight:bold; padding:3px 10px; border-radius:20px; }}
+  .donetag {{ display:none; color:#2a8f3c; font-weight:bold; font-size:13px; }}
   .card img, .noimg {{ width:100%; height:220px; object-fit:contain; margin:10px 0;
                       background:#fafafa; border-radius:10px; }}
   .noimg {{ display:flex; align-items:center; justify-content:center; color:#aaa; }}
@@ -301,31 +313,80 @@ def write_html(posts, path):
   .price {{ color:#bf0000; font-weight:bold; margin:2px 0 10px; }}
   textarea {{ width:100%; height:120px; box-sizing:border-box; border:1px solid #ddd;
              border-radius:8px; padding:8px; font-size:13px; line-height:1.5; resize:vertical; }}
-  .btns {{ display:flex; gap:8px; margin-top:10px; }}
-  button, .link {{ flex:1; text-align:center; padding:11px; border-radius:10px; font-size:14px;
-                  font-weight:bold; border:none; cursor:pointer; text-decoration:none; }}
-  button {{ background:#bf0000; color:#fff; }}
-  .link {{ background:#fff; color:#bf0000; border:2px solid #bf0000; line-height:1.2; }}
-  .done {{ background:#2a8f3c !important; }}
+  .steps {{ display:flex; flex-direction:column; gap:8px; margin-top:10px; }}
+  .steps button, .steps a {{ text-align:center; padding:13px; border-radius:10px;
+                  font-size:15px; font-weight:bold; border:none; cursor:pointer;
+                  text-decoration:none; display:block; }}
+  .step1 {{ background:#bf0000; color:#fff; }}
+  .step2 {{ background:#ff7a00; color:#fff; }}
+  .step3 {{ background:#fff; color:#bf0000; border:2px solid #bf0000 !important;
+           box-sizing:border-box; }}
+  .donebtn {{ width:100%; margin-top:10px; padding:11px; border-radius:10px;
+             border:2px solid #2a8f3c; background:#fff; color:#2a8f3c;
+             font-weight:bold; font-size:14px; cursor:pointer; }}
+  .flash {{ background:#2a8f3c !important; color:#fff !important; }}
+  /* 投稿済みカードは薄く＆折りたたむ */
+  .card.done {{ opacity:.5; }}
+  .card.done .donetag {{ display:inline; }}
+  .card.done img, .card.done textarea, .card.done .steps {{ display:none; }}
+  .card.done .donebtn {{ background:#2a8f3c; color:#fff; }}
 </style></head><body>
 <header>
   <h1>🛒 今日の楽天ROOM投稿リスト</h1>
-  <p>{now} 時点の売れ筋 / 全 {len(posts)} 件 ・ コピーして楽天ROOMに貼るだけ</p>
+  <p>{now} 時点の売れ筋 / 全 {len(posts)} 件</p>
+  <div class="counter" id="counter">投稿済み 0 / {len(posts)} 件</div>
 </header>
 <div class="wrap">
   {''.join(cards)}
 </div>
 <script>
-  function copyCap(i) {{
-    var t = document.getElementById('cap'+i);
-    navigator.clipboard.writeText(t.value).then(function() {{
-      var b = event.target;
-      var old = b.textContent;
-      b.textContent = '✅ コピーしました！';
-      b.classList.add('done');
-      setTimeout(function(){{ b.textContent = old; b.classList.remove('done'); }}, 1500);
-    }});
+  var TOTAL = {len(posts)};
+
+  function flash(btn, msg) {{
+    var old = btn.textContent;
+    btn.textContent = msg;
+    btn.classList.add('flash');
+    setTimeout(function(){{ btn.textContent = old; btn.classList.remove('flash'); }}, 1400);
   }}
+  function copyText(txt, btn, msg) {{
+    navigator.clipboard.writeText(txt).then(function(){{ flash(btn, msg); }});
+  }}
+  function copyCap(i) {{
+    copyText(document.getElementById('cap'+i).value, event.target, '✅ 投稿文をコピー！');
+  }}
+  function copyLink(i) {{
+    copyText(document.getElementById('lnk'+i).value, event.target, '✅ リンクをコピー！');
+  }}
+
+  // どこまで投稿したかをこのスマホに記憶する
+  function doneStore() {{
+    try {{ return JSON.parse(localStorage.getItem('room_done') || '{{}}'); }}
+    catch(e) {{ return {{}}; }}
+  }}
+  function updateCounter() {{
+    var n = document.querySelectorAll('.card.done').length;
+    document.getElementById('counter').textContent = '投稿済み ' + n + ' / ' + TOTAL + ' 件';
+  }}
+  function toggleDone(i) {{
+    var card = document.getElementById('card'+i);
+    var key = card.getAttribute('data-key');
+    var store = doneStore();
+    if (card.classList.contains('done')) {{
+      card.classList.remove('done'); delete store[key];
+    }} else {{
+      card.classList.add('done'); store[key] = 1;
+    }}
+    localStorage.setItem('room_done', JSON.stringify(store));
+    updateCounter();
+  }}
+  // ページを開いたとき、前回までの「投稿済み」を復元
+  (function() {{
+    var store = doneStore();
+    document.querySelectorAll('.card').forEach(function(card) {{
+      if (store[card.getAttribute('data-key')]) card.classList.add('done');
+    }});
+    updateCounter();
+  }})();
 </script>
 </body></html>"""
 
