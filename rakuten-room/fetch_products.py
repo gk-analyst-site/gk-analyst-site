@@ -19,6 +19,7 @@
 """
 
 import os
+import re
 import json
 import html
 import urllib.parse
@@ -126,6 +127,49 @@ def fetch_ranking(genre_id):
 
 
 # ---------------------------------------------------------------------------
+# 部品2a: 商品名から「検索しやすいキーワード」を作る
+# （楽天ROOMアプリの「商品キーワード検索から投稿」で使う用）
+# ---------------------------------------------------------------------------
+# 検索のじゃまになる宣伝ワード（含まれていたらそのトークンを捨てる）
+_PROMO_WORDS = (
+    "送料無料", "送料込", "あす楽", "楽天", "クーポン", "セール", "ポイント",
+    "まとめ買い", "選べる", "公式", "正規品", "訳あり", "本日", "限り",
+    "期間限定", "数量限定", "再入荷", "予約", "即納", "新品", "最大",
+    "第1位", "1位", "ランキング", "神トク", "完売", "割引", "OFF", "off",
+    "返品", "交換", "あたり", "無料", "半額", "在庫", "特価", "お得",
+)
+
+def build_search_keywords(name, max_words=4):
+    """商品名から宣伝文句を除き、検索用の短いキーワードを作る。"""
+    s = name
+    # 【…】[…]（…）〔…〕≪…≫ で囲まれた宣伝文句を除去
+    s = re.sub(r"[【\[（(〔≪].*?[】\]）)〕≫]", " ", s)
+    s = re.sub(r"★.*?★", " ", s)
+    # 区切り記号を空白にそろえる
+    s = re.sub(r"[／/｜|,、・×＋+=＝~〜～!！?？。．\.:：;；★☆♪【】\[\]（）()]+", " ", s)
+    tokens = s.split()
+
+    picked = []
+    for t in tokens:
+        if any(w in t for w in _PROMO_WORDS):
+            continue
+        # 価格や割合を含むトークンは捨てる（例: 144円, 25％, 1,144）
+        if "円" in t or "%" in t or "％" in t:
+            continue
+        # 数字・単位・％だけのトークンは捨てる
+        if re.fullmatch(r"[0-9０-９,，.%％台点本枚箱個組ml入]+", t):
+            continue
+        picked.append(t)
+        if len(picked) >= max_words:
+            break
+
+    kw = " ".join(picked).strip()
+    if len(kw) < 2:  # うまく取れなければ、括弧を除いた先頭20文字
+        kw = re.sub(r"\s+", " ", s).strip()[:20]
+    return kw
+
+
+# ---------------------------------------------------------------------------
 # 部品2: 投稿文（キャプション）を自動で書く
 # ---------------------------------------------------------------------------
 def build_caption(name, price, genre_name):
@@ -222,6 +266,7 @@ def collect_posts():
                 "price": price,
                 "link": link,
                 "image": image,
+                "keywords": build_search_keywords(name),
                 "caption": build_caption(name, price, genre_name),
             })
             picked += 1
@@ -247,6 +292,7 @@ def demo_posts():
         posts.append({
             "genre": genre, "rank": i, "name": name, "price": price,
             "link": link, "image": "",
+            "keywords": build_search_keywords(name),
             "caption": build_caption(name, price, genre),
         })
     return posts
@@ -262,6 +308,7 @@ def write_html(posts, path):
         name = html.escape(p["name"])
         genre = html.escape(p["genre"])
         caption = html.escape(p["caption"])
+        keywords = html.escape(p.get("keywords", ""))
         link = html.escape(p["link"])
         price = f'{p["price"]:,}円' if p["price"] else "価格は商品ページで"
         img = f'<img src="{html.escape(p["image"])}" alt="" loading="lazy">' if p["image"] else \
@@ -278,9 +325,11 @@ def write_html(posts, path):
           <textarea id="cap{i}" readonly>{caption}</textarea>
           <div class="steps">
             <button class="step1" onclick="copyCap({i})">① 投稿文をコピー</button>
+            <button class="stepk" onclick="copyKw({i})">🔍 検索用キーワードをコピー</button>
             <button class="step2" onclick="copyLink({i})">② 商品リンクをコピー</button>
             <a class="step3" href="{link}" target="_blank" rel="noopener">↗ 商品ページを開く</a>
             <input type="hidden" id="lnk{i}" value="{link}">
+            <input type="hidden" id="kw{i}" value="{keywords}">
           </div>
           <button class="donebtn" onclick="toggleDone({i})">✓ 投稿済みにする</button>
         </div>""")
@@ -318,6 +367,7 @@ def write_html(posts, path):
                   font-size:15px; font-weight:bold; border:none; cursor:pointer;
                   text-decoration:none; display:block; }}
   .step1 {{ background:#bf0000; color:#fff; }}
+  .stepk {{ background:#0a7d3c; color:#fff; }}
   .step2 {{ background:#ff7a00; color:#fff; }}
   .step3 {{ background:#fff; color:#bf0000; border:2px solid #bf0000 !important;
            box-sizing:border-box; }}
@@ -356,6 +406,9 @@ def write_html(posts, path):
   }}
   function copyLink(i) {{
     copyText(document.getElementById('lnk'+i).value, event.target, '✅ リンクをコピー！');
+  }}
+  function copyKw(i) {{
+    copyText(document.getElementById('kw'+i).value, event.target, '✅ キーワードをコピー！');
   }}
 
   // どこまで投稿したかをこのスマホに記憶する
