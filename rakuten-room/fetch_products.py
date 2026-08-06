@@ -377,9 +377,9 @@ def _render_card(i, p, featured=False):
           <p class="price">{price}</p>
           <textarea id="cap{i}" readonly>{caption}</textarea>
           <div class="steps">
-            <button class="step1" onclick="copyCap({i})">① 投稿文をコピー</button>
-            <button class="stepk" onclick="copyKw({i})">🔍 検索用キーワードをコピー</button>
-            <button class="step2" onclick="copyLink({i})">② 商品リンクをコピー</button>
+            <button class="stepk" onclick="copyKw({i})">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap({i})">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink({i})">商品リンクをコピー</button>
             <a class="step3" href="{link}" target="_blank" rel="noopener">↗ 商品ページを開く</a>
             <input type="hidden" id="lnk{i}" value="{link}">
             <input type="hidden" id="kw{i}" value="{keywords}">
