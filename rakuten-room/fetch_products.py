@@ -68,16 +68,18 @@ RAKUTEN_ACCESS_KEY = os.environ.get("RAKUTEN_ACCESS_KEY", "").strip()
 # 他のジャンルを足したいときは (ジャンルID, "表示名") を追加してください。
 # ジャンルIDの調べ方はREADMEに書いてあります。
 GENRES = [
-    (0,      "総合"),
-    (100371, "レディースファッション"),
-    (551177, "メンズファッション"),
-    (100939, "美容・コスメ・香水"),
+    (215783, "日用品"),      # 日用品雑貨・文房具・手芸
     (100227, "食品"),
-    (100804, "インテリア・寝具・収納"),
+    (100939, "コスメ"),      # 美容・コスメ・香水
+    (562637, "家電"),
+    (558929, "キッチン"),    # キッチン用品・食器・調理器具
 ]
 
-# 各ジャンルから上位いくつを拾うか（1〜30くらいがおすすめ）
-ITEMS_PER_GENRE = 5
+# 各ジャンルから上位いくつを拾うか（5ジャンル×4件＝20件）
+ITEMS_PER_GENRE = 4
+
+# これより高い商品は「ニッチすぎる高額」として除外（衝動買いされやすい手ごろ価格に絞る）
+MAX_PRICE = 8000
 
 # 出力先フォルダ
 OUTPUT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "output")
@@ -170,6 +172,26 @@ def build_search_keywords(name, max_words=4):
 
 
 # ---------------------------------------------------------------------------
+# 部品2c: 30文字以内の短い「キャッチ」を作る（カード見出し用）
+# ---------------------------------------------------------------------------
+_CATCHES = {
+    "日用品": ["毎日使うものは良いものを🧴", "地味に手放せない定番✨", "ストックで安心🧺", "買ってよかった生活雑貨🛍️"],
+    "食品":   ["おうちで“ちょい贅沢”🍽️", "家族に好評の予感🍚", "小腹の救世主😋", "リピ確定のおいしさ☕"],
+    "コスメ": ["自分にごほうびケア🫧", "リピしたくなる予感✨", "毎日のケアが楽しみに💄", "ご自愛アイテム🌸"],
+    "家電":   ["暮らしがぐっとラクに⚡", "あると便利な名脇役🔌", "時短の味方🕒", "QOL上がるやつ🙆"],
+    "キッチン": ["料理が楽しくなる🍳", "洗い物までラクに🧽", "食卓が映えるやつ🍽️", "毎日のごはんの相棒🥢"],
+}
+_CATCH_GENERIC = ["買ってよかった、を共有🍀", "地味に神なアイテム✨", "暮らしが軽くなるかも🛍️"]
+
+def build_catch(name, genre_name):
+    """商品ごとに変わる30文字以内の短いキャッチを返す。"""
+    lst = _CATCHES.get(genre_name, _CATCH_GENERIC)
+    idx = sum(ord(c) for c in name) % len(lst)
+    catch = lst[idx]
+    return catch[:30]
+
+
+# ---------------------------------------------------------------------------
 # 部品2: 投稿文（キャプション）を自動で書く
 # ---------------------------------------------------------------------------
 def build_caption(name, price, genre_name):
@@ -180,33 +202,12 @@ def build_caption(name, price, genre_name):
     # 「暮らしのポチ袋」の統一トーン。ジャンルごとに複数パターン用意し、
     # 商品名から決めたインデックスで選ぶので、商品によって1文目が変わる。
     hooks = {
-        "総合": [
+        "日用品": [
+            "毎日つかうものは、良いものを選びたい🧴",
+            "地味だけど手放せなくなる定番✨",
+            "ストックしておくと安心なやつ🧺",
             "暮らしがちょっとラクになる、見つけたよ〜🛍️",
-            "これ、地味に毎日使えるやつ✨",
-            "買ってよかった〜！ってなりそうな一品🙆",
-            "みんな結局これに戻ってくる定番🌿",
-            "カゴにそっと入れたくなるやつ、見つけた🛒",
-        ],
-        "レディースファッション": [
-            "肩の力を抜いて着られる、お気に入りになりそう🌷",
-            "今日の気分がちょっと上がる一枚🎀",
-            "着回しきくって、やっぱり最高💭",
-            "さらっと着て“こなれ見え”狙えるやつ👗",
-            "一枚あると助かる、頼れる相棒👚",
-        ],
-        "メンズファッション": [
-            "毎日さらっと使える、こういうの探してた👕",
-            "シンプルだけど、ちゃんと差がつくやつ🧢",
-            "一枚あると着回しがラクになる🙆",
-            "大人っぽく決まる、定番アイテム👔",
-            "迷ったらこれ、な安心感✨",
-        ],
-        "美容・コスメ・香水": [
-            "がんばった自分に、小さなごほうびを🫧",
-            "毎日のケアが、ちょっと楽しみになる💄",
-            "“自分メンテ”はじめませんか？🛁",
-            "リピートしたくなる予感…✨",
-            "気分まで上がる、ご自愛アイテム🌸",
+            "使ってみたら“もう戻れない”ってなった🙆",
         ],
         "食品": [
             "おうち時間がほっとする、我が家の定番になりそう☕",
@@ -215,12 +216,26 @@ def build_caption(name, price, genre_name):
             "小腹がすいたときの救世主🍩",
             "リピ確定かも、な美味しさ😋",
         ],
-        "インテリア・寝具・収納": [
-            "置くだけでお部屋が整う、地味に神アイテム🏠",
-            "お部屋の“ごちゃつき”がすっきり🧺",
-            "毎日の暮らしが、ちょっと快適に🛏️",
-            "気分が上がる部屋づくりに🌿",
-            "見えるところに置きたくなるやつ✨",
+        "コスメ": [
+            "がんばった自分に、小さなごほうびを🫧",
+            "毎日のケアが、ちょっと楽しみになる💄",
+            "“自分メンテ”はじめませんか？🛁",
+            "リピートしたくなる予感…✨",
+            "気分まで上がる、ご自愛アイテム🌸",
+        ],
+        "家電": [
+            "暮らしがぐっとラクになる、頼れる相棒⚡",
+            "あると便利、な名脇役🔌",
+            "時短したい人の味方🕒",
+            "一度使うと手放せないやつ✨",
+            "地味にQOL上がるアイテム🙆",
+        ],
+        "キッチン": [
+            "料理がちょっと楽しくなる、名脇役🍳",
+            "洗い物までラクになるの、地味に神🧽",
+            "食卓がぱっと映えるやつ🍽️",
+            "毎日のごはん作りがラクに🥢",
+            "あってよかった〜ってなるキッチン道具✨",
         ],
     }
     generic = [
@@ -237,11 +252,11 @@ def build_caption(name, price, genre_name):
     tags = ["#楽天ROOM", "#暮らしを楽しむ", "#買ってよかった",
             "#暮らしの記録", "#日々のこと", "#楽天room初心者"]
     genre_tag = {
-        "レディースファッション": "#大人カジュアル",
-        "メンズファッション":     "#シンプルコーデ",
-        "美容・コスメ・香水":     "#自分にごほうび",
-        "食品":                 "#おうちごはん",
-        "インテリア・寝具・収納":  "#丁寧な暮らし",
+        "日用品":   "#日用品ストック",
+        "食品":     "#おうちごはん",
+        "コスメ":   "#自分にごほうび",
+        "家電":     "#時短家電",
+        "キッチン": "#キッチングッズ",
     }.get(genre_name)
     if genre_tag:
         tags.insert(1, genre_tag)
@@ -293,6 +308,18 @@ def collect_posts():
                 price = int(str(item.get("itemPrice", 0)).replace(",", "").strip() or 0)
             except (ValueError, TypeError):
                 price = 0
+            # 高すぎる商品は除外（手ごろ価格に絞る）
+            if price and price > MAX_PRICE:
+                continue
+            # レビュー件数・評価（定番の目安）
+            try:
+                review_count = int(item.get("reviewCount", 0) or 0)
+            except (ValueError, TypeError):
+                review_count = 0
+            try:
+                review_avg = float(item.get("reviewAverage", 0) or 0)
+            except (ValueError, TypeError):
+                review_avg = 0.0
             rank = item.get("rank", picked + 1)
             # アフィリンクがあればそれを、無ければ通常リンクを使う
             link = item.get("affiliateUrl") or item.get("itemUrl", "")
@@ -309,8 +336,11 @@ def collect_posts():
                 "rank": rank,
                 "name": name,
                 "price": price,
+                "review_count": review_count,
+                "review_avg": review_avg,
                 "link": link,
                 "image": image,
+                "catch": build_catch(name, genre_name),
                 "keywords": build_search_keywords(name),
                 "caption": build_caption(name, price, genre_name),
             })
@@ -325,18 +355,24 @@ def collect_posts():
 def demo_posts():
     """鍵が無いときに、動きを体験するためのサンプルデータ。"""
     samples = [
-        ("総合", "ふわふわ タオル 5枚セット 今治産 まとめ買い", 2480,
+        ("日用品", "ふわふわ タオル 5枚セット 今治産 まとめ買い", 2480, 1820, 4.6,
          "https://item.rakuten.co.jp/demo/towel/"),
-        ("美容・コスメ・香水", "薬用 リップクリーム 高保湿 無香料 3本セット", 980,
+        ("コスメ", "薬用 リップクリーム 高保湿 無香料 3本セット", 980, 940, 4.4,
          "https://item.rakuten.co.jp/demo/lip/"),
-        ("食品", "北海道 チーズ お取り寄せ 詰め合わせ", 3200,
+        ("食品", "北海道 チーズ お取り寄せ 詰め合わせ", 3200, 610, 4.5,
          "https://item.rakuten.co.jp/demo/cheese/"),
+        ("キッチン", "シリコン 菜箸 耐熱 まな板 スタンド付き", 1280, 2300, 4.3,
+         "https://item.rakuten.co.jp/demo/kitchen/"),
+        ("家電", "USB 卓上加湿器 静音 コンパクト", 1980, 1500, 4.2,
+         "https://item.rakuten.co.jp/demo/kaden/"),
     ]
     posts = []
-    for i, (genre, name, price, link) in enumerate(samples, start=1):
+    for i, (genre, name, price, rc, ra, link) in enumerate(samples, start=1):
         posts.append({
             "genre": genre, "rank": i, "name": name, "price": price,
+            "review_count": rc, "review_avg": ra,
             "link": link, "image": "",
+            "catch": build_catch(name, genre),
             "keywords": build_search_keywords(name),
             "caption": build_caption(name, price, genre),
         })
@@ -346,25 +382,57 @@ def demo_posts():
 # ---------------------------------------------------------------------------
 # 部品3b: 売れ筋の中から「今日の推し」を選ぶ
 # ---------------------------------------------------------------------------
-def pick_todays_picks(posts, n=3):
-    """順位・価格・画像・ジャンルの多様性で採点し、今日イチ推しのn件を選ぶ。"""
-    def score(p):
-        s = 0
-        try:
-            rank = int(p.get("rank") or 30)
-        except (ValueError, TypeError):
-            rank = 30
-        s += (30 - min(rank, 30)) * 2          # 上位ほど高得点
-        pr = p.get("price") or 0
-        if 500 <= pr <= 5000:                  # 買われやすい価格帯を優遇
-            s += 12
-        elif pr <= 8000:
-            s += 5
-        if p.get("image"):
-            s += 4
-        return s
+def _pick_score(p):
+    s = 0
+    try:
+        rank = int(p.get("rank") or 30)
+    except (ValueError, TypeError):
+        rank = 30
+    s += (30 - min(rank, 30)) * 2              # 上位ほど高得点
+    pr = p.get("price") or 0
+    if 500 <= pr <= 5000:                      # 買われやすい価格帯を優遇
+        s += 12
+    elif pr <= 8000:
+        s += 5
+    rc = p.get("review_count") or 0            # レビューが多い＝定番を優先
+    if rc >= 1000:
+        s += 12
+    elif rc >= 300:
+        s += 8
+    elif rc >= 50:
+        s += 4
+    if (p.get("review_avg") or 0) >= 4.3:      # 評価が高いものを少し優遇
+        s += 3
+    if p.get("image"):
+        s += 4
+    return s
 
-    order = sorted(range(len(posts)), key=lambda i: score(posts[i]), reverse=True)
+
+def build_pick_reason(p):
+    """初心者がまず投稿するのにおすすめな理由を1行で作る。"""
+    reasons = []
+    rc = p.get("review_count") or 0
+    if rc >= 1000:
+        reasons.append(f"レビュー{rc:,}件超の鉄板定番")
+    elif rc >= 300:
+        reasons.append(f"レビュー{rc:,}件の人気者")
+    elif rc >= 50:
+        reasons.append("レビュー多めで安心感あり")
+    pr = p.get("price") or 0
+    if 0 < pr <= 2000:
+        reasons.append("低単価で衝動買いされやすい")
+    elif pr <= 5000:
+        reasons.append("手ごろでシェアしやすい価格")
+    if (p.get("review_avg") or 0) >= 4.4:
+        reasons.append(f"評価{p.get('review_avg')}の高評価")
+    if not reasons:
+        reasons.append("今よく売れている売れ筋")
+    return "・".join(reasons[:2])
+
+
+def pick_todays_picks(posts, n=5):
+    """順位・価格・レビュー数・評価・ジャンルの多様性で採点し、今日イチ推しのn件を選ぶ。"""
+    order = sorted(range(len(posts)), key=lambda i: _pick_score(posts[i]), reverse=True)
     picks, seen = [], set()
     for i in order:                            # まずジャンル違いで選ぶ
         g = posts[i].get("genre")
@@ -404,12 +472,22 @@ def _render_card(i, p, featured=False):
     genre = html.escape(p["genre"])
     caption = html.escape(p["caption"])
     keywords = html.escape(p.get("keywords", ""))
+    catch = html.escape(p.get("catch", ""))
     link = html.escape(p["link"])
     price = f'{p["price"]:,}円' if p["price"] else "価格は商品ページで"
     img = f'<img src="{html.escape(p["image"])}" alt="" loading="lazy">' if p["image"] else \
           '<div class="noimg">画像なし（デモ）</div>'
     star = '<span class="featured">⭐ 今日の推し</span>' if featured else ''
     fcls = ' featured' if featured else ''
+    # レビュー表示（★評価 と 件数）
+    rc = p.get("review_count") or 0
+    ra = p.get("review_avg") or 0
+    review = f'<p class="review">★ {ra}（レビュー{rc:,}件）</p>' if rc else ''
+    catch_html = f'<p class="catch">「{catch}」</p>' if catch else ''
+    # おすすめ理由（今日の推しだけ）
+    reason_html = ''
+    if featured:
+        reason_html = f'<p class="reason">👉 {html.escape(build_pick_reason(p))}</p>'
     return f"""
         <div class="card{fcls}" id="card{i}" data-key="{link}">
           <div class="cardtop">
@@ -419,7 +497,10 @@ def _render_card(i, p, featured=False):
           </div>
           {img}
           <h3>{name}</h3>
+          {catch_html}
           <p class="price">{price}</p>
+          {review}
+          {reason_html}
           <textarea id="cap{i}" readonly>{caption}</textarea>
           <div class="steps">
             <button class="stepk" onclick="copyKw({i})">① 🔍 検索用キーワードをコピー</button>
@@ -436,7 +517,7 @@ def _render_card(i, p, featured=False):
 def write_html(posts, path):
     now = datetime.now(JST).strftime("%Y年%m月%d日 %H:%M")
 
-    picks = pick_todays_picks(posts, 3)
+    picks = pick_todays_picks(posts, 5)
     pick_set = set(picks)
     featured_html = "".join(_render_card(i, posts[i], True) for i in picks)
     rest_html = "".join(_render_card(i, posts[i], False)
@@ -485,7 +566,11 @@ def write_html(posts, path):
                       background:#fafafa; border-radius:10px; }}
   .noimg {{ display:flex; align-items:center; justify-content:center; color:#aaa; }}
   .card h3 {{ font-size:15px; margin:6px 0; line-height:1.4; }}
-  .price {{ color:#bf0000; font-weight:bold; margin:2px 0 10px; }}
+  .catch {{ color:#0a7d3c; font-weight:bold; font-size:14px; margin:4px 0; }}
+  .price {{ color:#bf0000; font-weight:bold; margin:2px 0 4px; }}
+  .review {{ color:#e59500; font-size:12px; font-weight:bold; margin:0 0 8px; }}
+  .reason {{ background:#fff8e1; border-left:4px solid #ffcc00; color:#7a5c00;
+            font-size:13px; font-weight:bold; padding:8px 10px; border-radius:6px; margin:6px 0 10px; }}
   textarea {{ width:100%; height:120px; box-sizing:border-box; border:1px solid #ddd;
              border-radius:8px; padding:8px; font-size:13px; line-height:1.5; resize:vertical; }}
   .steps {{ display:flex; flex-direction:column; gap:8px; margin-top:10px; }}
