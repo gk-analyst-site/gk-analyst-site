@@ -70,6 +70,25 @@ python -m note_auto.main run
 投稿が成功すると、`topics.yaml` の該当トピックが `status: posted` になり、
 次回以降スキップされます。
 
+### STORY MINING STUDIO 連携（推奨ワークフロー）
+
+対話型ツール **STORY MINING STUDIO** で作った原稿（`.md`）を、そのまま
+note へ自動投稿できます。**中身は対話で作り（規約準拠・高品質）、投稿だけ自動化**
+する使い方です。
+
+```bash
+# STORY MINING STUDIO の「💾 .mdで保存」で書き出した原稿を投稿
+python -m note_auto.main publish-file path/to/原稿.md
+
+# 有料noteとして投稿（価格を指定、公開まで行う）
+python -m note_auto.main publish-file path/to/原稿.md --paid --price 9800 --publish
+```
+
+- タイトルは `.md` 先頭の `# ...` を使用
+- 有料ラインは本文中の `<!-- PAYWALL -->` または最初の単独行 `---` を境界にする
+  （STORY MINING STUDIO の出力はこの `---` が入るのでそのまま使えます）
+- `--publish` を付けなければ下書き保存で止まる（内容確認に推奨）
+
 ---
 
 ## ネタの追加

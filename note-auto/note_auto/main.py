@@ -9,6 +9,9 @@
 
   # 生成 → note へ投稿（config.yaml の publish.mode に従う）
   python -m note_auto.main run
+
+  # 既存の .md 原稿（STORY MINING STUDIO の出力など）を note へ投稿
+  python -m note_auto.main publish-file 原稿.md --paid --price 9800 --publish
 """
 
 from __future__ import annotations
@@ -127,19 +130,67 @@ def cmd_run(cfg: dict, topics_data: dict) -> int:
     return 0
 
 
+def cmd_publish_file(cfg: dict, args) -> int:
+    """既存の .md 原稿（STORY MINING STUDIO の出力など）を note に投稿する."""
+    from . import mdfile, publisher
+
+    path = Path(args.path)
+    if not path.exists():
+        print(f"ファイルが見つかりません: {path}")
+        return 1
+
+    paid = args.paid or cfg["sale"].get("enabled", False)
+    doc = mdfile.parse(path.read_text(encoding="utf-8"), paid=paid)
+    mode = "publish" if args.publish else cfg["publish"].get("mode", "draft")
+
+    print(f"タイトル: {doc.title}")
+    if paid and doc.is_paid and doc.paid_body:
+        price = int(args.price if args.price else cfg["sale"]["price"])
+        print(f"投稿中（有料 {price}円 / mode={mode}）...")
+        publisher.publish(
+            doc.title,
+            doc.free_body or "",
+            paid_body=doc.paid_body,
+            price=price,
+            mode=mode,
+        )
+    else:
+        if paid:
+            print(
+                "※ 有料指定ですが本文に有料ライン（<!-- PAYWALL --> か 単独行の ---）が"
+                "見つかりませんでした。無料の下書きとして投稿します。"
+            )
+        print(f"投稿中（無料 / mode={mode}）...")
+        publisher.publish(doc.title, doc.body, mode=mode)
+    print("完了。note の下書き/記事一覧で確認してください。")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     load_dotenv(ROOT / ".env")
     parser = argparse.ArgumentParser(description="note 自動投稿システム")
-    parser.add_argument(
-        "command",
-        choices=["preview", "generate", "run"],
-        help="preview: 生成して表示 / generate: ファイル出力 / run: note へ投稿",
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    sub.add_parser("preview", help="トピックから1件生成して表示（投稿しない）")
+    sub.add_parser("generate", help="生成して out/ にファイル出力（投稿しない）")
+    sub.add_parser("run", help="トピックから生成して note へ投稿")
+
+    pf = sub.add_parser(
+        "publish-file", help="既存の .md 原稿を note へ投稿（STORY MINING STUDIO 連携）"
     )
+    pf.add_argument("path", help="投稿する .md ファイルのパス")
+    pf.add_argument("--paid", action="store_true", help="有料noteとして投稿する")
+    pf.add_argument("--price", type=int, default=None, help="価格（円）。未指定なら config の値")
+    pf.add_argument("--publish", action="store_true", help="下書きでなく公開まで行う")
+
     args = parser.parse_args(argv)
 
     cfg = _load_yaml(CONFIG_PATH)
-    topics_data = _load_yaml(TOPICS_PATH)
 
+    if args.command == "publish-file":
+        return cmd_publish_file(cfg, args)
+
+    topics_data = _load_yaml(TOPICS_PATH)
     if args.command == "preview":
         return cmd_preview(cfg, topics_data)
     if args.command == "generate":
