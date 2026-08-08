@@ -23,7 +23,11 @@
                       background:#fafafa; border-radius:10px; }
   .noimg { display:flex; align-items:center; justify-content:center; color:#aaa; }
   .card h3 { font-size:15px; margin:6px 0; line-height:1.4; }
-  .price { color:#bf0000; font-weight:bold; margin:2px 0 10px; }
+  .catch { color:#0a7d3c; font-weight:bold; font-size:14px; margin:4px 0; }
+  .price { color:#bf0000; font-weight:bold; margin:2px 0 4px; }
+  .review { color:#e59500; font-size:12px; font-weight:bold; margin:0 0 8px; }
+  .reason { background:#fff8e1; border-left:4px solid #ffcc00; color:#7a5c00;
+            font-size:13px; font-weight:bold; padding:8px 10px; border-radius:6px; margin:6px 0 10px; }
   textarea { width:100%; height:120px; box-sizing:border-box; border:1px solid #ddd;
              border-radius:8px; padding:8px; font-size:13px; line-height:1.5; resize:vertical; }
   .steps { display:flex; flex-direction:column; gap:8px; margin-top:10px; }
@@ -63,585 +67,26 @@
 </style></head><body>
 <header>
   <h1>🛒 今日の楽天ROOM投稿リスト</h1>
-  <p>2026年08月08日 06:43 時点の売れ筋 / 全 30 件</p>
-  <div class="counter" id="counter">投稿済み 0 / 30 件</div>
+  <p>2026年08月08日 10:39 時点の売れ筋 / 全 20 件</p>
+  <div class="counter" id="counter">投稿済み 0 / 20 件</div>
 </header>
 <div class="wrap">
   <details class="bm"><summary>💻 PCで1クリック投稿する（初回だけ設定・任意）</summary><div class="bmbody"><p>楽天市場の商品ページで、公式の「楽天ROOMに投稿する」ボタンを自動で探して押す補助ツールです。（自動投稿ではなく、ボタン押しをラクにするだけの安全な補助です）</p><ol><li>下の「コードをコピー」を押す</li><li>ブラウザでブックマークを新規作成し、<b>名前</b>=「ROOM投稿」、<b>URL</b>欄に貼り付けて保存</li><li>商品ページを開いて、そのブックマークを1回クリック → 投稿画面へジャンプ</li></ol><textarea id="bmcode" readonly>javascript:(function(){var q=document.querySelectorAll(&#x27;a,button,[role=button],span,div&#x27;);var h=null,i,e,t;for(i=0;i&lt;q.length;i++){e=q[i];t=(e.textContent||&#x27;&#x27;).replace(/\s+/g,&#x27;&#x27;);if(t&amp;&amp;t.length&lt;=12&amp;&amp;(t.indexOf(&#x27;ROOMに投稿&#x27;)&gt;=0||t.indexOf(&#x27;ROOMで紹介&#x27;)&gt;=0||t.indexOf(&#x27;ROOM投稿&#x27;)&gt;=0)){h=e;break;}}if(!h){for(i=0;i&lt;q.length;i++){var u=q[i].getAttribute&amp;&amp;q[i].getAttribute(&#x27;href&#x27;);if(u&amp;&amp;/room\.rakuten\.co\.jp/.test(u)){h=q[i];break;}}}if(h){h.scrollIntoView({behavior:&#x27;smooth&#x27;,block:&#x27;center&#x27;});var o=h.style.outline;h.style.outline=&#x27;4px solid #bf0000&#x27;;setTimeout(function(){h.style.outline=o;},2500);try{h.click();}catch(x){}}else{alert(&#x27;「楽天ROOMに投稿する」ボタンが見つかりませんでした。楽天市場の商品ページを開いて、ログインした状態でお試しください。&#x27;);}})();</textarea><button class="bmcopy" onclick="copyText(document.getElementById('bmcode').value, event.target, '✅ コピー！')">📋 コードをコピー</button></div></details>
-  <div class="sec">⭐ 今日の推し 3件（まずはここから！）</div>
+  <div class="sec">⭐ 今日の推し 5件（まずはここから！）</div>
   
-        <div class="card featured" id="card5" data-key="https://hb.afl.rakuten.co.jp/hgc/g00qqehn.ykqho46a.g00qqehn.ykqhp78c/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftouhuzi%2Fvikir5189%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">レディースファッション・1位</div>
-            <span class="featured">⭐ 今日の推し</span>
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/touhuzi/cabinet/sale_aka02/vikir5189_os_38a.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>クーポン利用で3,880円〜！ タンキニ 水着 レディース 体型カバー 5点セット レギンス ショートパンツ 水陸両用 フィットネス 上下セット ママ水着 大きいサイズ【一部予約販売】【水着B3】</h3>
-          <p class="price">3,980円</p>
-          <textarea id="cap5" readonly>肩の力を抜いて着られる、お気に入りになりそう🌷
-
-【クーポン利用で3,880円〜！ タンキニ 水着 レディース 体型カバー 5点セ…】
-💰 3,980円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #大人カジュアル #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(5)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(5)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(5)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00qqehn.ykqho46a.g00qqehn.ykqhp78c/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftouhuzi%2Fvikir5189%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk5" value="https://hb.afl.rakuten.co.jp/hgc/g00qqehn.ykqho46a.g00qqehn.ykqhp78c/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftouhuzi%2Fvikir5189%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw5" value="タンキニ 水着 レディース 体型カバー">
-          </div>
-          <button class="donebtn" onclick="toggleDone(5)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card featured" id="card10" data-key="https://hb.afl.rakuten.co.jp/hgc/g00tpojn.ykqhoce5.g00tpojn.ykqhp125/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fhappymao10%2Fmensws-01%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">メンズファッション・1位</div>
-            <span class="featured">⭐ 今日の推し</span>
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/happymao10/cabinet/09804368/11013.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>＼マラソン限定クーポンで3,590円／【楽天1位】ラッシュガード 水着 メンズ 上下セット スポーツウェア フィットネス 長袖 体型カバー 水陸両用 3点セット レギンス サーフパンツ UVカット 紫外線対策 UV対策 水泳 競泳 競泳水着 ビーチ スイミング男性 大きいサイズ</h3>
-          <p class="price">3,890円</p>
-          <textarea id="cap10" readonly>シンプルだけど、ちゃんと差がつくやつ🧢
-
-【＼マラソン限定クーポンで3,590円／【楽天1位】ラッシュガード 水着 メンズ…】
-💰 3,890円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #シンプルコーデ #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(10)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(10)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(10)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00tpojn.ykqhoce5.g00tpojn.ykqhp125/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fhappymao10%2Fmensws-01%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk10" value="https://hb.afl.rakuten.co.jp/hgc/g00tpojn.ykqhoce5.g00tpojn.ykqhp125/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fhappymao10%2Fmensws-01%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw10" value="ラッシュガード 水着 メンズ 上下セット">
-          </div>
-          <button class="donebtn" onclick="toggleDone(10)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card featured" id="card15" data-key="https://hb.afl.rakuten.co.jp/hgc/g00tna6n.ykqhoc97.g00tna6n.ykqhp567/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fattenir%2F166013%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">美容・コスメ・香水・1位</div>
-            <span class="featured">⭐ 今日の推し</span>
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/attenir/cabinet/thum/166013_main_2608.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>【ポイント10倍！〜8月11日1:59】大容量 スキンクリア クレンズ オイル 350mL 大容量 ボトル / つめかえ用 (4種) [ クレンジング クレンジングオイル メイク落とし 毛穴 くすみ エイジングケア 洗顔 角栓 角質 皮脂 詰め替え ダブル洗顔不要 アテニア 公式 ]</h3>
-          <p class="price">3,630円</p>
-          <textarea id="cap15" readonly>気分まで上がる、ご自愛アイテム🌸
-
-【【ポイント10倍！〜8月11日1:59】大容量 スキンクリア クレンズ オイル…】
-💰 3,630円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #自分にごほうび #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(15)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(15)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(15)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00tna6n.ykqhoc97.g00tna6n.ykqhp567/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fattenir%2F166013%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk15" value="https://hb.afl.rakuten.co.jp/hgc/g00tna6n.ykqhoc97.g00tna6n.ykqhp567/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fattenir%2F166013%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw15" value="大容量 スキンクリア クレンズ オイル">
-          </div>
-          <button class="donebtn" onclick="toggleDone(15)">✓ 投稿済みにする</button>
-        </div>
-  <details class="more"><summary>▼ ほかの売れ筋も見る（残り 27 件）</summary>
-  
-        <div class="card" id="card0" data-key="https://hb.afl.rakuten.co.jp/hgc/g00rifrn.ykqho7a8.g00rifrn.ykqhp188/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbrightlele%2Fex002%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">総合・1位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/brightlele/cabinet/wig/ex002/m1_r.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>【予約販売】【 瞬間エクステ 】 部分ウィッグ ハイライト メッシュ 自然 ピンなし 面ファスナー ヘアピース ワンタッチ エクステ インナーカラー レディース 女性 前髪 ウィッグ つけ毛 トップカバー シールエクステ グラデーション ロング 白髪隠し かつら バレない</h3>
-          <p class="price">6,890円</p>
-          <textarea id="cap0" readonly>カゴにそっと入れたくなるやつ、見つけた🛒
-
-【【予約販売】【 瞬間エクステ 】 部分ウィッグ ハイライト メッシュ 自然 ピ…】
-💰 6,890円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(0)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(0)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(0)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00rifrn.ykqho7a8.g00rifrn.ykqhp188/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbrightlele%2Fex002%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk0" value="https://hb.afl.rakuten.co.jp/hgc/g00rifrn.ykqho7a8.g00rifrn.ykqhp188/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbrightlele%2Fex002%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw0" value="部分ウィッグ ハイライト メッシュ 自然">
-          </div>
-          <button class="donebtn" onclick="toggleDone(0)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card1" data-key="https://hb.afl.rakuten.co.jp/hgc/g00tqd5n.ykqho1c4.g00tqd5n.ykqhp05b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyamagoiida%2F10000077%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">総合・2位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/yamagoiida/cabinet/08906716/09064251/w_saba_mu2025_0004_2.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>【11日正午まで半額！最大4,990円OFF】北欧産〈無塩〉訳あり 骨取り さば（選べる1kg・2kg）｜骨なし 骨抜き 鯖 天然 ノルウェー産 イギリス産 冷凍 ストック 業務用 食品 離乳食 お弁当 プロテイン DHA EPA 一部地域除き 送料無料</h3>
-          <p class="price">2,490円</p>
-          <textarea id="cap1" readonly>カゴにそっと入れたくなるやつ、見つけた🛒
-
-【【11日正午まで半額！最大4,990円OFF】北欧産〈無塩〉訳あり 骨取り さ…】
-💰 2,490円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(1)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(1)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(1)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00tqd5n.ykqho1c4.g00tqd5n.ykqhp05b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyamagoiida%2F10000077%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk1" value="https://hb.afl.rakuten.co.jp/hgc/g00tqd5n.ykqho1c4.g00tqd5n.ykqhp05b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyamagoiida%2F10000077%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw1" value="骨取り さば 骨なし 骨抜き">
-          </div>
-          <button class="donebtn" onclick="toggleDone(1)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card2" data-key="https://hb.afl.rakuten.co.jp/hgc/g00tkn4n.ykqho9e6.g00tkn4n.ykqhp564/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flifedrinkcompany%2Fzaosoda-500-48%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">総合・3位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/lifedrinkcompany/cabinet/08451052/13632309/peach48_0806.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>【最安値に挑戦！2,399円〜】炭酸水 500ml 48本 (24本×2ケース) 送料無料※一部地域除く 強炭酸 炭酸 無糖 OZA SODA プレーン レモン ピンクグレープフルーツ ライム 割り材 箱買い まとめ買い ライフドリンクカンパニー LIFEDRINK ZAO SODA</h3>
-          <p class="price">2,399円</p>
-          <textarea id="cap2" readonly>みんな結局これに戻ってくる定番🌿
-
-【【最安値に挑戦！2,399円〜】炭酸水 500ml 48本 (24本×2ケース…】
-💰 2,399円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(2)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(2)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(2)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00tkn4n.ykqho9e6.g00tkn4n.ykqhp564/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flifedrinkcompany%2Fzaosoda-500-48%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk2" value="https://hb.afl.rakuten.co.jp/hgc/g00tkn4n.ykqho9e6.g00tkn4n.ykqhp564/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flifedrinkcompany%2Fzaosoda-500-48%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw2" value="炭酸水 強炭酸 炭酸 無糖">
-          </div>
-          <button class="donebtn" onclick="toggleDone(2)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card3" data-key="https://hb.afl.rakuten.co.jp/hgc/g00ram0n.ykqhod5b.g00ram0n.ykqhp081/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fteamo%2Fpure_clear_1%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">総合・4位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/teamo/cabinet/2026/clear/1day_clear2box_tm.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>コンタクトレンズ ワンデー 近視 遠視 選べる【2箱4箱】 TeAmo CLEAR 1DAY UV 低含水 高含水 ティアモ クリア ワンデー まとめ買い 1箱30枚 TeAmo コンタクト クリア 近視用 遠視用 1日使い捨て クリアワンデー 度あり UVカット ソフトコンタクト 送料無料 【最安値に挑戦】</h3>
-          <p class="price">1,986円</p>
-          <textarea id="cap3" readonly>買ってよかった〜！ってなりそうな一品🙆
-
-【コンタクトレンズ ワンデー 近視 遠視 選べる【2箱4箱】 TeAmo CLE…】
-💰 1,986円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(3)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(3)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(3)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00ram0n.ykqhod5b.g00ram0n.ykqhp081/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fteamo%2Fpure_clear_1%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk3" value="https://hb.afl.rakuten.co.jp/hgc/g00ram0n.ykqhod5b.g00ram0n.ykqhp081/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fteamo%2Fpure_clear_1%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw3" value="コンタクトレンズ ワンデー 近視 遠視">
-          </div>
-          <button class="donebtn" onclick="toggleDone(3)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card4" data-key="https://hb.afl.rakuten.co.jp/hgc/g00tna6n.ykqhoc97.g00tna6n.ykqhp567/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fattenir%2F166013%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">総合・5位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/attenir/cabinet/thum/166013_main_2608.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>【ポイント10倍！〜8月11日1:59】大容量 スキンクリア クレンズ オイル 350mL 大容量 ボトル / つめかえ用 (4種) [ クレンジング クレンジングオイル メイク落とし 毛穴 くすみ エイジングケア 洗顔 角栓 角質 皮脂 詰め替え ダブル洗顔不要 アテニア 公式 ]</h3>
-          <p class="price">3,630円</p>
-          <textarea id="cap4" readonly>カゴにそっと入れたくなるやつ、見つけた🛒
-
-【【ポイント10倍！〜8月11日1:59】大容量 スキンクリア クレンズ オイル…】
-💰 3,630円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(4)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(4)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(4)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00tna6n.ykqhoc97.g00tna6n.ykqhp567/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fattenir%2F166013%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk4" value="https://hb.afl.rakuten.co.jp/hgc/g00tna6n.ykqhoc97.g00tna6n.ykqhp567/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fattenir%2F166013%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw4" value="大容量 スキンクリア クレンズ オイル">
-          </div>
-          <button class="donebtn" onclick="toggleDone(4)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card6" data-key="https://hb.afl.rakuten.co.jp/hgc/g00q8qjn.ykqhodbd.g00q8qjn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdarkangel%2Fotg1704-0115%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">レディースファッション・2位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/darkangel/cabinet/12863863/13534266/0115-main-260701.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>75%OFF!【期間限定：1,110円～1,999円！】【年間ランキング3位】 UVパーカー UV UPF50+ UVカット ラッシュガード レディース 自転車 長袖 薄手 日焼け止め スポーツ ジム ヨガ マスク 元祖冷感coolify【完全防備UVカットパーカー】</h3>
-          <p class="price">1,110円</p>
-          <textarea id="cap6" readonly>肩の力を抜いて着られる、お気に入りになりそう🌷
-
-【75%OFF!【期間限定：1,110円～1,999円！】【年間ランキング3位】…】
-💰 1,110円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #大人カジュアル #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(6)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(6)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(6)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00q8qjn.ykqhodbd.g00q8qjn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdarkangel%2Fotg1704-0115%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk6" value="https://hb.afl.rakuten.co.jp/hgc/g00q8qjn.ykqhodbd.g00q8qjn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdarkangel%2Fotg1704-0115%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw6" value="UVパーカー UV UPF50 UVカット">
-          </div>
-          <button class="donebtn" onclick="toggleDone(6)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card7" data-key="https://hb.afl.rakuten.co.jp/hgc/g00r62fn.ykqhoebc.g00r62fn.ykqhp040/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fteddyshop%2Fhys2861%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">レディースファッション・3位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/teddyshop/cabinet/mizugi40/hys2861x1tr_6.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>UVカット率 99%以上 タンキニ 水着 レディース 体型カバー 長袖シャツ ラッシュガード ハーフパンツ 4点セット ビキニ セパレート 洋服みたいな水着 UPF50+ 無地 ビスチェ風 黒 20代 30代 40代 ママ水着 二の腕</h3>
-          <p class="price">3,580円</p>
-          <textarea id="cap7" readonly>さらっと着て“こなれ見え”狙えるやつ👗
-
-【UVカット率 99%以上 タンキニ 水着 レディース 体型カバー 長袖シャツ …】
-💰 3,580円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #大人カジュアル #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(7)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(7)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(7)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00r62fn.ykqhoebc.g00r62fn.ykqhp040/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fteddyshop%2Fhys2861%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk7" value="https://hb.afl.rakuten.co.jp/hgc/g00r62fn.ykqhoebc.g00r62fn.ykqhp040/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fteddyshop%2Fhys2861%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw7" value="UVカット率 タンキニ 水着 レディース">
-          </div>
-          <button class="donebtn" onclick="toggleDone(7)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card8" data-key="https://hb.afl.rakuten.co.jp/hgc/g00q8qjn.ykqhodbd.g00q8qjn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdarkangel%2Fto2305-1114%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">レディースファッション・4位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/darkangel/cabinet/12863863/13534266/1114-main-260709.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>74%OFF!【好評延長：999円～1,299円！】※1人様3枚まで※ 【年間ランキング4位】 ルームウェア さらてろリブ セットアップ 上下セット 長袖 ウエストゴム ハイウエスト 腹巻 ワンマイルウェア 【 ルームウェア上下セット】元祖冷感coolify　腹巻以外がページ内最安</h3>
-          <p class="price">999円</p>
-          <textarea id="cap8" readonly>一枚あると助かる、頼れる相棒👚
-
-【74%OFF!【好評延長：999円～1,299円！】※1人様3枚まで※ 【年間…】
-💰 999円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #大人カジュアル #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(8)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(8)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(8)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00q8qjn.ykqhodbd.g00q8qjn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdarkangel%2Fto2305-1114%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk8" value="https://hb.afl.rakuten.co.jp/hgc/g00q8qjn.ykqhodbd.g00q8qjn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdarkangel%2Fto2305-1114%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw8" value="※1人様3枚まで※ ルームウェア さらてろリブ セットアップ">
-          </div>
-          <button class="donebtn" onclick="toggleDone(8)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card9" data-key="https://hb.afl.rakuten.co.jp/hgc/g00q8qjn.ykqhodbd.g00q8qjn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdarkangel%2Fpa2301-3635%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">レディースファッション・5位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/darkangel/cabinet/12863863/13534266/07-1/3635-main-260722.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>48％OFF【8/6 10時~24H限定：3,790円→1,950円！】速乾 UVカット イージー コクーンパンツ レディース ボトム パンツ カーブパンツ チノパンツ バレルレッグ 春 夏 秋 冬 低身長 高身長 洗濯可【 イージーコクーンパンツ】</h3>
-          <p class="price">1,950円</p>
-          <textarea id="cap9" readonly>今日の気分がちょっと上がる一枚🎀
-
-【48％OFF【8/6 10時~24H限定：3,790円→1,950円！】速乾 …】
-💰 1,950円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #大人カジュアル #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(9)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(9)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(9)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00q8qjn.ykqhodbd.g00q8qjn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdarkangel%2Fpa2301-3635%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk9" value="https://hb.afl.rakuten.co.jp/hgc/g00q8qjn.ykqhodbd.g00q8qjn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fdarkangel%2Fpa2301-3635%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw9" value="速乾 UVカット イージー コクーンパンツ">
-          </div>
-          <button class="donebtn" onclick="toggleDone(9)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card11" data-key="https://hb.afl.rakuten.co.jp/hgc/g00slrwn.ykqho5d0.g00slrwn.ykqhpac3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fgeneless%2F04-0074my%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">メンズファッション・2位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/geneless/cabinet/shouhin01/04line/mny_01/04-0074n-000.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>接触冷感 メンズ パンツ 夏 ストレッチ ゆったり 涼しい ボトムス 清涼 涼感 超伸縮 レギパン 薄手 イージーパンツ ズボン エアパンツ 前開き テレワーク ゴルフパンツ ゴルフウェア 迷彩柄 バンダナ ペイズリー カモフラ S M L LL XL XXL 3L ジェネレス</h3>
-          <p class="price">2,698円</p>
-          <textarea id="cap11" readonly>一枚あると着回しがラクになる🙆
-
-【接触冷感 メンズ パンツ 夏 ストレッチ ゆったり 涼しい ボトムス 清涼 涼…】
-💰 2,698円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #シンプルコーデ #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(11)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(11)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(11)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00slrwn.ykqho5d0.g00slrwn.ykqhpac3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fgeneless%2F04-0074my%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk11" value="https://hb.afl.rakuten.co.jp/hgc/g00slrwn.ykqho5d0.g00slrwn.ykqhpac3/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fgeneless%2F04-0074my%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw11" value="接触冷感 メンズ パンツ 夏">
-          </div>
-          <button class="donebtn" onclick="toggleDone(11)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card12" data-key="https://hb.afl.rakuten.co.jp/hgc/g00ugmon.ykqho480.g00ugmon.ykqhp0ab/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsnowpeak-official%2Fet-26su009%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">メンズファッション・3位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/snowpeak-official/cabinet/newthumb202403_p/et-26su009_p5.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>【マラソン×全品P5倍】【スノーピーク 公式】snowpeak Peak Shade ET-26SU009 冷却ポンチョ 気化冷却 冷感ポンチョ 暑さ対策 熱中症対策 冷却グッズ 水で冷やす 軽量 コンパクト UVカット 遮熱 通気性 蒸れにくい 繰り返し使用 アウトドア キャンプ</h3>
-          <p class="price">7,480円</p>
-          <textarea id="cap12" readonly>毎日さらっと使える、こういうの探してた👕
-
-【【マラソン×全品P5倍】【スノーピーク 公式】snowpeak Peak Sh…】
-💰 7,480円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #シンプルコーデ #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(12)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(12)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(12)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00ugmon.ykqho480.g00ugmon.ykqhp0ab/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsnowpeak-official%2Fet-26su009%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk12" value="https://hb.afl.rakuten.co.jp/hgc/g00ugmon.ykqho480.g00ugmon.ykqhp0ab/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsnowpeak-official%2Fet-26su009%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw12" value="snowpeak Peak Shade ET-26SU009">
-          </div>
-          <button class="donebtn" onclick="toggleDone(12)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card13" data-key="https://hb.afl.rakuten.co.jp/hgc/g00s38fn.ykqho61c.g00s38fn.ykqhpc8d/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fimport-ss-shop%2F1114686%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">メンズファッション・4位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/import-ss-shop/cabinet/goq006/51534_1.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>モンベル Tシャツ 半袖 mont-bell WIC.T Mens トップス ロゴ アウトドア メンズ ユニセックス 1114686 [衣類] ユ00582</h3>
-          <p class="price">3,700円</p>
-          <textarea id="cap13" readonly>毎日さらっと使える、こういうの探してた👕
-
-【モンベル Tシャツ 半袖 mont-bell WIC.T Mens トップス …】
-💰 3,700円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #シンプルコーデ #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(13)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(13)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(13)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00s38fn.ykqho61c.g00s38fn.ykqhpc8d/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fimport-ss-shop%2F1114686%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk13" value="https://hb.afl.rakuten.co.jp/hgc/g00s38fn.ykqho61c.g00s38fn.ykqhpc8d/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fimport-ss-shop%2F1114686%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw13" value="モンベル Tシャツ 半袖 mont-bell">
-          </div>
-          <button class="donebtn" onclick="toggleDone(13)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card14" data-key="https://hb.afl.rakuten.co.jp/hgc/g00r62fn.ykqhoebc.g00r62fn.ykqhp040/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fteddyshop%2Fpants536%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">メンズファッション・5位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/teddyshop/cabinet/pants8/pants536x1tr.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>水着 メンズ サーフパンツ インナー付き おしゃれ 水陸両用 ボードショーツ 海パン トランクス 黒 白 夏 薄手 膝丈 ひざ丈 ポケット ウエストゴム ひも付き 裏地付き ボタニカル プール 海水浴 旅行 リゾート スポーツ</h3>
-          <p class="price">1,690円</p>
-          <textarea id="cap14" readonly>毎日さらっと使える、こういうの探してた👕
-
-【水着 メンズ サーフパンツ インナー付き おしゃれ 水陸両用 ボードショーツ …】
-💰 1,690円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #シンプルコーデ #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(14)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(14)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(14)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00r62fn.ykqhoebc.g00r62fn.ykqhp040/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fteddyshop%2Fpants536%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk14" value="https://hb.afl.rakuten.co.jp/hgc/g00r62fn.ykqhoebc.g00r62fn.ykqhp040/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fteddyshop%2Fpants536%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw14" value="水着 メンズ サーフパンツ インナー付き">
-          </div>
-          <button class="donebtn" onclick="toggleDone(14)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card16" data-key="https://hb.afl.rakuten.co.jp/hgc/g00thh0n.ykqho4df.g00thh0n.ykqhp883/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpochibell%2F4909978164461%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">美容・コスメ・香水・2位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/pochibell/cabinet/11888607/4909978164461.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>◇アウトレット◇AQUALABEL（アクアレーベル）/スペシャルジェルクリームEXモイスト/90g</h3>
-          <p class="price">880円</p>
-          <textarea id="cap16" readonly>がんばった自分に、小さなごほうびを🫧
-
-【◇アウトレット◇AQUALABEL（アクアレーベル）/スペシャルジェルクリーム…】
-💰 880円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #自分にごほうび #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(16)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(16)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(16)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00thh0n.ykqho4df.g00thh0n.ykqhp883/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpochibell%2F4909978164461%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk16" value="https://hb.afl.rakuten.co.jp/hgc/g00thh0n.ykqho4df.g00thh0n.ykqhp883/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpochibell%2F4909978164461%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw16" value="◇アウトレット◇AQUALABEL スペシャルジェルクリームEXモイスト 90g">
-          </div>
-          <button class="donebtn" onclick="toggleDone(16)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card17" data-key="https://hb.afl.rakuten.co.jp/hgc/g00uwfon.ykqhoeb4.g00uwfon.ykqhp338/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fveramoreofficial%2Fveraset001%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">美容・コスメ・香水・3位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/veramoreofficial/cabinet/veraset001/800-1.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>【神トク20％クーポン】【Sonkyou x VERAMORE】孫きょうさんコラボセット クレンジングからスキンケアまでスキンケアセット (3点構成 / 6点構成) クレンジングパッド シートマスク セラム パック スピキュール スキンケア クレンジング</h3>
-          <p class="price">4,875円</p>
-          <textarea id="cap17" readonly>リピートしたくなる予感…✨
-
-【【神トク20％クーポン】【Sonkyou x VERAMORE】孫きょうさんコ…】
-💰 4,875円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #自分にごほうび #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(17)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(17)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(17)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00uwfon.ykqhoeb4.g00uwfon.ykqhp338/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fveramoreofficial%2Fveraset001%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk17" value="https://hb.afl.rakuten.co.jp/hgc/g00uwfon.ykqhoeb4.g00uwfon.ykqhp338/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fveramoreofficial%2Fveraset001%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw17" value="孫きょうさんコラボセット クレンジングからスキンケアまでスキンケアセット クレンジングパッド シートマスク">
-          </div>
-          <button class="donebtn" onclick="toggleDone(17)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card18" data-key="https://hb.afl.rakuten.co.jp/hgc/g00thh0n.ykqho4df.g00thh0n.ykqhp883/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpochibell%2F4909978152734%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">美容・コスメ・香水・4位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/pochibell/cabinet/11888607/4909978152734.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>送料無料◇アウトレット◇AQUALABEL（アクアレーベル）/スペシャルジェルクリームEXモイストつめかえ用/81g</h3>
-          <p class="price">800円</p>
-          <textarea id="cap18" readonly>気分まで上がる、ご自愛アイテム🌸
-
-【送料無料◇アウトレット◇AQUALABEL（アクアレーベル）/スペシャルジェル…】
-💰 800円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #自分にごほうび #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(18)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(18)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(18)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00thh0n.ykqho4df.g00thh0n.ykqhp883/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpochibell%2F4909978152734%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk18" value="https://hb.afl.rakuten.co.jp/hgc/g00thh0n.ykqho4df.g00thh0n.ykqhp883/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpochibell%2F4909978152734%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw18" value="スペシャルジェルクリームEXモイストつめかえ用 81g">
-          </div>
-          <button class="donebtn" onclick="toggleDone(18)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card19" data-key="https://hb.afl.rakuten.co.jp/hgc/g00twl6n.ykqho6db.g00twl6n.ykqhpe2b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flarocheposay%2Fl00332ropenkit%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-          <div class="cardtop">
-            <div class="badge">美容・コスメ・香水・5位</div>
-            
-            <span class="donetag">✅ 投稿済み</span>
-          </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/larocheposay/cabinet/products/11910172/imgrc0139185571.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>ポイント最大19倍★楽天お買い物マラソン 8/4 20:00~ 8/11 01:59★【公式】楽天限定★トーンアップUV 人気サンプルキット / 30mL / ローズ＋ / ホワイト / クリア / ティント / ローズ＋ BIGサイズ 50mL / 無香料 / 日焼け止め / SPF 50+ / 正規品/ ダーマコスメ</h3>
-          <p class="price">3,960円</p>
-          <textarea id="cap19" readonly>“自分メンテ”はじめませんか？🛁
-
-【ポイント最大19倍★楽天お買い物マラソン 8/4 20:00~ 8/11 01…】
-💰 3,960円（送料などは商品ページで確認してね）
-
-気になったら下の商品をタップしてチェックしてね👇
-フォローしてくれたら嬉しいです☺️
-
-#楽天ROOM #自分にごほうび #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
-          <div class="steps">
-            <button class="stepk" onclick="copyKw(19)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(19)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(19)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00twl6n.ykqho6db.g00twl6n.ykqhpe2b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flarocheposay%2Fl00332ropenkit%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk19" value="https://hb.afl.rakuten.co.jp/hgc/g00twl6n.ykqho6db.g00twl6n.ykqhpe2b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Flarocheposay%2Fl00332ropenkit%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw19" value="トーンアップUV 人気サンプルキット 30mL ローズ">
-          </div>
-          <button class="donebtn" onclick="toggleDone(19)">✓ 投稿済みにする</button>
-        </div>
-        <div class="card" id="card20" data-key="https://hb.afl.rakuten.co.jp/hgc/g00tqd5n.ykqho1c4.g00tqd5n.ykqhp05b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyamagoiida%2F10000077%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+        <div class="card featured" id="card4" data-key="https://hb.afl.rakuten.co.jp/hgc/g00tqd5n.ykqho1c4.g00tqd5n.ykqhp05b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyamagoiida%2F10000077%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
           <div class="cardtop">
             <div class="badge">食品・1位</div>
-            
+            <span class="featured">⭐ 今日の推し</span>
             <span class="donetag">✅ 投稿済み</span>
           </div>
           <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/yamagoiida/cabinet/08906716/09064251/w_saba_mu2025_0004_2.jpg?_ex=300x300" alt="" loading="lazy">
           <h3>【11日正午まで半額！最大4,990円OFF】北欧産〈無塩〉訳あり 骨取り さば（選べる1kg・2kg）｜骨なし 骨抜き 鯖 天然 ノルウェー産 イギリス産 冷凍 ストック 業務用 食品 離乳食 お弁当 プロテイン DHA EPA 一部地域除き 送料無料</h3>
+          <p class="catch">「おうちで“ちょい贅沢”🍽️」</p>
           <p class="price">2,490円</p>
-          <textarea id="cap20" readonly>リピ確定かも、な美味しさ😋
+          <p class="review">★ 4.78（レビュー35,843件）</p>
+          <p class="reason">👉 レビュー35,843件超の鉄板定番・手ごろでシェアしやすい価格</p>
+          <textarea id="cap4" readonly>リピ確定かも、な美味しさ😋
 
 【【11日正午まで半額！最大4,990円OFF】北欧産〈無塩〉訳あり 骨取り さ…】
 💰 2,490円（送料などは商品ページで確認してね）
@@ -651,16 +96,235 @@
 
 #楽天ROOM #おうちごはん #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
           <div class="steps">
-            <button class="stepk" onclick="copyKw(20)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(20)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(20)">商品リンクをコピー</button>
+            <button class="stepk" onclick="copyKw(4)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(4)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(4)">商品リンクをコピー</button>
             <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00tqd5n.ykqho1c4.g00tqd5n.ykqhp05b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyamagoiida%2F10000077%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk20" value="https://hb.afl.rakuten.co.jp/hgc/g00tqd5n.ykqho1c4.g00tqd5n.ykqhp05b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyamagoiida%2F10000077%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw20" value="骨取り さば 骨なし 骨抜き">
+            <input type="hidden" id="lnk4" value="https://hb.afl.rakuten.co.jp/hgc/g00tqd5n.ykqho1c4.g00tqd5n.ykqhp05b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyamagoiida%2F10000077%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw4" value="骨取り さば 骨なし 骨抜き">
           </div>
-          <button class="donebtn" onclick="toggleDone(20)">✓ 投稿済みにする</button>
+          <button class="donebtn" onclick="toggleDone(4)">✓ 投稿済みにする</button>
         </div>
-        <div class="card" id="card21" data-key="https://hb.afl.rakuten.co.jp/hgc/g00r77tn.ykqho8e7.g00r77tn.ykqhpb81/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fkouragumi%2F201175%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+        <div class="card featured" id="card8" data-key="https://hb.afl.rakuten.co.jp/hgc/g00tna6n.ykqhoc97.g00tna6n.ykqhp567/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fattenir%2F166013%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+          <div class="cardtop">
+            <div class="badge">コスメ・1位</div>
+            <span class="featured">⭐ 今日の推し</span>
+            <span class="donetag">✅ 投稿済み</span>
+          </div>
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/attenir/cabinet/thum/166013_main_2608.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>【ポイント10倍！〜8月11日1:59】大容量 スキンクリア クレンズ オイル 350mL 大容量 ボトル / つめかえ用 (4種) [ クレンジング クレンジングオイル メイク落とし 毛穴 くすみ エイジングケア 洗顔 角栓 角質 皮脂 詰め替え ダブル洗顔不要 アテニア 公式 ]</h3>
+          <p class="catch">「毎日のケアが楽しみに💄」</p>
+          <p class="price">3,630円</p>
+          <p class="review">★ 4.8（レビュー47,951件）</p>
+          <p class="reason">👉 レビュー47,951件超の鉄板定番・手ごろでシェアしやすい価格</p>
+          <textarea id="cap8" readonly>気分まで上がる、ご自愛アイテム🌸
+
+【【ポイント10倍！〜8月11日1:59】大容量 スキンクリア クレンズ オイル…】
+💰 3,630円（送料などは商品ページで確認してね）
+
+気になったら下の商品をタップしてチェックしてね👇
+フォローしてくれたら嬉しいです☺️
+
+#楽天ROOM #自分にごほうび #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+          <div class="steps">
+            <button class="stepk" onclick="copyKw(8)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(8)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(8)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00tna6n.ykqhoc97.g00tna6n.ykqhp567/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fattenir%2F166013%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk8" value="https://hb.afl.rakuten.co.jp/hgc/g00tna6n.ykqhoc97.g00tna6n.ykqhp567/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fattenir%2F166013%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw8" value="大容量 スキンクリア クレンズ オイル">
+          </div>
+          <button class="donebtn" onclick="toggleDone(8)">✓ 投稿済みにする</button>
+        </div>
+        <div class="card featured" id="card12" data-key="https://hb.afl.rakuten.co.jp/hgc/g00s0hgn.ykqho9f3.g00s0hgn.ykqhp74b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpremium-interior%2Flff-pokefun01cc%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+          <div class="cardtop">
+            <div class="badge">家電・1位</div>
+            <span class="featured">⭐ 今日の推し</span>
+            <span class="donetag">✅ 投稿済み</span>
+          </div>
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/premium-interior/cabinet/item/fan/imgrc0118075653.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>【全エントリーでP20倍＆50％OFFクーポン】【楽天10冠☆】2026新作 ハンディファン ポケファン 超軽量57g ポケット扇風機 強風 ハンディーファン 小型扇風機 携帯扇風機 ミニ扇風機 扇風機 コンパクト 暑さ対策 グッズ 熱中症対策グッズ Lafuture</h3>
+          <p class="catch">「あると便利な名脇役🔌」</p>
+          <p class="price">2,980円</p>
+          <p class="review">★ 4.41（レビュー1,055件）</p>
+          <p class="reason">👉 レビュー1,055件超の鉄板定番・手ごろでシェアしやすい価格</p>
+          <textarea id="cap12" readonly>地味にQOL上がるアイテム🙆
+
+【【全エントリーでP20倍＆50％OFFクーポン】【楽天10冠☆】2026新作 …】
+💰 2,980円（送料などは商品ページで確認してね）
+
+気になったら下の商品をタップしてチェックしてね👇
+フォローしてくれたら嬉しいです☺️
+
+#楽天ROOM #時短家電 #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+          <div class="steps">
+            <button class="stepk" onclick="copyKw(12)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(12)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(12)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00s0hgn.ykqho9f3.g00s0hgn.ykqhp74b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpremium-interior%2Flff-pokefun01cc%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk12" value="https://hb.afl.rakuten.co.jp/hgc/g00s0hgn.ykqho9f3.g00s0hgn.ykqhp74b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpremium-interior%2Flff-pokefun01cc%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw12" value="2026新作 ハンディファン ポケファン 超軽量57g">
+          </div>
+          <button class="donebtn" onclick="toggleDone(12)">✓ 投稿済みにする</button>
+        </div>
+        <div class="card featured" id="card16" data-key="https://hb.afl.rakuten.co.jp/hgc/g00ty4nn.ykqho590.g00ty4nn.ykqhp42c/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fenterb%2Fnexmate-1%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+          <div class="cardtop">
+            <div class="badge">キッチン・1位</div>
+            <span class="featured">⭐ 今日の推し</span>
+            <span class="donetag">✅ 投稿済み</span>
+          </div>
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/enterb/cabinet/event/url1/nexmate--2384.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>クーポンで最安2,384円～！★2025年楽天年間1位受賞★【新色登場】スマートウォッチ 通話機能付 1.96インチ大画面 Bluetooth5.4最新型 24時間健康管理 皮膚温変動検知 血中酸素度 心拍数測定 IP68防水 長時間待機 着信通知 GPS運動記録 多機能 腕時計</h3>
+          <p class="catch">「食卓が映えるやつ🍽️」</p>
+          <p class="price">2,980円</p>
+          <p class="review">★ 4.4（レビュー36,396件）</p>
+          <p class="reason">👉 レビュー36,396件超の鉄板定番・手ごろでシェアしやすい価格</p>
+          <textarea id="cap16" readonly>食卓がぱっと映えるやつ🍽️
+
+【クーポンで最安2,384円～！★2025年楽天年間1位受賞★【新色登場】スマー…】
+💰 2,980円（送料などは商品ページで確認してね）
+
+気になったら下の商品をタップしてチェックしてね👇
+フォローしてくれたら嬉しいです☺️
+
+#楽天ROOM #キッチングッズ #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+          <div class="steps">
+            <button class="stepk" onclick="copyKw(16)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(16)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(16)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00ty4nn.ykqho590.g00ty4nn.ykqhp42c/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fenterb%2Fnexmate-1%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk16" value="https://hb.afl.rakuten.co.jp/hgc/g00ty4nn.ykqho590.g00ty4nn.ykqhp42c/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fenterb%2Fnexmate-1%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw16" value="スマートウォッチ 通話機能付 96インチ大画面 Bluetooth5">
+          </div>
+          <button class="donebtn" onclick="toggleDone(16)">✓ 投稿済みにする</button>
+        </div>
+        <div class="card featured" id="card1" data-key="https://hb.afl.rakuten.co.jp/hgc/g00qcmkn.ykqho840.g00qcmkn.ykqhp5ea/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftoucher-home%2F10000264%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+          <div class="cardtop">
+            <div class="badge">日用品・2位</div>
+            <span class="featured">⭐ 今日の推し</span>
+            <span class="donetag">✅ 投稿済み</span>
+          </div>
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/toucher-home/cabinet/image02/hslft_01cxa.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>【1枚790円！20周年クーポン】 日本製 ホテルスタイルタオル ビッグフェイスタオル 【圧縮】 【お試しSALE】 楽天1位受賞 / 約40×100cm タオル 小さめ バスタオル 厚手 吸水 1枚 ポイント消化 SALE 送料無料 メディア掲載</h3>
+          <p class="catch">「毎日使うものは良いものを🧴」</p>
+          <p class="price">890円</p>
+          <p class="review">★ 4.49（レビュー117,262件）</p>
+          <p class="reason">👉 レビュー117,262件超の鉄板定番・低単価で衝動買いされやすい</p>
+          <textarea id="cap1" readonly>地味だけど手放せなくなる定番✨
+
+【【1枚790円！20周年クーポン】 日本製 ホテルスタイルタオル ビッグフェイ…】
+💰 890円（送料などは商品ページで確認してね）
+
+気になったら下の商品をタップしてチェックしてね👇
+フォローしてくれたら嬉しいです☺️
+
+#楽天ROOM #日用品ストック #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+          <div class="steps">
+            <button class="stepk" onclick="copyKw(1)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(1)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(1)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00qcmkn.ykqho840.g00qcmkn.ykqhp5ea/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftoucher-home%2F10000264%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk1" value="https://hb.afl.rakuten.co.jp/hgc/g00qcmkn.ykqho840.g00qcmkn.ykqhp5ea/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftoucher-home%2F10000264%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw1" value="日本製 ホテルスタイルタオル ビッグフェイスタオル 約40">
+          </div>
+          <button class="donebtn" onclick="toggleDone(1)">✓ 投稿済みにする</button>
+        </div>
+  <details class="more"><summary>▼ ほかの売れ筋も見る（残り 15 件）</summary>
+  
+        <div class="card" id="card0" data-key="https://hb.afl.rakuten.co.jp/hgc/g00uexxn.ykqhoed4.g00uexxn.ykqhp794/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Foujiseiyaku%2Fec20260119007%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+          <div class="cardtop">
+            <div class="badge">日用品・1位</div>
+            
+            <span class="donetag">✅ 投稿済み</span>
+          </div>
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/oujiseiyaku/cabinet/12025037/imgrc0120791302.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>【期間限定 50％OFF】＜甘く華やぐ香りセット＞ アフューム 洗濯洗剤 柔軟剤入り洗剤 ローズ本体42粒 アモーレ詰め替え20粒 エターナル詰め替え6粒×4袋 リリー詰め替え20粒 ファブリックスプレー ハピネス250mL 柔軟剤 ブリス530mL 香りビーズ スウィートシャイン150g</h3>
+          <p class="catch">「買ってよかった生活雑貨🛍️」</p>
+          <p class="price">4,000円</p>
+          <p class="review">★ 4.71（レビュー21件）</p>
+          
+          <textarea id="cap0" readonly>使ってみたら“もう戻れない”ってなった🙆
+
+【【期間限定 50％OFF】＜甘く華やぐ香りセット＞ アフューム 洗濯洗剤 柔軟…】
+💰 4,000円（送料などは商品ページで確認してね）
+
+気になったら下の商品をタップしてチェックしてね👇
+フォローしてくれたら嬉しいです☺️
+
+#楽天ROOM #日用品ストック #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+          <div class="steps">
+            <button class="stepk" onclick="copyKw(0)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(0)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(0)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00uexxn.ykqhoed4.g00uexxn.ykqhp794/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Foujiseiyaku%2Fec20260119007%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk0" value="https://hb.afl.rakuten.co.jp/hgc/g00uexxn.ykqhoed4.g00uexxn.ykqhp794/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Foujiseiyaku%2Fec20260119007%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw0" value="＜甘く華やぐ香りセット＞ アフューム 洗濯洗剤 柔軟剤入り洗剤">
+          </div>
+          <button class="donebtn" onclick="toggleDone(0)">✓ 投稿済みにする</button>
+        </div>
+        <div class="card" id="card2" data-key="https://hb.afl.rakuten.co.jp/hgc/g00r136n.ykqhoc9b.g00r136n.ykqhp6e7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakuten24%2F404889%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+          <div class="cardtop">
+            <div class="badge">日用品・3位</div>
+            
+            <span class="donetag">✅ 投稿済み</span>
+          </div>
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/rakuten24/cabinet/889/404889.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>【1種類を選べる】アタック 抗菌EX 洗濯洗剤 詰替 超特大サイズ 梱販売用(6袋入)【アタック】</h3>
+          <p class="catch">「ストックで安心🧺」</p>
+          <p class="price">6,171円</p>
+          <p class="review">★ 4.67（レビュー4,137件）</p>
+          
+          <textarea id="cap2" readonly>毎日つかうものは、良いものを選びたい🧴
+
+【【1種類を選べる】アタック 抗菌EX 洗濯洗剤 詰替 超特大サイズ 梱販売用(…】
+💰 6,171円（送料などは商品ページで確認してね）
+
+気になったら下の商品をタップしてチェックしてね👇
+フォローしてくれたら嬉しいです☺️
+
+#楽天ROOM #日用品ストック #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+          <div class="steps">
+            <button class="stepk" onclick="copyKw(2)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(2)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(2)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00r136n.ykqhoc9b.g00r136n.ykqhp6e7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakuten24%2F404889%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk2" value="https://hb.afl.rakuten.co.jp/hgc/g00r136n.ykqhoc9b.g00r136n.ykqhp6e7/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Frakuten24%2F404889%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw2" value="アタック 抗菌EX 洗濯洗剤 詰替">
+          </div>
+          <button class="donebtn" onclick="toggleDone(2)">✓ 投稿済みにする</button>
+        </div>
+        <div class="card" id="card3" data-key="https://hb.afl.rakuten.co.jp/hgc/g00qcmkn.ykqho840.g00qcmkn.ykqhp5ea/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftoucher-home%2F925619%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+          <div class="cardtop">
+            <div class="badge">日用品・4位</div>
+            
+            <span class="donetag">✅ 投稿済み</span>
+          </div>
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/toucher-home/cabinet/image02/hsls201w_01x.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>【特価3500円→2980円】 日本製 ホテルスタイルタオル ビッグフェイスタオル 4枚同色セット 【圧縮】 楽天1位受賞 / 約40×100cm タオル フェイスタオル 小さめ バスタオル 厚手 セット lt SALE バーゲン 送料無料</h3>
+          <p class="catch">「毎日使うものは良いものを🧴」</p>
+          <p class="price">2,980円</p>
+          <p class="review">★ 4.52（レビュー18,245件）</p>
+          
+          <textarea id="cap3" readonly>使ってみたら“もう戻れない”ってなった🙆
+
+【【特価3500円→2980円】 日本製 ホテルスタイルタオル ビッグフェイスタ…】
+💰 2,980円（送料などは商品ページで確認してね）
+
+気になったら下の商品をタップしてチェックしてね👇
+フォローしてくれたら嬉しいです☺️
+
+#楽天ROOM #日用品ストック #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+          <div class="steps">
+            <button class="stepk" onclick="copyKw(3)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(3)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(3)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00qcmkn.ykqho840.g00qcmkn.ykqhp5ea/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftoucher-home%2F925619%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk3" value="https://hb.afl.rakuten.co.jp/hgc/g00qcmkn.ykqho840.g00qcmkn.ykqhp5ea/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Ftoucher-home%2F925619%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw3" value="日本製 ホテルスタイルタオル ビッグフェイスタオル 4枚同色セット">
+          </div>
+          <button class="donebtn" onclick="toggleDone(3)">✓ 投稿済みにする</button>
+        </div>
+        <div class="card" id="card5" data-key="https://hb.afl.rakuten.co.jp/hgc/g00r77tn.ykqho8e7.g00r77tn.ykqhpb81/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fkouragumi%2F201175%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
           <div class="cardtop">
             <div class="badge">食品・2位</div>
             
@@ -668,8 +332,11 @@
           </div>
           <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/kouragumi/cabinet/10531638/imgrc0114997850.jpg?_ex=300x300" alt="" loading="lazy">
           <h3>お試し送料無料2,490円～ 骨取りサバ切身 1kg 無塩or有塩が選べる♪骨とり 骨なし 鯖 さば 冷凍食品 お中元 ギフト 【P】</h3>
+          <p class="catch">「リピ確定のおいしさ☕」</p>
           <p class="price">2,490円</p>
-          <textarea id="cap21" readonly>家族に好評まちがいなしの予感🍚
+          <p class="review">★ 4.51（レビュー18,495件）</p>
+          
+          <textarea id="cap5" readonly>家族に好評まちがいなしの予感🍚
 
 【お試し送料無料2,490円～ 骨取りサバ切身 1kg 無塩or有塩が選べる♪骨…】
 💰 2,490円（送料などは商品ページで確認してね）
@@ -679,16 +346,16 @@
 
 #楽天ROOM #おうちごはん #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
           <div class="steps">
-            <button class="stepk" onclick="copyKw(21)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(21)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(21)">商品リンクをコピー</button>
+            <button class="stepk" onclick="copyKw(5)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(5)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(5)">商品リンクをコピー</button>
             <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00r77tn.ykqho8e7.g00r77tn.ykqhpb81/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fkouragumi%2F201175%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk21" value="https://hb.afl.rakuten.co.jp/hgc/g00r77tn.ykqho8e7.g00r77tn.ykqhpb81/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fkouragumi%2F201175%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw21" value="骨取りサバ切身 1kg 骨とり 骨なし">
+            <input type="hidden" id="lnk5" value="https://hb.afl.rakuten.co.jp/hgc/g00r77tn.ykqho8e7.g00r77tn.ykqhpb81/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fkouragumi%2F201175%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw5" value="骨取りサバ切身 1kg 骨とり 骨なし">
           </div>
-          <button class="donebtn" onclick="toggleDone(21)">✓ 投稿済みにする</button>
+          <button class="donebtn" onclick="toggleDone(5)">✓ 投稿済みにする</button>
         </div>
-        <div class="card" id="card22" data-key="https://hb.afl.rakuten.co.jp/hgc/g00t3ztn.ykqho43f.g00t3ztn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Firisplaza-r%2F113800%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+        <div class="card" id="card6" data-key="https://hb.afl.rakuten.co.jp/hgc/g00t3ztn.ykqho43f.g00t3ztn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Firisplaza-r%2F113800%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
           <div class="cardtop">
             <div class="badge">食品・3位</div>
             
@@ -696,8 +363,11 @@
           </div>
           <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/irisplaza-r/cabinet/12351902/imgrc0120697447.jpg?_ex=300x300" alt="" loading="lazy">
           <h3>＼1袋あたり2,327円〜！／【令和7年産100％使用】白米 無洗米 和の輝き ブレンド米 10kg (5kg×2袋) 15kg (5kg×3袋) 密封新鮮パック 脱酸素剤入り 米 お米 国産 10キロ 15キロ 低温製法米 送料無料 アイリスオーヤマ</h3>
+          <p class="catch">「リピ確定のおいしさ☕」</p>
           <p class="price">4,980円</p>
-          <textarea id="cap22" readonly>小腹がすいたときの救世主🍩
+          <p class="review">★ 4.68（レビュー5,934件）</p>
+          
+          <textarea id="cap6" readonly>小腹がすいたときの救世主🍩
 
 【＼1袋あたり2,327円〜！／【令和7年産100％使用】白米 無洗米 和の輝き…】
 💰 4,980円（送料などは商品ページで確認してね）
@@ -707,16 +377,16 @@
 
 #楽天ROOM #おうちごはん #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
           <div class="steps">
-            <button class="stepk" onclick="copyKw(22)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(22)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(22)">商品リンクをコピー</button>
+            <button class="stepk" onclick="copyKw(6)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(6)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(6)">商品リンクをコピー</button>
             <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00t3ztn.ykqho43f.g00t3ztn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Firisplaza-r%2F113800%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk22" value="https://hb.afl.rakuten.co.jp/hgc/g00t3ztn.ykqho43f.g00t3ztn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Firisplaza-r%2F113800%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw22" value="白米 無洗米 和の輝き ブレンド米">
+            <input type="hidden" id="lnk6" value="https://hb.afl.rakuten.co.jp/hgc/g00t3ztn.ykqho43f.g00t3ztn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Firisplaza-r%2F113800%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw6" value="白米 無洗米 和の輝き ブレンド米">
           </div>
-          <button class="donebtn" onclick="toggleDone(22)">✓ 投稿済みにする</button>
+          <button class="donebtn" onclick="toggleDone(6)">✓ 投稿済みにする</button>
         </div>
-        <div class="card" id="card23" data-key="https://hb.afl.rakuten.co.jp/hgc/g00uhmzn.ykqho529.g00uhmzn.ykqhpa4a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyama-oatmeal-institute%2Fkiwamiseimai10%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+        <div class="card" id="card7" data-key="https://hb.afl.rakuten.co.jp/hgc/g00uhmzn.ykqho529.g00uhmzn.ykqhpa4a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyama-oatmeal-institute%2Fkiwamiseimai10%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
           <div class="cardtop">
             <div class="badge">食品・4位</div>
             
@@ -724,8 +394,11 @@
           </div>
           <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/yama-oatmeal-institute/cabinet/13044696/imgrc0127109405.jpg?_ex=300x300" alt="" loading="lazy">
           <h3>[2026年 楽天上半期ランキング1位] 令和7年産 ブレンド米 極味精米 10kg ( きわみせいまい こめ お米 米 白米 全国 送料無料 （北海道 沖縄 離島含む） ブレンド米 安い 生活応援米 備蓄米 不使用 10キロ 5キロ ) 山川食糧</h3>
+          <p class="catch">「小腹の救世主😋」</p>
           <p class="price">2,680円</p>
-          <textarea id="cap23" readonly>ちょっと贅沢したい日にぴったり🍽️
+          <p class="review">★ 4.5（レビュー5,948件）</p>
+          
+          <textarea id="cap7" readonly>ちょっと贅沢したい日にぴったり🍽️
 
 【[2026年 楽天上半期ランキング1位] 令和7年産 ブレンド米 極味精米 1…】
 💰 2,680円（送料などは商品ページで確認してね）
@@ -735,187 +408,298 @@
 
 #楽天ROOM #おうちごはん #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
           <div class="steps">
-            <button class="stepk" onclick="copyKw(23)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(23)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(23)">商品リンクをコピー</button>
+            <button class="stepk" onclick="copyKw(7)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(7)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(7)">商品リンクをコピー</button>
             <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00uhmzn.ykqho529.g00uhmzn.ykqhpa4a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyama-oatmeal-institute%2Fkiwamiseimai10%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk23" value="https://hb.afl.rakuten.co.jp/hgc/g00uhmzn.ykqho529.g00uhmzn.ykqhpa4a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyama-oatmeal-institute%2Fkiwamiseimai10%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw23" value="令和7年産 ブレンド米 極味精米 10kg">
+            <input type="hidden" id="lnk7" value="https://hb.afl.rakuten.co.jp/hgc/g00uhmzn.ykqho529.g00uhmzn.ykqhpa4a/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyama-oatmeal-institute%2Fkiwamiseimai10%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw7" value="令和7年産 ブレンド米 極味精米 10kg">
           </div>
-          <button class="donebtn" onclick="toggleDone(23)">✓ 投稿済みにする</button>
+          <button class="donebtn" onclick="toggleDone(7)">✓ 投稿済みにする</button>
         </div>
-        <div class="card" id="card24" data-key="https://hb.afl.rakuten.co.jp/hgc/g00tqd5n.ykqho1c4.g00tqd5n.ykqhp05b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyamagoiida%2F10000120%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+        <div class="card" id="card9" data-key="https://hb.afl.rakuten.co.jp/hgc/g00thh0n.ykqho4df.g00thh0n.ykqhp883/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpochibell%2F4909978164461%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
           <div class="cardtop">
-            <div class="badge">食品・5位</div>
+            <div class="badge">コスメ・2位</div>
             
             <span class="donetag">✅ 投稿済み</span>
           </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/yamagoiida/cabinet/12604244/13204764/13204768/ginsake_thum002.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>※2kg完売※【11日正午まで半額！1kgが7,980円→3,990円】鮭 訳あり〈無塩〉骨取り 銀さけ （選べる1kg・2kg）｜骨取り鮭 骨なし チリ産 養殖 鮭 さけ サケ 銀鮭 厚切り 切身 冷凍 ストック 業務用 食品 離乳食 お弁当 アスタキサンチン 一部地域除き 送料無料</h3>
-          <p class="price">3,990円</p>
-          <textarea id="cap24" readonly>家族に好評まちがいなしの予感🍚
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/pochibell/cabinet/11888607/4909978164461.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>◇アウトレット◇AQUALABEL（アクアレーベル）/スペシャルジェルクリームEXモイスト/90g</h3>
+          <p class="catch">「毎日のケアが楽しみに💄」</p>
+          <p class="price">880円</p>
+          
+          
+          <textarea id="cap9" readonly>がんばった自分に、小さなごほうびを🫧
 
-【※2kg完売※【11日正午まで半額！1kgが7,980円→3,990円】鮭 訳…】
-💰 3,990円（送料などは商品ページで確認してね）
+【◇アウトレット◇AQUALABEL（アクアレーベル）/スペシャルジェルクリーム…】
+💰 880円（送料などは商品ページで確認してね）
 
 気になったら下の商品をタップしてチェックしてね👇
 フォローしてくれたら嬉しいです☺️
 
-#楽天ROOM #おうちごはん #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+#楽天ROOM #自分にごほうび #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
           <div class="steps">
-            <button class="stepk" onclick="copyKw(24)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(24)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(24)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00tqd5n.ykqho1c4.g00tqd5n.ykqhp05b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyamagoiida%2F10000120%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk24" value="https://hb.afl.rakuten.co.jp/hgc/g00tqd5n.ykqho1c4.g00tqd5n.ykqhp05b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fyamagoiida%2F10000120%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw24" value="鮭 銀さけ 骨取り鮭 骨なし">
+            <button class="stepk" onclick="copyKw(9)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(9)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(9)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00thh0n.ykqho4df.g00thh0n.ykqhp883/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpochibell%2F4909978164461%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk9" value="https://hb.afl.rakuten.co.jp/hgc/g00thh0n.ykqho4df.g00thh0n.ykqhp883/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpochibell%2F4909978164461%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw9" value="◇アウトレット◇AQUALABEL スペシャルジェルクリームEXモイスト 90g">
           </div>
-          <button class="donebtn" onclick="toggleDone(24)">✓ 投稿済みにする</button>
+          <button class="donebtn" onclick="toggleDone(9)">✓ 投稿済みにする</button>
         </div>
-        <div class="card" id="card25" data-key="https://hb.afl.rakuten.co.jp/hgc/g00pui9n.ykqhoad1.g00pui9n.ykqhpad0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fe-kurashi%2Fs1u57%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+        <div class="card" id="card10" data-key="https://hb.afl.rakuten.co.jp/hgc/g00uwfon.ykqhoeb4.g00uwfon.ykqhp338/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fveramoreofficial%2Fveraset001%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
           <div class="cardtop">
-            <div class="badge">インテリア・寝具・収納・1位</div>
+            <div class="badge">コスメ・3位</div>
             
             <span class="donetag">✅ 投稿済み</span>
           </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/e-kurashi/cabinet/rank-img/021/main-xaedt-01.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>コロ脚 中が透けない 壁付き チェスト スリム/ワイド 幅34/54 奥行41.5/41.7 高さ66.1/86.1/106.1cm 衣装ケース 収納ケース プラスチック 引き出し 洗面所 収納 子供部屋 クローゼット 隠す収納 ランドリーチェスト 壁付きチェスト 日本製 【送料無料】</h3>
-          <p class="price">4,999円</p>
-          <textarea id="cap25" readonly>見えるところに置きたくなるやつ✨
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/veramoreofficial/cabinet/veraset001/800-1.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>【神トク20％クーポン】【Sonkyou x VERAMORE】孫きょうさんコラボセット クレンジングからスキンケアまでスキンケアセット (3点構成 / 6点構成) クレンジングパッド シートマスク セラム パック スピキュール スキンケア クレンジング</h3>
+          <p class="catch">「ご自愛アイテム🌸」</p>
+          <p class="price">4,875円</p>
+          
+          
+          <textarea id="cap10" readonly>リピートしたくなる予感…✨
 
-【コロ脚 中が透けない 壁付き チェスト スリム/ワイド 幅34/54 奥行41…】
-💰 4,999円（送料などは商品ページで確認してね）
+【【神トク20％クーポン】【Sonkyou x VERAMORE】孫きょうさんコ…】
+💰 4,875円（送料などは商品ページで確認してね）
 
 気になったら下の商品をタップしてチェックしてね👇
 フォローしてくれたら嬉しいです☺️
 
-#楽天ROOM #丁寧な暮らし #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+#楽天ROOM #自分にごほうび #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
           <div class="steps">
-            <button class="stepk" onclick="copyKw(25)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(25)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(25)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00pui9n.ykqhoad1.g00pui9n.ykqhpad0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fe-kurashi%2Fs1u57%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk25" value="https://hb.afl.rakuten.co.jp/hgc/g00pui9n.ykqhoad1.g00pui9n.ykqhpad0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fe-kurashi%2Fs1u57%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw25" value="コロ脚 中が透けない 壁付き チェスト">
+            <button class="stepk" onclick="copyKw(10)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(10)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(10)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00uwfon.ykqhoeb4.g00uwfon.ykqhp338/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fveramoreofficial%2Fveraset001%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk10" value="https://hb.afl.rakuten.co.jp/hgc/g00uwfon.ykqhoeb4.g00uwfon.ykqhp338/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fveramoreofficial%2Fveraset001%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw10" value="孫きょうさんコラボセット クレンジングからスキンケアまでスキンケアセット クレンジングパッド シートマスク">
           </div>
-          <button class="donebtn" onclick="toggleDone(25)">✓ 投稿済みにする</button>
+          <button class="donebtn" onclick="toggleDone(10)">✓ 投稿済みにする</button>
         </div>
-        <div class="card" id="card26" data-key="https://hb.afl.rakuten.co.jp/hgc/g00tnhln.ykqho1c8.g00tnhln.ykqhp25b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2F33taiyo%2Fhitsuji%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+        <div class="card" id="card11" data-key="https://hb.afl.rakuten.co.jp/hgc/g00thh0n.ykqho4df.g00thh0n.ykqhp883/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpochibell%2F4909978152734%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
           <div class="cardtop">
-            <div class="badge">インテリア・寝具・収納・2位</div>
+            <div class="badge">コスメ・4位</div>
             
             <span class="donetag">✅ 投稿済み</span>
           </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/33taiyo/cabinet/campaign/sale_daiichi/260806/hitsuji.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>【最大3,500円OFFクーポン！】枕 枕カバー 付 ヒツジのいらない枕 ギフト 実用的 健康グッズ 誕生日 ギフト 洗える 通気性 寝用枕 うつぶせ寝 まくら ジェル 首 寝返り 横向き 仰向け いびき 予防 防止 tpe ジェル</h3>
-          <p class="price">15,800円</p>
-          <textarea id="cap26" readonly>見えるところに置きたくなるやつ✨
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/pochibell/cabinet/11888607/4909978152734.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>送料無料◇アウトレット◇AQUALABEL（アクアレーベル）/スペシャルジェルクリームEXモイストつめかえ用/81g</h3>
+          <p class="catch">「毎日のケアが楽しみに💄」</p>
+          <p class="price">800円</p>
+          
+          
+          <textarea id="cap11" readonly>気分まで上がる、ご自愛アイテム🌸
 
-【【最大3,500円OFFクーポン！】枕 枕カバー 付 ヒツジのいらない枕 ギフ…】
-💰 15,800円（送料などは商品ページで確認してね）
+【送料無料◇アウトレット◇AQUALABEL（アクアレーベル）/スペシャルジェル…】
+💰 800円（送料などは商品ページで確認してね）
 
 気になったら下の商品をタップしてチェックしてね👇
 フォローしてくれたら嬉しいです☺️
 
-#楽天ROOM #丁寧な暮らし #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+#楽天ROOM #自分にごほうび #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
           <div class="steps">
-            <button class="stepk" onclick="copyKw(26)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(26)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(26)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00tnhln.ykqho1c8.g00tnhln.ykqhp25b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2F33taiyo%2Fhitsuji%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk26" value="https://hb.afl.rakuten.co.jp/hgc/g00tnhln.ykqho1c8.g00tnhln.ykqhp25b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2F33taiyo%2Fhitsuji%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw26" value="枕 枕カバー 付 ヒツジのいらない枕">
+            <button class="stepk" onclick="copyKw(11)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(11)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(11)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00thh0n.ykqho4df.g00thh0n.ykqhp883/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpochibell%2F4909978152734%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk11" value="https://hb.afl.rakuten.co.jp/hgc/g00thh0n.ykqho4df.g00thh0n.ykqhp883/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fpochibell%2F4909978152734%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw11" value="スペシャルジェルクリームEXモイストつめかえ用 81g">
           </div>
-          <button class="donebtn" onclick="toggleDone(26)">✓ 投稿済みにする</button>
+          <button class="donebtn" onclick="toggleDone(11)">✓ 投稿済みにする</button>
         </div>
-        <div class="card" id="card27" data-key="https://hb.afl.rakuten.co.jp/hgc/g00rgpgn.ykqho754.g00rgpgn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fauc-kaei-trading%2Fzk-snb02-all-9c%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+        <div class="card" id="card13" data-key="https://hb.afl.rakuten.co.jp/hgc/g00sa33n.ykqho145.g00sa33n.ykqhpb7d/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fcicib%2Fe1-2%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
           <div class="cardtop">
-            <div class="badge">インテリア・寝具・収納・3位</div>
+            <div class="badge">家電・2位</div>
             
             <span class="donetag">✅ 投稿済み</span>
           </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/auc-kaei-trading/cabinet/zk-snb02/snb02-9cc.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>収納ボックス 収納ケース 折りたたみ 収納 ふた付き キャスター付き 5面開き 前開き 27L 40L 53L 82L 屋外 おしゃれ プラスチック 衣装ケース コンテナ ボックス 衣類 布団</h3>
-          <p class="price">1,280円</p>
-          <textarea id="cap27" readonly>置くだけでお部屋が整う、地味に神アイテム🏠
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/cicib/cabinet/top1-970.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>衝撃セール970円〜【楽天1位☆テレビ紹介】4way 冷却ハンディファンPRO 2026 ハンディファン 冷却プレート 扇風機 シシベラ ハンディファン 静音 軽量 強風 小型 冷却モード 充電式 冷却 携帯扇風機 卓上扇風機 小型扇風機 cicibella 手持ち扇風機「MONOQLO受賞」＜公式＞</h3>
+          <p class="catch">「暮らしがぐっとラクに⚡」</p>
+          <p class="price">2,780円</p>
+          <p class="review">★ 4.5（レビュー3,022件）</p>
+          
+          <textarea id="cap13" readonly>一度使うと手放せないやつ✨
 
-【収納ボックス 収納ケース 折りたたみ 収納 ふた付き キャスター付き 5面開き…】
-💰 1,280円（送料などは商品ページで確認してね）
+【衝撃セール970円〜【楽天1位☆テレビ紹介】4way 冷却ハンディファンPRO…】
+💰 2,780円（送料などは商品ページで確認してね）
 
 気になったら下の商品をタップしてチェックしてね👇
 フォローしてくれたら嬉しいです☺️
 
-#楽天ROOM #丁寧な暮らし #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+#楽天ROOM #時短家電 #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
           <div class="steps">
-            <button class="stepk" onclick="copyKw(27)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(27)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(27)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00rgpgn.ykqho754.g00rgpgn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fauc-kaei-trading%2Fzk-snb02-all-9c%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk27" value="https://hb.afl.rakuten.co.jp/hgc/g00rgpgn.ykqho754.g00rgpgn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fauc-kaei-trading%2Fzk-snb02-all-9c%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw27" value="収納ボックス 収納ケース 折りたたみ 収納">
+            <button class="stepk" onclick="copyKw(13)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(13)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(13)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00sa33n.ykqho145.g00sa33n.ykqhpb7d/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fcicib%2Fe1-2%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk13" value="https://hb.afl.rakuten.co.jp/hgc/g00sa33n.ykqho145.g00sa33n.ykqhpb7d/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fcicib%2Fe1-2%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw13" value="4way 冷却ハンディファンPRO ハンディファン 冷却プレート">
           </div>
-          <button class="donebtn" onclick="toggleDone(27)">✓ 投稿済みにする</button>
+          <button class="donebtn" onclick="toggleDone(13)">✓ 投稿済みにする</button>
         </div>
-        <div class="card" id="card28" data-key="https://hb.afl.rakuten.co.jp/hgc/g00pui9n.ykqhoad1.g00pui9n.ykqhpad0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fe-kurashi%2Fs1y43%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+        <div class="card" id="card14" data-key="https://hb.afl.rakuten.co.jp/hgc/g00tbsun.ykqho107.g00tbsun.ykqhp249/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbrita%2Fmaxtraplus-8%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
           <div class="cardtop">
-            <div class="badge">インテリア・寝具・収納・4位</div>
+            <div class="badge">家電・3位</div>
             
             <span class="donetag">✅ 投稿済み</span>
           </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/e-kurashi/cabinet/rank-img/021/main-s6z70-03.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>天板 水に強い 耐荷重10kg ズレない 板 中が透けない 壁付き チェスト 専用 チェスト用 収納ケース用 収納ボックス用 シェルフ 棚 【天板のみ ※本体別売り】 山善 YAMAZEN 【送料無料】</h3>
-          <p class="price">2,299円</p>
-          <textarea id="cap28" readonly>気分が上がる部屋づくりに🌿
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/brita/cabinet/thum/thumb_01/maxtraplus-8.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>【公式・正規品】 ポット型浄水器用カートリッジ マクストラプロ ピュアパフォーマンス 8個セット | 日本仕様 浄水カートリッジ 浄水ポット マ 日本仕様 ブリタカートリッジ brita maxtra アウトレット PFAS (PFOS/PFOA) 除去</h3>
+          <p class="catch">「QOL上がるやつ🙆」</p>
+          <p class="price">7,990円</p>
+          <p class="review">★ 4.78（レビュー25,360件）</p>
+          
+          <textarea id="cap14" readonly>地味にQOL上がるアイテム🙆
 
-【天板 水に強い 耐荷重10kg ズレない 板 中が透けない 壁付き チェスト …】
-💰 2,299円（送料などは商品ページで確認してね）
+【【公式・正規品】 ポット型浄水器用カートリッジ マクストラプロ ピュアパフォー…】
+💰 7,990円（送料などは商品ページで確認してね）
 
 気になったら下の商品をタップしてチェックしてね👇
 フォローしてくれたら嬉しいです☺️
 
-#楽天ROOM #丁寧な暮らし #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+#楽天ROOM #時短家電 #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
           <div class="steps">
-            <button class="stepk" onclick="copyKw(28)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(28)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(28)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00pui9n.ykqhoad1.g00pui9n.ykqhpad0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fe-kurashi%2Fs1y43%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk28" value="https://hb.afl.rakuten.co.jp/hgc/g00pui9n.ykqhoad1.g00pui9n.ykqhpad0/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fe-kurashi%2Fs1y43%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw28" value="天板 水に強い 耐荷重10kg ズレない">
+            <button class="stepk" onclick="copyKw(14)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(14)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(14)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00tbsun.ykqho107.g00tbsun.ykqhp249/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbrita%2Fmaxtraplus-8%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk14" value="https://hb.afl.rakuten.co.jp/hgc/g00tbsun.ykqho107.g00tbsun.ykqhp249/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fbrita%2Fmaxtraplus-8%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw14" value="ポット型浄水器用カートリッジ マクストラプロ ピュアパフォーマンス 8個セット">
           </div>
-          <button class="donebtn" onclick="toggleDone(28)">✓ 投稿済みにする</button>
+          <button class="donebtn" onclick="toggleDone(14)">✓ 投稿済みにする</button>
         </div>
-        <div class="card" id="card29" data-key="https://hb.afl.rakuten.co.jp/hgc/g00rgpgn.ykqho754.g00rgpgn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fauc-kaei-trading%2Fzk-snb02-all%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+        <div class="card" id="card15" data-key="https://hb.afl.rakuten.co.jp/hgc/g00tyy9n.ykqho219.g00tyy9n.ykqhp989/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fazusa%2F0302%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
           <div class="cardtop">
-            <div class="badge">インテリア・寝具・収納・5位</div>
+            <div class="badge">家電・4位</div>
             
             <span class="donetag">✅ 投稿済み</span>
           </div>
-          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/auc-kaei-trading/cabinet/zk-snb02/snb02-2026.jpg?_ex=300x300" alt="" loading="lazy">
-          <h3>【50%オフクーポン】即納 収納ボックス 収納ケース チェスト 折りたたみ 収納 ふた付き キャスター付き 5面開き 前開き 27L 40L 53L 82L 屋外 おしゃれ プラスチック 衣装ケース コンテナ ボックス 衣類 布団</h3>
-          <p class="price">2,580円</p>
-          <textarea id="cap29" readonly>お部屋の“ごちゃつき”がすっきり🧺
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/azusa/cabinet/h8fan/h08pro_main02.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>酷暑SALE！980円〜【楽天1位★テレビ紹介】 ハンディファン 冷却プレート 120段階 携帯扇風機 5000mAh 3200mAh クーラー 冷却プレート 強風 冷却モード 扇風機 卓上 小型扇風機 ハンディ扇風機 手持ち扇風機 腰掛け扇風機 usb充電式 扇風機 usb ネッククーラー 父の日</h3>
+          <p class="catch">「暮らしがぐっとラクに⚡」</p>
+          <p class="price">2,780円</p>
+          <p class="review">★ 4.4（レビュー17,150件）</p>
+          
+          <textarea id="cap15" readonly>一度使うと手放せないやつ✨
 
-【【50%オフクーポン】即納 収納ボックス 収納ケース チェスト 折りたたみ 収…】
-💰 2,580円（送料などは商品ページで確認してね）
+【酷暑SALE！980円〜【楽天1位★テレビ紹介】 ハンディファン 冷却プレート…】
+💰 2,780円（送料などは商品ページで確認してね）
 
 気になったら下の商品をタップしてチェックしてね👇
 フォローしてくれたら嬉しいです☺️
 
-#楽天ROOM #丁寧な暮らし #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+#楽天ROOM #時短家電 #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
           <div class="steps">
-            <button class="stepk" onclick="copyKw(29)">① 🔍 検索用キーワードをコピー</button>
-            <button class="step1" onclick="copyCap(29)">② 投稿文をコピー</button>
-            <button class="step2" onclick="copyLink(29)">商品リンクをコピー</button>
-            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00rgpgn.ykqho754.g00rgpgn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fauc-kaei-trading%2Fzk-snb02-all%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
-            <input type="hidden" id="lnk29" value="https://hb.afl.rakuten.co.jp/hgc/g00rgpgn.ykqho754.g00rgpgn.ykqhpe82/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fauc-kaei-trading%2Fzk-snb02-all%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
-            <input type="hidden" id="kw29" value="収納ボックス 収納ケース チェスト 折りたたみ">
+            <button class="stepk" onclick="copyKw(15)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(15)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(15)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00tyy9n.ykqho219.g00tyy9n.ykqhp989/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fazusa%2F0302%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk15" value="https://hb.afl.rakuten.co.jp/hgc/g00tyy9n.ykqho219.g00tyy9n.ykqhp989/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fazusa%2F0302%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw15" value="酷暑SALE ハンディファン 冷却プレート 120段階">
           </div>
-          <button class="donebtn" onclick="toggleDone(29)">✓ 投稿済みにする</button>
+          <button class="donebtn" onclick="toggleDone(15)">✓ 投稿済みにする</button>
+        </div>
+        <div class="card" id="card17" data-key="https://hb.afl.rakuten.co.jp/hgc/g00s3wvn.ykqho4bc.g00s3wvn.ykqhp63b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsmahoservice%2Fw301984-4%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+          <div class="cardtop">
+            <div class="badge">キッチン・2位</div>
+            
+            <span class="donetag">✅ 投稿済み</span>
+          </div>
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/smahoservice/cabinet/w/w302430/w302430_2026.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>＼⭐限定SALE♪10％OFFクーポン✨／【日本人気デザイナー監修 特別版登場！楽天年間ランキング1位】レディーススマートウォッチ QS16PRO 小さめ腕時計 通話機能 24時間健康管理 1.9インチ大画面 IP68防水 歩数計 心拍数 着信通知 睡眠モード 音楽製御 iPhone/Android対応</h3>
+          <p class="catch">「毎日のごはんの相棒🥢」</p>
+          <p class="price">2,980円</p>
+          <p class="review">★ 4.39（レビュー49,215件）</p>
+          
+          <textarea id="cap17" readonly>料理がちょっと楽しくなる、名脇役🍳
+
+【＼⭐限定SALE♪10％OFFクーポン✨／【日本人気デザイナー監修 特別版登場…】
+💰 2,980円（送料などは商品ページで確認してね）
+
+気になったら下の商品をタップしてチェックしてね👇
+フォローしてくれたら嬉しいです☺️
+
+#楽天ROOM #キッチングッズ #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+          <div class="steps">
+            <button class="stepk" onclick="copyKw(17)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(17)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(17)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00s3wvn.ykqho4bc.g00s3wvn.ykqhp63b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsmahoservice%2Fw301984-4%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk17" value="https://hb.afl.rakuten.co.jp/hgc/g00s3wvn.ykqho4bc.g00s3wvn.ykqhp63b/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fsmahoservice%2Fw301984-4%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw17" value="＼⭐限定SALE レディーススマートウォッチ QS16PRO 小さめ腕時計">
+          </div>
+          <button class="donebtn" onclick="toggleDone(17)">✓ 投稿済みにする</button>
+        </div>
+        <div class="card" id="card18" data-key="https://hb.afl.rakuten.co.jp/hgc/g00rb8hn.ykqho99e.g00rb8hn.ykqhpc65/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fgryps-%2Fs-mq24%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+          <div class="cardtop">
+            <div class="badge">キッチン・4位</div>
+            
+            <span class="donetag">✅ 投稿済み</span>
+          </div>
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/gryps-/cabinet/series/mq-24_1.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>【10年保証】【日本未発売】CASIO STANDARD MEN カシオ スタンダード MQ-24 腕時計 時計 ブランド メンズ レディース キッズ 子供 男の子 女の子 チープカシオ チプカシ アナログ ブラック 黒 ホワイト 白 銀 金 薄型 軽量 軽い 海外モデル ギフト プレゼント</h3>
+          <p class="catch">「料理が楽しくなる🍳」</p>
+          <p class="price">1,890円</p>
+          <p class="review">★ 4.7（レビュー17,153件）</p>
+          
+          <textarea id="cap18" readonly>あってよかった〜ってなるキッチン道具✨
+
+【【10年保証】【日本未発売】CASIO STANDARD MEN カシオ スタ…】
+💰 1,890円（送料などは商品ページで確認してね）
+
+気になったら下の商品をタップしてチェックしてね👇
+フォローしてくれたら嬉しいです☺️
+
+#楽天ROOM #キッチングッズ #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+          <div class="steps">
+            <button class="stepk" onclick="copyKw(18)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(18)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(18)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00rb8hn.ykqho99e.g00rb8hn.ykqhpc65/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fgryps-%2Fs-mq24%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk18" value="https://hb.afl.rakuten.co.jp/hgc/g00rb8hn.ykqho99e.g00rb8hn.ykqhpc65/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Fgryps-%2Fs-mq24%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw18" value="CASIO STANDARD MEN カシオ">
+          </div>
+          <button class="donebtn" onclick="toggleDone(18)">✓ 投稿済みにする</button>
+        </div>
+        <div class="card" id="card19" data-key="https://hb.afl.rakuten.co.jp/hgc/g00tre1n.ykqhoe40.g00tre1n.ykqhpcfe/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Funboxroom%2Fsw-p18t_c%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+          <div class="cardtop">
+            <div class="badge">キッチン・5位</div>
+            
+            <span class="donetag">✅ 投稿済み</span>
+          </div>
+          <img src="https://thumbnail.image.rakuten.co.jp/@0_mall/unboxroom/cabinet/sw/sw-p20/sw-p20main2.jpg?_ex=300x300" alt="" loading="lazy">
+          <h3>【テストする女性誌「LDK」ベストバイ受賞】 スマートウォッチ レディース 小さめ Primo 常時表示 AMOLEDディスプレイ 通話機能 薄型 防水 iphone Android LINE通知 日本語 腕時計 メンズ ラッピング無料 ギフト プレゼント （SW-P18Nリニューアル）</h3>
+          <p class="catch">「洗い物までラクに🧽」</p>
+          <p class="price">5,980円</p>
+          <p class="review">★ 4.37（レビュー11,284件）</p>
+          
+          <textarea id="cap19" readonly>食卓がぱっと映えるやつ🍽️
+
+【【テストする女性誌「LDK」ベストバイ受賞】 スマートウォッチ レディース 小…】
+💰 5,980円（送料などは商品ページで確認してね）
+
+気になったら下の商品をタップしてチェックしてね👇
+フォローしてくれたら嬉しいです☺️
+
+#楽天ROOM #キッチングッズ #暮らしを楽しむ #買ってよかった #暮らしの記録 #日々のこと #楽天room初心者</textarea>
+          <div class="steps">
+            <button class="stepk" onclick="copyKw(19)">① 🔍 検索用キーワードをコピー</button>
+            <button class="step1" onclick="copyCap(19)">② 投稿文をコピー</button>
+            <button class="step2" onclick="copyLink(19)">商品リンクをコピー</button>
+            <a class="step3" href="https://hb.afl.rakuten.co.jp/hgc/g00tre1n.ykqhoe40.g00tre1n.ykqhpcfe/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Funboxroom%2Fsw-p18t_c%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f" target="_blank" rel="noopener">↗ 商品ページを開く</a>
+            <input type="hidden" id="lnk19" value="https://hb.afl.rakuten.co.jp/hgc/g00tre1n.ykqhoe40.g00tre1n.ykqhpcfe/?pc=https%3A%2F%2Fitem.rakuten.co.jp%2Funboxroom%2Fsw-p18t_c%2F&amp;rafcid=wsc_i_ra_b532ca9a-7c39-498b-ac78-e222837e874f">
+            <input type="hidden" id="kw19" value="スマートウォッチ レディース 小さめ Primo">
+          </div>
+          <button class="donebtn" onclick="toggleDone(19)">✓ 投稿済みにする</button>
         </div>
   </details>
 </div>
 <script>
-  var TOTAL = 30;
+  var TOTAL = 20;
 
   function flash(btn, msg) {
     var old = btn.textContent;
