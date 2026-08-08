@@ -24,8 +24,6 @@ from pathlib import Path
 import yaml
 from dotenv import load_dotenv
 
-from . import generator
-
 ROOT = Path(__file__).resolve().parent.parent
 CONFIG_PATH = ROOT / "config.yaml"
 TOPICS_PATH = ROOT / "topics.yaml"
@@ -60,6 +58,8 @@ def _article_to_markdown(article: generator.Article) -> str:
 
 
 def cmd_preview(cfg: dict, topics_data: dict) -> int:
+    from . import generator
+
     pending = _pending_topics(topics_data)
     if not pending:
         print("未投稿のトピックがありません。topics.yaml に追加してください。")
@@ -72,6 +72,8 @@ def cmd_preview(cfg: dict, topics_data: dict) -> int:
 
 
 def cmd_generate(cfg: dict, topics_data: dict) -> int:
+    from . import generator
+
     pending = _pending_topics(topics_data)
     if not pending:
         print("未投稿のトピックがありません。")
@@ -89,8 +91,8 @@ def cmd_generate(cfg: dict, topics_data: dict) -> int:
 
 
 def cmd_run(cfg: dict, topics_data: dict) -> int:
-    # publisher は Playwright に依存するので、実行時にだけ import する。
-    from . import publisher
+    # generator は anthropic、publisher は Playwright に依存するので実行時に import。
+    from . import generator, publisher
 
     pending = _pending_topics(topics_data)
     if not pending:
@@ -132,7 +134,7 @@ def cmd_run(cfg: dict, topics_data: dict) -> int:
 
 def cmd_publish_file(cfg: dict, args) -> int:
     """既存の .md 原稿（STORY MINING STUDIO の出力など）を note に投稿する."""
-    from . import mdfile, publisher
+    from . import mdfile
 
     path = Path(args.path)
     if not path.exists():
@@ -142,10 +144,38 @@ def cmd_publish_file(cfg: dict, args) -> int:
     paid = args.paid or cfg["sale"].get("enabled", False)
     doc = mdfile.parse(path.read_text(encoding="utf-8"), paid=paid)
     mode = "publish" if args.publish else cfg["publish"].get("mode", "draft")
+    is_paid = paid and doc.is_paid and bool(doc.paid_body)
+    price = int(args.price if args.price else cfg["sale"]["price"]) if is_paid else None
+
+    # --dry-run: ブラウザを起動せず、投稿内容の解析結果だけ表示する
+    if args.dry_run:
+        print("=" * 60)
+        print("[DRY RUN] 実際の投稿は行いません。解析結果を表示します。")
+        print(f"タイトル : {doc.title}")
+        print(f"投稿モード: {mode}（publish=公開 / draft=下書き）")
+        if is_paid:
+            print(f"販売    : 有料 {price}円")
+            print(f"無料パート: {len(doc.free_body or '')}字")
+            print(f"有料パート: {len(doc.paid_body or '')}字")
+            print("-" * 60)
+            print("【無料パート 末尾（有料ラインの直前）】")
+            print((doc.free_body or "")[-200:])
+            print("-" * 60)
+            print("【有料パート 冒頭】")
+            print((doc.paid_body or "")[:200])
+        else:
+            if paid:
+                print("販売    : 有料指定だが有料ライン未検出 → 無料扱い")
+            else:
+                print("販売    : 無料")
+            print(f"本文    : {len(doc.body)}字")
+        print("=" * 60)
+        return 0
+
+    from . import publisher
 
     print(f"タイトル: {doc.title}")
-    if paid and doc.is_paid and doc.paid_body:
-        price = int(args.price if args.price else cfg["sale"]["price"])
+    if is_paid:
         print(f"投稿中（有料 {price}円 / mode={mode}）...")
         publisher.publish(
             doc.title,
@@ -182,6 +212,11 @@ def main(argv: list[str] | None = None) -> int:
     pf.add_argument("--paid", action="store_true", help="有料noteとして投稿する")
     pf.add_argument("--price", type=int, default=None, help="価格（円）。未指定なら config の値")
     pf.add_argument("--publish", action="store_true", help="下書きでなく公開まで行う")
+    pf.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="投稿せず、解析結果（タイトル/有料ライン/価格）だけ表示する",
+    )
 
     args = parser.parse_args(argv)
 
