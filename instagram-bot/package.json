@@ -11,6 +11,7 @@
     "node": ">=20"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.68.0"
+    "@anthropic-ai/sdk": "^0.68.0",
+    "@napi-rs/canvas": "^1.0.8"
   }
 }
