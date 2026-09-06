@@ -63,15 +63,15 @@ const plan = {
     },
     {
       type: "cta",
-      kicker: "Just4Keepers Japan",
+      kicker: "KEEPIX",
       title: "Coach with purpose",
-      body: "Save this framework and use it in your next session. Follow for more GK coaching insight.",
+      body: "Save this framework for your next session. Follow for more GK coaching insight.",
     },
   ],
 };
 
 await mkdir(OUT, { recursive: true });
-const slides = renderSlides(plan);
+const slides = await renderSlides(plan);
 for (const s of slides) {
   await writeFile(path.join(OUT, s.name), s.buffer);
 }
