@@ -1,4 +1,53 @@
 {
-  "covered": [],
-  "series": null
+  "covered": [
+    "GKのポジショニング入門"
+  ],
+  "series": {
+    "id": "20260907-pzx5",
+    "sha": "dfa67c36b6051cb90872fb73f2d7545b48f6063b",
+    "topic": "GKのポジショニング入門",
+    "parts": [
+      {
+        "caption": "ポジショニングはGKの土台。まずは「立ち位置」の考え方から始めましょう。Part1ではボールとゴールを結ぶ基準線を解説します。次回は角度の詰め方へ。#Just4Keepers #ZERO #ゴールキーパー #GK #GKトレーニング #サッカー #ポジショニング #守護神 #育成年代 #サッカーコーチ #キーパー #守備",
+        "images": [
+          "content/zero-slides/20260907-pzx5/p1/01.png",
+          "content/zero-slides/20260907-pzx5/p1/02.png",
+          "content/zero-slides/20260907-pzx5/p1/03.png",
+          "content/zero-slides/20260907-pzx5/p1/04.png",
+          "content/zero-slides/20260907-pzx5/p1/05.png"
+        ],
+        "posted": false,
+        "mediaId": null,
+        "postedAt": null
+      },
+      {
+        "caption": "基準線に乗れたら次は角度。前に出ることで守る面積は大きく変わります。Part2では詰める判断とリスクを整理します。次回は最終回、クロス&ブレイクアウェイへ。#Just4Keepers #ZERO #ゴールキーパー #GK #GKトレーニング #ポジショニング #サッカー #守護神 #1対1 #育成年代 #キーパー #サッカーコーチ",
+        "images": [
+          "content/zero-slides/20260907-pzx5/p2/01.png",
+          "content/zero-slides/20260907-pzx5/p2/02.png",
+          "content/zero-slides/20260907-pzx5/p2/03.png",
+          "content/zero-slides/20260907-pzx5/p2/04.png",
+          "content/zero-slides/20260907-pzx5/p2/05.png",
+          "content/zero-slides/20260907-pzx5/p2/06.png"
+        ],
+        "posted": false,
+        "mediaId": null,
+        "postedAt": null
+      },
+      {
+        "caption": "最終回はゴールを離れる場面。クロスや背後のスペース管理はポジショニングの応用編です。Part3で連載を締めくくります。3部作、ぜひ保存して見返してください。#Just4Keepers #ZERO #ゴールキーパー #GK #GKトレーニング #ポジショニング #クロス対応 #スイーパーキーパー #サッカー #育成年代 #守護神 #キーパー",
+        "images": [
+          "content/zero-slides/20260907-pzx5/p3/01.png",
+          "content/zero-slides/20260907-pzx5/p3/02.png",
+          "content/zero-slides/20260907-pzx5/p3/03.png",
+          "content/zero-slides/20260907-pzx5/p3/04.png",
+          "content/zero-slides/20260907-pzx5/p3/05.png",
+          "content/zero-slides/20260907-pzx5/p3/06.png"
+        ],
+        "posted": false,
+        "mediaId": null,
+        "postedAt": null
+      }
+    ]
+  }
 }
