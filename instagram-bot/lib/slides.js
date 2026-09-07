@@ -8,10 +8,10 @@ const ASSETS = path.join(HERE, "..", "assets");
 const FONTS = path.join(ASSETS, "fonts");
 
 function firstExisting(paths) {
-  return paths.find((p) => existsSync(p));
+  return paths.find((p) => p && existsSync(p));
 }
 
-// Latin: prefer bundled, else system Liberation Sans (present on the CI runner).
+// Latin fonts: bundled if present, else system Liberation Sans (on the CI runner too).
 const LIB = "/usr/share/fonts/truetype/liberation";
 GlobalFonts.registerFromPath(
   firstExisting([path.join(FONTS, "Head.ttf"), `${LIB}/LiberationSans-Bold.ttf`]),
@@ -21,34 +21,41 @@ GlobalFonts.registerFromPath(
   firstExisting([path.join(FONTS, "Body.ttf"), `${LIB}/LiberationSans-Regular.ttf`]),
   "J4KBody",
 );
-// Japanese: bundled JP font, else system Noto CJK (workflow installs fonts-noto-cjk).
-const jp = firstExisting([
-  path.join(FONTS, "JP.ttf"),
+// Japanese (workflow installs fonts-noto-cjk). Register regular + bold as fallbacks.
+const jpReg = firstExisting([
   path.join(FONTS, "JP.otf"),
   "/usr/share/fonts/opentype/noto/NotoSansCJK-Regular.ttc",
-  "/usr/share/fonts/opentype/noto/NotoSansCJKjp-Regular.otf",
   "/usr/share/fonts/truetype/noto/NotoSansCJK-Regular.ttc",
 ]);
-if (jp) GlobalFonts.registerFromPath(jp, "J4KJP");
+const jpBold = firstExisting([
+  path.join(FONTS, "JP-Bold.otf"),
+  "/usr/share/fonts/opentype/noto/NotoSansCJK-Bold.ttc",
+  "/usr/share/fonts/truetype/noto/NotoSansCJK-Bold.ttc",
+]);
+if (jpReg) GlobalFonts.registerFromPath(jpReg, "J4KJP");
+if (jpBold) GlobalFonts.registerFromPath(jpBold, "J4KJPBold");
 
-// --- KEEPIX brand tokens (dark + mint green, matching the logo) ---
+const HEAD = jpBold ? "J4KHead, J4KJPBold" : "J4KHead";
+const BODY = jpReg ? "J4KBody, J4KJP" : "J4KBody";
+const WHITE = "#FFFFFF";
+
+// --- Brand presets. Reusable for both accounts (future "mixing"). ---
+export const BRANDS = {
+  keepix: {
+    bg: "#0B1512", accent: "#5FE3A1", body: "#D7DEDA", ink: "#08110D",
+    ctaBodyInk: "#123227", gray: "#93A29B",
+    handle: "@KEEPIX.GK_OFFICIAL", wordmark: "KEEPIX", logo: "keepix-logo.png",
+  },
+  zero: {
+    bg: "#0B0B0C", accent: "#FACC15", body: "#D6D8DB", ink: "#0B0B0C",
+    ctaBodyInk: "#1a1a1a", gray: "#9AA0A6",
+    handle: "@just4keepers_japan", wordmark: "ZERO", logo: "zero-logo.png",
+  },
+};
+
 const W = 1080;
 const H = 1350;
 const M = 96;
-const BG = "#0B1512"; // near-black green
-const ACCENT = "#5FE3A1"; // KEEPIX mint green
-const WHITE = "#FFFFFF";
-const GRAY = "#93A29B";
-const BODYCOL = "#D7DEDA";
-const INK = "#08110D"; // dark text on green
-const HEAD = jp ? "J4KHead, J4KJP" : "J4KHead";
-const BODY = jp ? "J4KBody, J4KJP" : "J4KBody";
-const HANDLE = "@KEEPIX.GK_OFFICIAL";
-
-const LOGO_PATH = firstExisting([
-  path.join(ASSETS, "keepix-logo.png"),
-  path.join(ASSETS, "logo.png"),
-]);
 
 function roundRect(ctx, x, y, w, h, r) {
   ctx.beginPath();
@@ -61,9 +68,8 @@ function roundRect(ctx, x, y, w, h, r) {
 }
 
 function wrapLines(ctx, text, maxWidth) {
-  // Word-based for Latin; falls back to char-based when a token is too wide (CJK).
   const out = [];
-  for (const rawWord of text.split(/\s+/).filter(Boolean)) {
+  for (const rawWord of String(text).split(/\s+/).filter(Boolean)) {
     let word = rawWord;
     while (ctx.measureText(word).width > maxWidth) {
       let i = 1;
@@ -88,130 +94,118 @@ function wrapLines(ctx, text, maxWidth) {
   return lines;
 }
 
-function drawBody(ctx, text, x, y, maxWidth, { size = 40, lineHeight = 1.45, color = BODYCOL } = {}) {
+function bodyMetrics(ctx, text, maxWidth, size, lineHeight = 1.5) {
   ctx.font = `${size}px ${BODY}`;
-  ctx.fillStyle = color;
-  ctx.textBaseline = "alphabetic";
   const lh = size * lineHeight;
-  let cursor = y;
-  const paragraphs = text.split(/\n+/).map((p) => p.trim()).filter(Boolean);
-  paragraphs.forEach((para, pi) => {
-    const bullet = /^[-*]\s+/.test(para);
-    const content = bullet ? para.replace(/^[-*]\s+/, "") : para;
+  const blocks = [];
+  let total = 0;
+  for (const [pi, para] of String(text).split(/\n+/).map((p) => p.trim()).filter(Boolean).entries()) {
+    const bullet = /^[-*・]\s*/.test(para);
+    const content = para.replace(/^[-*・]\s*/, "");
     const indent = bullet ? 44 : 0;
     const lines = wrapLines(ctx, content, maxWidth - indent);
-    lines.forEach((ln, li) => {
+    blocks.push({ lines, bullet, indent });
+    total += lines.length * lh;
+    if (pi > 0) total += lh * 0.4;
+  }
+  return { blocks, lh, height: total + (blocks.length - 1) * lh * 0.4 };
+}
+
+function drawBody(ctx, b, text, x, y, maxWidth, size) {
+  const { blocks, lh } = bodyMetrics(ctx, text, maxWidth, size);
+  ctx.font = `${size}px ${BODY}`;
+  ctx.textBaseline = "alphabetic";
+  let cursor = y;
+  blocks.forEach((blk, i) => {
+    if (i > 0) cursor += lh * 0.4;
+    blk.lines.forEach((ln, li) => {
       cursor += lh;
-      if (bullet && li === 0) {
-        ctx.fillStyle = ACCENT;
+      if (blk.bullet && li === 0) {
+        ctx.fillStyle = b.accent;
         ctx.fillText("•", x, cursor);
-        ctx.fillStyle = color;
       }
-      ctx.fillText(ln, x + indent, cursor);
+      ctx.fillStyle = b.body;
+      ctx.fillText(ln, x + blk.indent, cursor);
     });
-    if (pi < paragraphs.length - 1) cursor += lh * 0.45;
   });
   return cursor;
 }
 
-function measureBodyHeight(ctx, text, maxWidth, size, lineHeight = 1.45) {
-  ctx.font = `${size}px ${BODY}`;
-  const lh = size * lineHeight;
-  let h = 0;
-  const paragraphs = text.split(/\n+/).map((p) => p.trim()).filter(Boolean);
-  paragraphs.forEach((para, pi) => {
-    const bullet = /^[-*]\s+/.test(para);
-    const content = bullet ? para.replace(/^[-*]\s+/, "") : para;
-    const indent = bullet ? 44 : 0;
-    h += wrapLines(ctx, content, maxWidth - indent).length * lh;
-    if (pi < paragraphs.length - 1) h += lh * 0.45;
-  });
-  return h;
-}
-
-function drawLogo(ctx, logo, x, y, size, onAccent) {
+function drawLogo(ctx, b, logo, x, y, size, onAccent) {
   if (logo) {
     ctx.drawImage(logo, x, y, size, size);
-    return size;
+    return;
   }
-  // Fallback wordmark
   ctx.font = `bold ${Math.round(size * 0.5)}px ${HEAD}`;
-  ctx.fillStyle = onAccent ? INK : ACCENT;
+  ctx.fillStyle = onAccent ? b.ink : b.accent;
   ctx.textBaseline = "alphabetic";
-  ctx.fillText("KEEPIX", x, y + size * 0.62);
-  return size;
+  ctx.fillText(b.wordmark, x, y + size * 0.62);
 }
 
-function footer(ctx, rightText, { onAccent = false } = {}) {
+function footer(ctx, b, rightText, onAccent) {
   const y = H - M;
-  ctx.strokeStyle = onAccent ? "rgba(8,17,13,0.25)" : "rgba(255,255,255,0.14)";
+  ctx.strokeStyle = onAccent ? "rgba(0,0,0,0.22)" : "rgba(255,255,255,0.14)";
   ctx.lineWidth = 2;
   ctx.beginPath();
   ctx.moveTo(M, y - 46);
   ctx.lineTo(W - M, y - 46);
   ctx.stroke();
-  ctx.font = `24px ${BODY}`;
   ctx.textBaseline = "alphabetic";
-  ctx.fillStyle = onAccent ? "rgba(8,17,13,0.75)" : GRAY;
+  ctx.font = `24px ${BODY}`;
+  ctx.fillStyle = onAccent ? "rgba(0,0,0,0.72)" : b.gray;
   ctx.textAlign = "left";
-  ctx.fillText(HANDLE, M, y);
+  ctx.fillText(b.handle, M, y);
   if (rightText) {
     ctx.textAlign = "right";
-    ctx.fillStyle = onAccent ? INK : ACCENT;
+    ctx.fillStyle = onAccent ? b.ink : b.accent;
     ctx.font = `bold 24px ${HEAD}`;
     ctx.fillText(rightText, W - M, y);
   }
   ctx.textAlign = "left";
 }
 
-function drawCover(ctx, s, logo) {
-  ctx.fillStyle = BG;
+function drawCover(ctx, b, s, logo) {
+  ctx.fillStyle = b.bg;
   ctx.fillRect(0, 0, W, H);
+  if (logo) drawLogo(ctx, b, logo, M, 150, 132, false);
 
-  if (logo) drawLogo(ctx, logo, M, 150, 132, false);
-
-  const kicker = (s.kicker || "GK COACHING").toUpperCase();
-  ctx.fillStyle = ACCENT;
+  ctx.fillStyle = b.accent;
   ctx.fillRect(M, 372, 64, 8);
   ctx.font = `bold 30px ${HEAD}`;
-  ctx.fillStyle = ACCENT;
+  ctx.fillStyle = b.accent;
   ctx.textBaseline = "alphabetic";
-  ctx.fillText(spaced(kicker), M, 354);
+  ctx.fillText(spaced((s.kicker || "GK COACHING")), M, 354);
 
-  ctx.font = `90px ${HEAD}`;
+  ctx.font = `86px ${HEAD}`;
   ctx.fillStyle = WHITE;
-  const titleLines = wrapLines(ctx, s.title || "", W - M * 2);
   let y = 470;
-  for (const ln of titleLines) {
-    y += 96;
+  for (const ln of wrapLines(ctx, s.title || "", W - M * 2)) {
+    y += 94;
     ctx.fillText(ln, M, y);
   }
-
   if (s.subtitle) {
     ctx.font = `40px ${BODY}`;
-    ctx.fillStyle = GRAY;
-    const subLines = wrapLines(ctx, s.subtitle, W - M * 2);
-    y += 40;
-    for (const ln of subLines) {
-      y += 54;
+    ctx.fillStyle = b.gray;
+    y += 30;
+    for (const ln of wrapLines(ctx, s.subtitle, W - M * 2)) {
+      y += 56;
       ctx.fillText(ln, M, y);
     }
   }
-
-  footer(ctx, "SWIPE →");
+  footer(ctx, b, "SWIPE →", false);
 }
 
-function drawContent(ctx, s, index, total) {
-  ctx.fillStyle = BG;
+function drawContent(ctx, b, s, index, total) {
+  ctx.fillStyle = b.bg;
   ctx.fillRect(0, 0, W, H);
 
   let y = 210;
   if (s.badge) {
-    ctx.fillStyle = ACCENT;
+    ctx.fillStyle = b.accent;
     roundRect(ctx, M, y, 96, 96, 22);
     ctx.fill();
-    ctx.fillStyle = INK;
-    ctx.font = `56px ${HEAD}`;
+    ctx.fillStyle = b.ink;
+    ctx.font = `54px ${HEAD}`;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillText(String(s.badge), M + 48, y + 52);
@@ -219,89 +213,87 @@ function drawContent(ctx, s, index, total) {
     ctx.textBaseline = "alphabetic";
     y += 150;
   } else {
-    ctx.fillStyle = ACCENT;
+    ctx.fillStyle = b.accent;
     ctx.fillRect(M, y, 64, 8);
     y += 40;
   }
 
-  ctx.font = `58px ${HEAD}`;
+  ctx.font = `56px ${HEAD}`;
   ctx.fillStyle = WHITE;
-  const headLines = wrapLines(ctx, s.heading || "", W - M * 2);
-  for (const ln of headLines) {
-    y += 66;
+  for (const ln of wrapLines(ctx, s.heading || "", W - M * 2)) {
+    y += 64;
     ctx.fillText(ln, M, y);
   }
 
-  y += 30;
+  y += 34;
   const maxWidth = W - M * 2;
   const available = H - M - 70 - y;
   let size = 40;
-  for (const trySize of [40, 37, 34, 31, 28]) {
+  for (const trySize of [40, 37, 34, 31, 28, 26]) {
     size = trySize;
-    if (measureBodyHeight(ctx, s.body || "", maxWidth, trySize) <= available) break;
+    if (bodyMetrics(ctx, s.body || "", maxWidth, trySize).height <= available) break;
   }
-  drawBody(ctx, s.body || "", M, y, maxWidth, { size });
-
-  footer(ctx, `${index} / ${total}`);
+  drawBody(ctx, b, s.body || "", M, y, maxWidth, size);
+  footer(ctx, b, `${index} / ${total}`, false);
 }
 
-function drawCta(ctx, s, logo) {
-  ctx.fillStyle = ACCENT;
+function drawCta(ctx, b, s, logo) {
+  ctx.fillStyle = b.accent;
   ctx.fillRect(0, 0, W, H);
+  if (logo) drawLogo(ctx, b, logo, M, 150, 132, true);
 
-  if (logo) drawLogo(ctx, logo, M, 150, 132, true);
-
-  ctx.fillStyle = INK;
+  ctx.fillStyle = b.ink;
   ctx.font = `bold 30px ${HEAD}`;
-  ctx.fillText(spaced((s.kicker || "KEEPIX").toUpperCase()), M, 360);
+  ctx.fillText(spaced((s.kicker || b.wordmark)), M, 360);
 
-  ctx.font = `82px ${HEAD}`;
-  const titleLines = wrapLines(ctx, s.title || "", W - M * 2);
+  ctx.font = `78px ${HEAD}`;
   let y = 420;
-  for (const ln of titleLines) {
-    y += 90;
+  for (const ln of wrapLines(ctx, s.title || "", W - M * 2)) {
+    y += 88;
     ctx.fillText(ln, M, y);
   }
-
   if (s.body) {
-    y += 30;
     ctx.font = `40px ${BODY}`;
-    ctx.fillStyle = "#123227";
-    const lines = wrapLines(ctx, s.body, W - M * 2);
-    for (const ln of lines) {
+    ctx.fillStyle = b.ctaBodyInk;
+    y += 30;
+    for (const ln of wrapLines(ctx, s.body, W - M * 2)) {
       y += 56;
       ctx.fillText(ln, M, y);
     }
   }
-
-  ctx.font = `48px ${HEAD}`;
-  ctx.fillStyle = INK;
-  ctx.fillText(HANDLE, M, H - M - 90);
-
-  footer(ctx, "FOLLOW", { onAccent: true });
+  ctx.font = `46px ${HEAD}`;
+  ctx.fillStyle = b.ink;
+  ctx.fillText(b.handle, M, H - M - 90);
+  footer(ctx, b, "FOLLOW", true);
 }
 
 function spaced(str) {
-  return str.split("").join(" ");
+  // Latin gets letter-spacing; leave CJK alone (spacing looks bad on kana/kanji).
+  return /[^\x00-\x7F]/.test(str) ? str : String(str).toUpperCase().split("").join(" ");
 }
 
-function renderSlide(slide, index, total, logo) {
+function renderSlide(b, slide, index, total, logo) {
   const canvas = createCanvas(W, H);
   const ctx = canvas.getContext("2d");
-  if (slide.type === "cover") drawCover(ctx, slide, logo);
-  else if (slide.type === "cta") drawCta(ctx, slide, logo);
-  else drawContent(ctx, slide, index, total);
+  if (slide.type === "cover") drawCover(ctx, b, slide, logo);
+  else if (slide.type === "cta") drawCta(ctx, b, slide, logo);
+  else drawContent(ctx, b, slide, index, total);
   return canvas.toBuffer("image/png");
 }
 
 /**
- * Render a slide plan to an array of { name, buffer } PNG slides.
+ * Render a slide plan to PNG slides.
+ * @param {object} plan  { slides: [...] }
+ * @param {string|object} brand  brand name ('keepix' | 'zero') or a brand config object
+ * @returns {Promise<Array<{name:string, buffer:Buffer}>>}
  */
-export async function renderSlides(plan) {
-  const logo = LOGO_PATH ? await loadImage(LOGO_PATH) : null;
+export async function renderSlides(plan, brand = "keepix") {
+  const b = typeof brand === "string" ? BRANDS[brand] || BRANDS.keepix : brand;
+  const logoPath = firstExisting([path.join(ASSETS, b.logo), path.join(ASSETS, "logo.png")]);
+  const logo = logoPath ? await loadImage(logoPath) : null;
   const slides = plan.slides || [];
   return slides.map((slide, i) => ({
     name: `${String(i + 1).padStart(2, "0")}.png`,
-    buffer: renderSlide(slide, i + 1, slides.length, logo),
+    buffer: renderSlide(b, slide, i + 1, slides.length, logo),
   }));
 }
