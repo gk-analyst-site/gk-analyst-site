@@ -260,9 +260,13 @@ function drawCta(ctx, b, s, logo) {
   ctx.fillRect(0, 0, W, H);
   drawLogo(ctx, b, logo, M, 150, 96, true);
 
-  ctx.fillStyle = b.ink;
-  ctx.font = `bold 30px ${HEAD}`;
-  ctx.fillText(spaced((s.kicker || b.wordmark)), M, 360);
+  // Skip a kicker that merely repeats the wordmark (the logo already shows it).
+  const ctaKicker = (s.kicker || "").trim();
+  if (ctaKicker && ctaKicker.toUpperCase() !== b.wordmark.toUpperCase()) {
+    ctx.fillStyle = b.ink;
+    ctx.font = `bold 30px ${HEAD}`;
+    ctx.fillText(spaced(ctaKicker), M, 360);
+  }
 
   ctx.font = `78px ${HEAD}`;
   let y = 420;
