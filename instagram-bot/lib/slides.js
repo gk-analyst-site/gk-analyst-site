@@ -50,6 +50,7 @@ export const BRANDS = {
     bg: "#0B0B0C", accent: "#FACC15", body: "#D6D8DB", ink: "#0B0B0C",
     ctaBodyInk: "#1a1a1a", gray: "#9AA0A6",
     handle: "@just4keepers_japan", wordmark: "ZERO", logo: "zero-logo.png",
+    logoChip: true,
   },
 };
 
@@ -131,15 +132,32 @@ function drawBody(ctx, b, text, x, y, maxWidth, size) {
   return cursor;
 }
 
-function drawLogo(ctx, b, logo, x, y, size, onAccent) {
+function drawLogo(ctx, b, logo, x, y, boxH, onAccent) {
   if (logo) {
-    ctx.drawImage(logo, x, y, size, size);
+    const ratio = (logo.width || 1) / (logo.height || 1);
+    let h = boxH;
+    let w = boxH * ratio;
+    const maxW = 520;
+    if (w > maxW) {
+      w = maxW;
+      h = w / ratio;
+    }
+    // Logo art is dark-on-transparent; on the dark cover it needs a white chip.
+    if (b.logoChip && !onAccent) {
+      const pad = 18;
+      ctx.fillStyle = "#FFFFFF";
+      roundRect(ctx, x, y, w + pad * 2, h + pad * 2, 18);
+      ctx.fill();
+      ctx.drawImage(logo, x + pad, y + pad, w, h);
+    } else {
+      ctx.drawImage(logo, x, y, w, h);
+    }
     return;
   }
-  ctx.font = `bold ${Math.round(size * 0.5)}px ${HEAD}`;
+  ctx.font = `bold ${Math.round(boxH * 0.92)}px ${HEAD}`;
   ctx.fillStyle = onAccent ? b.ink : b.accent;
   ctx.textBaseline = "alphabetic";
-  ctx.fillText(b.wordmark, x, y + size * 0.62);
+  ctx.fillText(b.wordmark, x, y + boxH * 0.9);
 }
 
 function footer(ctx, b, rightText, onAccent) {
@@ -167,7 +185,7 @@ function footer(ctx, b, rightText, onAccent) {
 function drawCover(ctx, b, s, logo) {
   ctx.fillStyle = b.bg;
   ctx.fillRect(0, 0, W, H);
-  if (logo) drawLogo(ctx, b, logo, M, 150, 132, false);
+  drawLogo(ctx, b, logo, M, 150, 96, false);
 
   ctx.fillStyle = b.accent;
   ctx.fillRect(M, 372, 64, 8);
@@ -240,7 +258,7 @@ function drawContent(ctx, b, s, index, total) {
 function drawCta(ctx, b, s, logo) {
   ctx.fillStyle = b.accent;
   ctx.fillRect(0, 0, W, H);
-  if (logo) drawLogo(ctx, b, logo, M, 150, 132, true);
+  drawLogo(ctx, b, logo, M, 150, 96, true);
 
   ctx.fillStyle = b.ink;
   ctx.font = `bold 30px ${HEAD}`;

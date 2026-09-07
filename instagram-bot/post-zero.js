@@ -86,7 +86,7 @@ async function createSeries(state) {
       await writeFile(path.join(absDir, s.name), s.buffer);
       images.push(`${relDir}/${s.name}`);
     }
-    parts.push({ caption: part.caption, images, posted: false, mediaId: null, postedAt: null });
+    parts.push({ caption: part.caption, plan: part.slides, images, posted: false, mediaId: null, postedAt: null });
   }
 
   // Commit the slide images to get a content-addressed SHA for image URLs.
