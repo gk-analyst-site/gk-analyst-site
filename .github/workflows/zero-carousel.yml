@@ -1,0 +1,48 @@
+name: ZERO GK carousel (Mon/Wed/Fri)
+
+on:
+  schedule:
+    # 月・水・金 UTC 00:00 = 日本時間(JST) 09:00
+    - cron: "0 0 * * 1,3,5"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Generate & render only (do not post)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: zero-carousel
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install Japanese fonts
+        run: sudo apt-get update && sudo apt-get install -y fonts-noto-cjk
+
+      - name: Install dependencies
+        working-directory: instagram-bot
+        run: npm install
+
+      - name: Generate & publish next ZERO carousel
+        working-directory: instagram-bot
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: npm run post:zero

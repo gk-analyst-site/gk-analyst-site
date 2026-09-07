@@ -5,7 +5,8 @@
   "type": "module",
   "description": "J4K (Just4Keepers Japan) Instagram auto-poster: picks the next queued image, generates a caption with Claude, and publishes via the Instagram Graph API.",
   "scripts": {
-    "post": "node post.js"
+    "post": "node post.js",
+    "post:zero": "node post-zero.js"
   },
   "engines": {
     "node": ">=20"
