@@ -289,6 +289,40 @@ function drawCta(ctx, b, s, logo) {
   footer(ctx, b, "FOLLOW", true);
 }
 
+// A standalone single-image "tip" card (no swipe): logo, category, heading, body.
+function drawTip(ctx, b, s, logo) {
+  ctx.fillStyle = b.bg;
+  ctx.fillRect(0, 0, W, H);
+  drawLogo(ctx, b, logo, M, 140, 84, false);
+
+  let y = 372;
+  ctx.fillStyle = b.accent;
+  ctx.fillRect(M, y, 64, 8);
+  ctx.font = `bold 30px ${HEAD}`;
+  ctx.fillStyle = b.accent;
+  ctx.textBaseline = "alphabetic";
+  ctx.fillText(spaced(s.category || s.kicker || "GK豆知識"), M, y - 18);
+
+  y += 48;
+  ctx.font = `64px ${HEAD}`;
+  ctx.fillStyle = WHITE;
+  for (const ln of wrapLines(ctx, s.title || s.heading || "", W - M * 2)) {
+    y += 74;
+    ctx.fillText(ln, M, y);
+  }
+
+  y += 40;
+  const maxWidth = W - M * 2;
+  const available = H - M - 70 - y;
+  let size = 40;
+  for (const trySize of [40, 37, 34, 31, 28]) {
+    size = trySize;
+    if (bodyMetrics(ctx, s.body || "", maxWidth, trySize).height <= available) break;
+  }
+  drawBody(ctx, b, s.body || "", M, y, maxWidth, size);
+  footer(ctx, b, "保存 ▷", false);
+}
+
 function spaced(str) {
   // Latin gets letter-spacing; leave CJK alone (spacing looks bad on kana/kanji).
   return /[^\x00-\x7F]/.test(str) ? str : String(str).toUpperCase().split("").join(" ");
@@ -299,6 +333,7 @@ function renderSlide(b, slide, index, total, logo) {
   const ctx = canvas.getContext("2d");
   if (slide.type === "cover") drawCover(ctx, b, slide, logo);
   else if (slide.type === "cta") drawCta(ctx, b, slide, logo);
+  else if (slide.type === "tip") drawTip(ctx, b, slide, logo);
   else drawContent(ctx, b, slide, index, total);
   return canvas.toBuffer("image/png");
 }
