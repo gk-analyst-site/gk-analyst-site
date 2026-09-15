@@ -1,10 +1,11 @@
 name: J4K Instagram daily post
 
+# NOTE: The automatic daily schedule is retired. Product images are now posted
+# by the "J4K daily card" workflow (Tue/Thu/Sat), which posts a queued product
+# image if one exists and otherwise an AI GK-tip card. This workflow remains for
+# manual, one-off product posts via "Run workflow".
 on:
-  schedule:
-    # 毎日 UTC 00:00 = 日本時間(JST) 09:00 に実行
-    - cron: "0 0 * * *"
-  workflow_dispatch: {} # 手動実行も可能
+  workflow_dispatch: {} # 手動実行のみ
 
 permissions:
   contents: write # queue.json の更新をコミットするために必要

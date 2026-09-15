@@ -12,11 +12,25 @@ const SYSTEM = `あなたはゴールキーパー(GK)専門の指導者兼SNSコ
 - 各パートは「1枚で完結しすぎず、続きが気になる」構成にする(小出し/連載)。
 - 出力は指定のJSONのみ。前後に説明文やコードフェンスを付けない。`;
 
-function buildUserPrompt(covered) {
+// Rotate the carousel format so the feed stays varied (all use the same slide
+// types: cover / content / cta).
+const FORMATS = [
+  { key: "解説連載", directive: "オーソドックスな解説連載。各パートで技術・戦術を段階的に深掘りする。" },
+  { key: "クイズ形式", directive: "クイズ形式。cover で実戦のGK状況を問いとして提示し、content で選択肢や考え方→答えと根拠を解説、cta で次の問題を予告する。" },
+  { key: "GK用語集", directive: "GK用語をやさしく解説する用語集。各パートで1〜2個の用語を、意味・具体例・実戦での使いどころに分けて中学生でもわかるように説明する。" },
+  { key: "よくある誤解", directive: "よくある誤解を正すミス解説。cover で「ありがちな思い込み(×)」を提示し、content で「正しい理解(○)」と理由・改善策を示す。" },
+];
+
+export function pickFormat() {
+  return FORMATS[Math.floor(Math.random() * FORMATS.length)];
+}
+
+function buildUserPrompt(covered, format) {
   const avoid = covered.length
     ? `次のトピックは既出なので避けてください:\n- ${covered.join("\n- ")}`
     : "まだ何も投稿していません。";
   return `新しいGK指導テーマで、全3パートの連載カルーセルを日本語で作ってください。
+今回のフォーマット: 「${format.key}」 — ${format.directive}
 ${avoid}
 
 各パートの構成:
@@ -54,11 +68,13 @@ function extractJson(text) {
  * @returns {Promise<{topic:string, parts:Array<{caption:string, slides:object[]}>}>}
  */
 export async function generateSeries(covered = []) {
+  const format = pickFormat();
+  console.log(`Series format: ${format.key}`);
   const res = await client.messages.create({
     model: "claude-opus-4-8",
     max_tokens: 8000,
     system: SYSTEM,
-    messages: [{ role: "user", content: buildUserPrompt(covered) }],
+    messages: [{ role: "user", content: buildUserPrompt(covered, format) }],
   });
   const text = res.content.filter((b) => b.type === "text").map((b) => b.text).join("").trim();
   const plan = extractJson(text);
