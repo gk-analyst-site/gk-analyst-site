@@ -13,6 +13,19 @@ const CONTEXT_PATH = path.join(HERE, "content", "context.json");
 
 const IMAGE_EXTENSIONS = new Set([".jpg", ".jpeg", ".png", ".webp"]);
 
+// A dropped file can be empty or corrupt (e.g. a 2-byte placeholder). Verify the
+// bytes actually start with a known image signature before trying to post it, so
+// one bad file is skipped instead of halting the whole queue.
+function looksLikeImage(buf) {
+  if (!buf || buf.length < 100) return false;
+  const isPng = buf[0] === 0x89 && buf[1] === 0x50 && buf[2] === 0x4e && buf[3] === 0x47;
+  const isJpeg = buf[0] === 0xff && buf[1] === 0xd8 && buf[2] === 0xff;
+  const isWebp =
+    buf[0] === 0x52 && buf[1] === 0x49 && buf[2] === 0x46 && buf[3] === 0x46 &&
+    buf[8] === 0x57 && buf[9] === 0x45 && buf[10] === 0x42 && buf[11] === 0x50;
+  return isPng || isJpeg || isWebp;
+}
+
 function requireEnv(name) {
   const value = process.env[name];
   if (!value) {
@@ -63,12 +76,29 @@ async function main() {
     return;
   }
 
-  const nextImage = candidates[0];
-  const remaining = candidates.length - 1;
+  // Pick the next candidate whose bytes are a real image; skip corrupt/empty files.
+  let nextImage;
+  let imageBuffer;
+  let skipped = 0;
+  for (const candidate of candidates) {
+    const buf = await readFile(path.join(IMAGES_DIR, candidate));
+    if (looksLikeImage(buf)) {
+      nextImage = candidate;
+      imageBuffer = buf;
+      break;
+    }
+    console.warn(`Skipping ${candidate}: not a valid image file.`);
+    skipped++;
+  }
+
+  if (!nextImage) {
+    console.log("No valid images to post (all remaining files were skipped).");
+    return;
+  }
+
+  const remaining = candidates.length - skipped - 1;
   console.log(`Next image: ${nextImage} (${remaining} more waiting after this)`);
 
-  const imagePath = path.join(IMAGES_DIR, nextImage);
-  const imageBuffer = await readFile(imagePath);
   const mediaType = mediaTypeFor(nextImage);
 
   console.log("Generating caption with Claude...");
