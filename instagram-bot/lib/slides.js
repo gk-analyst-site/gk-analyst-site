@@ -289,33 +289,113 @@ function drawCta(ctx, b, s, logo) {
   footer(ctx, b, "FOLLOW", true);
 }
 
-// A standalone single-image "tip" card (no swipe): logo, category, heading, body.
+// --- Goalkeeper motifs (drawn vector, so no photos are needed) ---
+
+// A goal frame with diamond-mesh net. Reads instantly as "soccer goal".
+function drawGoalNet(ctx, x, y, w, h, color, alpha) {
+  ctx.save();
+  // Net mesh (clipped to the goal mouth).
+  ctx.beginPath();
+  ctx.rect(x, y, w, h);
+  ctx.clip();
+  ctx.globalAlpha = alpha;
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+  const gap = 40;
+  ctx.beginPath();
+  for (let i = -h; i < w + h; i += gap) {
+    ctx.moveTo(x + i, y);
+    ctx.lineTo(x + i + h, y + h);
+    ctx.moveTo(x + i, y + h);
+    ctx.lineTo(x + i + h, y);
+  }
+  ctx.stroke();
+  ctx.restore();
+
+  // Goal frame (posts + crossbar), drawn brighter on top of the net.
+  ctx.save();
+  ctx.globalAlpha = Math.min(1, alpha * 3.4);
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 10;
+  ctx.lineCap = "round";
+  ctx.beginPath();
+  ctx.moveTo(x, y + h);
+  ctx.lineTo(x, y);
+  ctx.lineTo(x + w, y);
+  ctx.lineTo(x + w, y + h);
+  ctx.stroke();
+  ctx.restore();
+}
+
+// A simple goalkeeper glove badge — the clearest "this is about GKs" symbol.
+function drawGloveBadge(ctx, cx, cy, r, accent, ink) {
+  ctx.save();
+  ctx.fillStyle = accent;
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Glove drawn in the ink colour inside the badge.
+  const s = r * 1.15;
+  const x = cx - s / 2;
+  const y = cy - s / 2;
+  ctx.fillStyle = ink;
+  const fingerW = s * 0.18;
+  const fingerGap = s * 0.065;
+  const fingerTop = y + s * 0.02;
+  const fingerH = s * 0.52;
+  // Four fingers.
+  for (let i = 0; i < 4; i++) {
+    const fx = x + s * 0.12 + i * (fingerW + fingerGap);
+    roundRect(ctx, fx, fingerTop, fingerW, fingerH, fingerW / 2);
+    ctx.fill();
+  }
+  // Palm.
+  roundRect(ctx, x + s * 0.08, y + s * 0.42, s * 0.84, s * 0.5, s * 0.16);
+  ctx.fill();
+  // Thumb.
+  roundRect(ctx, x + s * 0.8, y + s * 0.5, s * 0.28, fingerW, fingerW / 2);
+  ctx.fill();
+  ctx.restore();
+}
+
+// A standalone single-image "tip" card (no swipe). GK motifs make it read as
+// goalkeeper content at a glance, distinct from the M/W/F carousels.
 function drawTip(ctx, b, s, logo) {
   ctx.fillStyle = b.bg;
   ctx.fillRect(0, 0, W, H);
-  drawLogo(ctx, b, logo, M, 140, 84, false);
 
-  let y = 372;
-  ctx.fillStyle = b.accent;
-  ctx.fillRect(M, y, 64, 8);
+  // Goal + net header band.
+  drawGoalNet(ctx, M, 150, W - M * 2, 250, b.accent, 0.16);
+
+  // Brand wordmark, small, top-left over the frame corner.
+  drawLogo(ctx, b, logo, M + 24, 196, 64, false);
+
+  // Glove badge + category, sitting just under the goal.
+  const badgeCx = M + 40;
+  const badgeCy = 476;
+  drawGloveBadge(ctx, badgeCx, badgeCy, 40, b.accent, b.ink);
   ctx.font = `bold 30px ${HEAD}`;
   ctx.fillStyle = b.accent;
+  ctx.textBaseline = "middle";
+  ctx.fillText(spaced(s.category || s.kicker || "GK豆知識"), badgeCx + 66, badgeCy + 2);
   ctx.textBaseline = "alphabetic";
-  ctx.fillText(spaced(s.category || s.kicker || "GK豆知識"), M, y - 18);
 
-  y += 48;
-  ctx.font = `64px ${HEAD}`;
+  // Heading.
+  let y = 540;
+  ctx.font = `62px ${HEAD}`;
   ctx.fillStyle = WHITE;
   for (const ln of wrapLines(ctx, s.title || s.heading || "", W - M * 2)) {
-    y += 74;
+    y += 72;
     ctx.fillText(ln, M, y);
   }
 
-  y += 40;
+  // Body (auto-fit to remaining space).
+  y += 34;
   const maxWidth = W - M * 2;
   const available = H - M - 70 - y;
-  let size = 40;
-  for (const trySize of [40, 37, 34, 31, 28]) {
+  let size = 38;
+  for (const trySize of [38, 35, 32, 29, 27]) {
     size = trySize;
     if (bodyMetrics(ctx, s.body || "", maxWidth, trySize).height <= available) break;
   }
