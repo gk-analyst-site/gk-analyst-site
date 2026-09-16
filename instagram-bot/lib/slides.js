@@ -403,6 +403,71 @@ function drawTip(ctx, b, s, logo) {
   footer(ctx, b, "保存 ▷", false);
 }
 
+// A branded product card: the product photo embedded in a ZERO frame with
+// name + features. Price is intentionally never rendered here.
+function drawProduct(ctx, b, s, logo, product) {
+  ctx.fillStyle = b.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  drawLogo(ctx, b, logo, M, 96, 72, false);
+  ctx.font = `bold 28px ${HEAD}`;
+  ctx.fillStyle = b.accent;
+  ctx.textBaseline = "alphabetic";
+  ctx.fillText(spaced("商品紹介"), M, 214);
+
+  // Photo panel.
+  const px = M;
+  const py = 246;
+  const pw = W - M * 2;
+  const ph = 560;
+  ctx.fillStyle = "#15161A";
+  roundRect(ctx, px, py, pw, ph, 28);
+  ctx.fill();
+
+  // "contain"-fit the product image inside the panel.
+  if (product) {
+    const pad = 30;
+    const bw = pw - pad * 2;
+    const bh = ph - pad * 2;
+    const r = Math.min(bw / product.width, bh / product.height);
+    const w = product.width * r;
+    const h = product.height * r;
+    const ix = px + (pw - w) / 2;
+    const iy = py + (ph - h) / 2;
+    ctx.save();
+    roundRect(ctx, px, py, pw, ph, 28);
+    ctx.clip();
+    ctx.drawImage(product, ix, iy, w, h);
+    ctx.restore();
+  }
+
+  // Title.
+  let y = py + ph + 20;
+  ctx.font = `54px ${HEAD}`;
+  ctx.fillStyle = WHITE;
+  for (const ln of wrapLines(ctx, s.title || "", W - M * 2)) {
+    y += 62;
+    ctx.fillText(ln, M, y);
+  }
+
+  // Feature bullets.
+  y += 20;
+  ctx.font = `34px ${BODY}`;
+  for (const feat of (s.features || []).slice(0, 3)) {
+    y += 52;
+    ctx.fillStyle = b.accent;
+    ctx.fillText("•", M, y);
+    ctx.fillStyle = b.body;
+    for (const ln of wrapLines(ctx, feat, W - M * 2 - 44)) {
+      ctx.fillText(ln, M + 44, y);
+      y += 44;
+    }
+    y -= 44;
+  }
+
+  footer(ctx, b, "SHOP ▷", false);
+}
+
 function spaced(str) {
   // Latin gets letter-spacing; leave CJK alone (spacing looks bad on kana/kanji).
   return /[^\x00-\x7F]/.test(str) ? str : String(str).toUpperCase().split("").join(" ");
@@ -433,4 +498,24 @@ export async function renderSlides(plan, brand = "keepix") {
     name: `${String(i + 1).padStart(2, "0")}.png`,
     buffer: renderSlide(b, slide, i + 1, slides.length, logo),
   }));
+}
+
+/**
+ * Render a single branded product card with the product photo embedded.
+ * @param {object} opts
+ * @param {Buffer} opts.imageBuffer  the product photo bytes
+ * @param {string} opts.title
+ * @param {string[]} [opts.features]
+ * @param {string|object} [opts.brand]
+ * @returns {Promise<Buffer>} PNG buffer
+ */
+export async function renderProductCard({ imageBuffer, title, features = [], brand = "zero" }) {
+  const b = typeof brand === "string" ? BRANDS[brand] || BRANDS.zero : brand;
+  const logoPath = firstExisting([path.join(ASSETS, b.logo), path.join(ASSETS, "logo.png")]);
+  const logo = logoPath ? await loadImage(logoPath) : null;
+  const product = await loadImage(imageBuffer);
+  const canvas = createCanvas(W, H);
+  const ctx = canvas.getContext("2d");
+  drawProduct(ctx, b, { title, features }, logo, product);
+  return canvas.toBuffer("image/png");
 }

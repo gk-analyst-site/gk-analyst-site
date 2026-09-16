@@ -4,8 +4,9 @@ import { execSync } from "node:child_process";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
-import { renderSlides } from "./lib/slides.js";
-import { generateCaption, mediaTypeFor } from "./lib/caption.js";
+import { renderSlides, renderProductCard } from "./lib/slides.js";
+import { mediaTypeFor } from "./lib/caption.js";
+import { generateProductCard } from "./lib/product-content.js";
 import { generateTip, tipCaption } from "./lib/tip-content.js";
 import { nextQueuedImage } from "./lib/images.js";
 import { publishImage } from "./lib/instagram.js";
@@ -16,6 +17,7 @@ const POSTED_PATH = path.join(HERE, "content", "posted.json");
 const CONTEXT_PATH = path.join(HERE, "content", "context.json");
 const CARD_STATE_PATH = path.join(HERE, "content", "card-state.json");
 const REL_TIP_SLIDES = "content/tip-slides"; // relative to instagram-bot
+const REL_PRODUCT_SLIDES = "content/product-slides";
 const DRY_RUN = process.env.DRY_RUN === "true";
 
 function requireEnv(name) {
@@ -53,27 +55,51 @@ function buildImageUrl(repo, ref, relPath) {
   return `https://raw.githubusercontent.com/${repo}/${ref}/instagram-bot/${relPath}`;
 }
 
-// --- Path A: a queued product image exists → post it as a product promo. ---
+// --- Path A: a queued product image exists → post it as a branded product card. ---
 async function postProductImage({ igUserId, accessToken, repo, image }) {
   const contextMap = await readJson(CONTEXT_PATH, {});
-  console.log("Generating product caption with Claude (vision)...");
-  const caption = await generateCaption(image.buffer, mediaTypeFor(image.name), contextMap[image.name]);
-  console.log(`\n--- Caption ---\n${caption}\n---------------\n`);
+  console.log("Generating product card copy with Claude (vision)...");
+  const card = await generateProductCard(image.buffer, mediaTypeFor(image.name), contextMap[image.name]);
+  console.log(`Product: ${card.title} | ${card.features.join(" / ")}`);
+  console.log(`\n--- Caption ---\n${card.caption}\n---------------\n`);
+
+  // Composite the photo into a branded ZERO card.
+  const cardBuffer = await renderProductCard({
+    imageBuffer: image.buffer,
+    title: card.title,
+    features: card.features,
+    brand: "zero",
+  });
 
   if (DRY_RUN) {
-    console.log(`DRY RUN: would post product image ${image.name}. Not posting.`);
+    const previewDir = path.join(HERE, "preview-tip");
+    await mkdir(previewDir, { recursive: true });
+    await writeFile(path.join(previewDir, "product-dryrun.png"), cardBuffer);
+    console.log(`DRY RUN: rendered product card to preview-tip/product-dryrun.png. Not posting.`);
     return;
   }
 
-  const ref = process.env.GITHUB_REF_NAME || "main";
-  const imageUrl = buildImageUrl(repo, ref, `content/images/${encodeURIComponent(image.name)}`);
-  console.log(`Publishing product image (${imageUrl})...`);
-  const mediaId = await publishImage({ igUserId, accessToken, imageUrl, caption });
+  const id = new Date().toISOString().slice(0, 10).replace(/-/g, "") + "-" + Math.random().toString(36).slice(2, 6);
+  const relPath = `${REL_PRODUCT_SLIDES}/${id}.png`;
+  await mkdir(path.join(HERE, REL_PRODUCT_SLIDES), { recursive: true });
+  await writeFile(path.join(HERE, relPath), cardBuffer);
+  const sha = commitPush(relPath, `chore(card): add product card for ${image.name} [skip ci]`);
+  if (!sha) throw new Error("Product card commit produced no SHA.");
+
+  const imageUrl = buildImageUrl(repo, sha, relPath);
+  console.log(`Publishing product card (${imageUrl})...`);
+  const mediaId = await publishImage({ igUserId, accessToken, imageUrl, caption: card.caption });
   console.log(`Published. Media ID: ${mediaId}`);
 
   const postedFile = await readJson(POSTED_PATH, { posted: [] });
   if (!Array.isArray(postedFile.posted)) postedFile.posted = [];
-  postedFile.posted.push({ image: image.name, postedAt: new Date().toISOString(), caption, mediaId });
+  postedFile.posted.push({
+    image: image.name,
+    card: relPath,
+    postedAt: new Date().toISOString(),
+    caption: card.caption,
+    mediaId,
+  });
   await writeFile(POSTED_PATH, JSON.stringify(postedFile, null, 2) + "\n", "utf8");
   commitPush("content/posted.json", `chore(card): record product post ${image.name} [skip ci]`);
 }
