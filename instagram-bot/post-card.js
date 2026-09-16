@@ -5,7 +5,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { renderSlides, renderProductCard } from "./lib/slides.js";
-import { mediaTypeFor } from "./lib/caption.js";
+import { generateCaption, mediaTypeFor } from "./lib/caption.js";
 import { generateProductCard } from "./lib/product-content.js";
 import { generateTip, tipCaption } from "./lib/tip-content.js";
 import { nextQueuedImage } from "./lib/images.js";
@@ -55,11 +55,56 @@ function buildImageUrl(repo, ref, relPath) {
   return `https://raw.githubusercontent.com/${repo}/${ref}/instagram-bot/${relPath}`;
 }
 
-// --- Path A: a queued product image exists → post it as a branded product card. ---
+// A context.json value can be a plain string (a caption hint) or an object
+// { hint?, card?, title?, features? }. `card: true` opts into the branded frame.
+function contextEntry(v) {
+  if (!v) return { hint: undefined, card: false };
+  if (typeof v === "string") return { hint: v, card: false };
+  return { hint: v.hint, card: !!v.card, title: v.title, features: v.features };
+}
+
+// --- Path A: a queued product image exists. Post it as-is by default (finished
+// ad images), or wrap it in a branded ZERO card when opted in via context.json. ---
 async function postProductImage({ igUserId, accessToken, repo, image }) {
   const contextMap = await readJson(CONTEXT_PATH, {});
-  console.log("Generating product card copy with Claude (vision)...");
-  const card = await generateProductCard(image.buffer, mediaTypeFor(image.name), contextMap[image.name]);
+  const entry = contextEntry(contextMap[image.name]);
+  if (entry.card) {
+    await postBrandedProductCard({ igUserId, accessToken, repo, image, entry });
+  } else {
+    await postProductAsIs({ igUserId, accessToken, repo, image, entry });
+  }
+}
+
+// Default: post the finished image unchanged, with an AI caption.
+async function postProductAsIs({ igUserId, accessToken, repo, image, entry }) {
+  console.log("Generating caption with Claude (vision)...");
+  const caption = await generateCaption(image.buffer, mediaTypeFor(image.name), entry.hint);
+  console.log(`\n--- Caption ---\n${caption}\n---------------\n`);
+
+  if (DRY_RUN) {
+    console.log(`DRY RUN: would post ${image.name} as-is. Not posting.`);
+    return;
+  }
+
+  const ref = process.env.GITHUB_REF_NAME || "main";
+  const imageUrl = buildImageUrl(repo, ref, `content/images/${encodeURIComponent(image.name)}`);
+  console.log(`Publishing image as-is (${imageUrl})...`);
+  const mediaId = await publishImage({ igUserId, accessToken, imageUrl, caption });
+  console.log(`Published. Media ID: ${mediaId}`);
+
+  const postedFile = await readJson(POSTED_PATH, { posted: [] });
+  if (!Array.isArray(postedFile.posted)) postedFile.posted = [];
+  postedFile.posted.push({ image: image.name, postedAt: new Date().toISOString(), caption, mediaId });
+  await writeFile(POSTED_PATH, JSON.stringify(postedFile, null, 2) + "\n", "utf8");
+  commitPush("content/posted.json", `chore(card): record product post ${image.name} [skip ci]`);
+}
+
+// Opt-in: wrap a plain product photo into a branded ZERO product card.
+async function postBrandedProductCard({ igUserId, accessToken, repo, image, entry }) {
+  console.log("Generating branded product card with Claude (vision)...");
+  const card = await generateProductCard(image.buffer, mediaTypeFor(image.name), entry.hint);
+  if (entry.title) card.title = entry.title;
+  if (Array.isArray(entry.features) && entry.features.length) card.features = entry.features.slice(0, 3);
   console.log(`Product: ${card.title} | ${card.features.join(" / ")}`);
   console.log(`\n--- Caption ---\n${card.caption}\n---------------\n`);
 
