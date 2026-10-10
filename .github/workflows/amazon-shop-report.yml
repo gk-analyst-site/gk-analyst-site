@@ -1,19 +1,21 @@
 name: Amazon店舗レポートを作る
 
 # このワークフロー(自動作業員)がやること:
-#   amazon-shop/data/ に成績表CSVが置かれたら、分析して
+#   毎朝、Amazon公式の窓口(SP-API)から成績表を自動でもらい、分析して
 #   report.html(診断) と todo.md(今週やること) を作り直します。
+#   （鍵3つ: SPAPI_CLIENT_ID / SPAPI_CLIENT_SECRET / SPAPI_REFRESH_TOKEN をSecretsに設定）
 #   ※売上データを守るため「非公開リポジトリ」のときだけ動きます。
 
 on:
   schedule:
-    # 毎週月曜 UTC 21:00 = 日本時間 火曜 朝6:00
-    - cron: "0 21 * * 1"
+    # 毎日 UTC 21:30 = 日本時間 朝6:30
+    - cron: "30 21 * * *"
   workflow_dispatch: {}
   push:
     paths:
       - "amazon-shop/data/**"
       - "amazon-shop/analyze.py"
+      - "amazon-shop/fetch_spapi.py"
 
 permissions:
   contents: write
@@ -23,6 +25,10 @@ jobs:
     # 公開リポジトリでは売上が見えてしまうので動かさない
     if: github.event.repository.private == true
     runs-on: ubuntu-latest
+    env:
+      SPAPI_CLIENT_ID: ${{ secrets.SPAPI_CLIENT_ID }}
+      SPAPI_CLIENT_SECRET: ${{ secrets.SPAPI_CLIENT_SECRET }}
+      SPAPI_REFRESH_TOKEN: ${{ secrets.SPAPI_REFRESH_TOKEN }}
     steps:
       - name: リポジトリを取得
         uses: actions/checkout@v4
@@ -32,6 +38,11 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Amazonから成績表をもらう
+        # 鍵が登録されていないときは飛ばして、置いてあるCSVだけで分析する
+        if: env.SPAPI_REFRESH_TOKEN != ''
+        run: python3 amazon-shop/fetch_spapi.py
+
       - name: 成績表を分析する
         run: python3 amazon-shop/analyze.py
 
@@ -39,7 +50,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -f amazon-shop/output/report.html amazon-shop/output/todo.md amazon-shop/output/summary.json
+          git add -f amazon-shop/data/*.csv amazon-shop/output/report.html amazon-shop/output/todo.md amazon-shop/output/summary.json
           if git diff --staged --quiet; then
             echo "変更なし。コミットしません。"
           else

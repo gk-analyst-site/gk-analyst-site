@@ -169,6 +169,58 @@ def diagnose(items):
     return store_cvr
 
 
+def diagnose_sales_only(items, prev):
+    """セッションの数字がないとき(注文データだけのとき)は、前回との売上の変化で判定する"""
+    p = {i["asin"]: i["sales"] for i in (prev or [])}
+    by_sales = sorted(items, key=lambda i: -i["sales"])
+    top = {i["asin"] for i in by_sales[:max(1, round(len(items) * 0.2))] if i["sales"] > 0}
+    for it in items:
+        before = p.get(it["asin"], 0)
+        change = (it["sales"] - before) / before * 100 if before else None
+        if change is not None and change <= -20:
+            it["type"], it["priority"] = "売上が落ちている", 1
+            it["why"] = f"前回より売上が{-change:.0f}%減っている"
+            it["todo"] = ["在庫切れ・出品停止になっていないか確認",
+                          "カートを他のお店に取られていないか、価格を確認",
+                          "新しい低評価レビューが付いていないか確認"]
+        elif it["asin"] in top:
+            it["type"], it["priority"] = "勝ち商品", 3
+            it["why"] = "売上上位20%に入っている、お店の柱"
+            it["todo"] = ["在庫切れを絶対に起こさない（在庫日数を毎週チェック）",
+                          "広告予算を少し増やして伸ばす", "色違い・セット品などの関連商品を作る"]
+        elif change is not None and change >= 20:
+            it["type"], it["priority"] = "伸びている", 2
+            it["why"] = f"前回より売上が{change:.0f}%増えている"
+            it["todo"] = ["在庫を多めに用意する", "広告を少し足して勢いに乗せる"]
+        elif it["units"] == 0:
+            it["type"], it["priority"] = "ほとんど動いていない", 4
+            it["why"] = "この期間に売れていない"
+            it["todo"] = ["検索で出てくるか確認（出品停止・カテゴリ違いがないか）",
+                          "3か月動かなければ値下げ処分か出品停止で在庫コストを減らす"]
+        else:
+            it["type"], it["priority"] = "ふつう", 5
+            it["why"] = "目立った変化なし"
+            it["todo"] = []
+    items.sort(key=lambda i: (i["priority"], -i["sales"]))
+
+
+def pick_prev(files):
+    """比べる相手：最新の約7日前のファイル。なければ1つ前"""
+    def date_of(f):
+        try:
+            return datetime.strptime(f.stem[:10], "%Y-%m-%d")
+        except ValueError:
+            return None
+    if len(files) < 2:
+        return None
+    cur = date_of(files[-1])
+    if cur:
+        older = [f for f in files[:-1] if date_of(f) and date_of(f) <= cur - timedelta(days=7)]
+        if older:
+            return older[-1]
+    return files[-2]
+
+
 def compare(cur, prev):
     if not prev:
         return None
@@ -194,8 +246,14 @@ def pct_change(a, b):
 def build(files):
     cur_file = files[-1]
     cur = read_csv(cur_file)
-    prev = read_csv(files[-2]) if len(files) >= 2 else None
-    store_cvr = diagnose(cur)
+    prev_file = pick_prev(files)
+    prev = read_csv(prev_file) if prev_file else None
+    sales_only = sum(i["sessions"] for i in cur) == 0
+    if sales_only:
+        diagnose_sales_only(cur, prev)
+        store_cvr = 0.0
+    else:
+        store_cvr = diagnose(cur)
     diff = compare(cur, prev)
 
     total = {
@@ -224,7 +282,8 @@ def build(files):
     summary = {
         "generated_at": datetime.now(JST).strftime("%Y-%m-%d %H:%M"),
         "source": cur_file.name,
-        "compared_with": files[-2].name if prev else None,
+        "compared_with": prev_file.name if prev else None,
+        "sales_only": sales_only,
         "total": total,
         "top20_share": top_share,
         "upside_yen": upside,
@@ -263,11 +322,13 @@ def render_html(s):
             ch = f'<span class="chg">前回比 {pct_change(*d[key])}</span>'
         return f'<div class="kpi"><div class="lbl">{label}</div><div class="val">{value}</div>{ch}</div>'
 
-    order = ["カートを取られている", "見られているのに買われない", "買われやすいのに人が来ない",
-             "勝ち商品", "ほとんど動いていない", "ふつう"]
+    order = ["カートを取られている", "見られているのに買われない", "売上が落ちている",
+             "買われやすいのに人が来ない", "伸びている", "勝ち商品", "ほとんど動いていない", "ふつう"]
     color = {"カートを取られている": "red", "見られているのに買われない": "red",
-             "買われやすいのに人が来ない": "amber", "勝ち商品": "green",
+             "売上が落ちている": "red", "買われやすいのに人が来ない": "amber",
+             "伸びている": "amber", "勝ち商品": "green",
              "ほとんど動いていない": "gray", "ふつう": "gray"}
+    so = s["sales_only"]
 
     chips = "".join(
         f'<span class="chip {color[k]}">{k} <b>{s["counts"].get(k, 0)}</b></span>'
@@ -288,14 +349,21 @@ def render_html(s):
   <div class="nums">
     <span>売上 <b>{yen(it['sales'])}</b></span>{prev}
     <span>販売数 <b>{it['units']:,.0f}</b></span>
-    <span>セッション <b>{it['sessions']:,.0f}</b></span>
-    <span>買う率 <b>{it['cvr']:.1f}%</b></span>
-    <span>カート <b>{bb}</b></span>
+    {'' if so else f"<span>セッション <b>{it['sessions']:,.0f}</b></span><span>買う率 <b>{it['cvr']:.1f}%</b></span><span>カート <b>{bb}</b></span>"}
   </div>
   <p class="why">{e(it['why'])}</p>
   {f'<ul>{todo}</ul>' if todo else ''}
 </article>""")
 
+    if so:
+        body_note = (f"<p>注文データだけで判定しています（セッション・カート獲得率はブランド登録をすると取れるようになります）。"
+                     f"前回と比べて売上が大きく変わった商品を先に並べました。</p>"
+                     f"<p>上位20%の商品で売上の<b>{s['top20_share']:.0f}%</b>を作っています。</p>")
+    else:
+        body_note = (f"<p>売上 = <b>見に来た人</b> × <b>買う率</b> × <b>単価</b>。この3つのどれが弱いかを商品ごとに判定しました。</p>"
+                     f"<p>上位20%の商品で売上の<b>{s['top20_share']:.0f}%</b>を作っています。"
+                     f"「見られているのに買われない」商品の買う率をお店平均まで上げると、"
+                     f"売上は約<b>{yen(s['upside_yen'])}</b>増える見込みです。</p>")
     cmp_note = f"（前回 {e(s['compared_with'])} と比較）" if s["compared_with"] else "（比較データなし：CSVを2回以上置くと前回比が出ます）"
 
     return f"""<!doctype html>
@@ -332,17 +400,14 @@ ul{{margin:4px 0 0;padding-left:20px}} li{{margin:2px 0}}
 <div class="kpis">
 {kpi("売上", yen(t['sales']), "sales")}
 {kpi("販売数", f"{t['units']:,.0f}", "units")}
-{kpi("セッション", f"{t['sessions']:,.0f}", "sessions")}
-{kpi("買う率(CVR)", f"{t['cvr']:.1f}%")}
+{'' if so else kpi("セッション", f"{t['sessions']:,.0f}", "sessions")}
+{'' if so else kpi("買う率(CVR)", f"{t['cvr']:.1f}%")}
 {kpi("1個あたり単価", yen(t['aov']))}
 </div>
 
 <div class="box">
 <h2>ひとことでいうと</h2>
-<p>売上 = <b>見に来た人</b> × <b>買う率</b> × <b>単価</b>。この3つのどれが弱いかを商品ごとに判定しました。</p>
-<p>上位20%の商品で売上の<b>{s['top20_share']:.0f}%</b>を作っています。
-「見られているのに買われない」商品の買う率をお店平均まで上げると、
-売上は約<b>{yen(s['upside_yen'])}</b>増える見込みです。</p>
+{body_note}
 <div class="chips">{chips}</div>
 </div>
 
