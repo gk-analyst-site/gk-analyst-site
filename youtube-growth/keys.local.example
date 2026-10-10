@@ -1,0 +1,17 @@
+# このファイルを「keys.local」という名前でコピーして、= のうしろに鍵を書きます。
+# keys.local は GitHub に上がりません（.gitignore で除外済み）。
+
+# 鍵1（必須）: YouTube Data API のAPIキー
+YT_API_KEY=
+
+# 鍵2（任意）: アナリティクス用
+YT_CLIENT_ID=
+YT_CLIENT_SECRET=
+YT_REFRESH_TOKEN=
+
+# 鍵3（任意）: 方向性の文章を書く係
+ANTHROPIC_API_KEY=
+
+# 任意: 別のチャンネルを分析したいとき / 目標を変えたいとき
+# YT_CHANNEL_ID=UCxxxxxxxxxxxxxxxxxxxxxx
+# YT_GOAL=チャンネル登録者を増やし、見てくれた人の役に立つ動画を続けて出す

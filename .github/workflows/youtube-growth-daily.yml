@@ -1,0 +1,60 @@
+name: YouTube 毎朝の成長チェック
+
+# このワークフロー(自動作業員)がやること:
+#   毎朝、YouTubeチャンネルの数字を集めて分析し、「今日の方向性」を決めます。
+#   結果は youtube-growth/output/today.html（スマホで見るページ）と
+#   youtube-growth/history/direction-log.md（方針の日記）に保存されます。
+#   （鍵: YT_API_KEY は必須。YT_CLIENT_ID / YT_CLIENT_SECRET / YT_REFRESH_TOKEN /
+#    ANTHROPIC_API_KEY は任意。README で説明）
+
+on:
+  schedule:
+    # 毎日 UTC 21:30 = 日本時間 朝6:30 に自動で動きます
+    - cron: "30 21 * * *"
+  workflow_dispatch: {}   # 「今すぐ動かす」ボタンからも実行できる
+
+permissions:
+  contents: write          # 結果ファイルをコミット(保存)するために必要
+
+concurrency:
+  group: youtube-growth
+  cancel-in-progress: false
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: リポジトリを取得
+        uses: actions/checkout@v4
+
+      - name: Python を用意
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 方向性を書く係の道具を入れる
+        run: pip install anthropic
+
+      - name: チャンネルを分析して今日の方向性を決める
+        env:
+          YT_API_KEY: ${{ secrets.YT_API_KEY }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          YT_CHANNEL_ID: ${{ vars.YT_CHANNEL_ID }}
+          YT_GOAL: ${{ vars.YT_GOAL }}
+        run: python3 youtube-growth/analyze.py
+
+      - name: 結果を保存(コミット)する
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add youtube-growth/output youtube-growth/history
+          if git diff --staged --quiet; then
+            echo "変更なし。コミットしません。"
+          else
+            git commit -m "chore: YouTube 成長チェックを更新 [skip ci]"
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push
+          fi

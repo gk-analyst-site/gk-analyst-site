@@ -4,3 +4,6 @@ rakuten-room/keys.local
 # Python
 __pycache__/
 *.pyc
+
+# YouTube分析の鍵ファイル（絶対にGitHubに上げない）
+youtube-growth/keys.local
