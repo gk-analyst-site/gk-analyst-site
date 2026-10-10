@@ -4,3 +4,7 @@ rakuten-room/keys.local
 # Python
 __pycache__/
 *.pyc
+
+# Amazon店舗分析: 本物の売上データとレポートは公開リポジトリに上げない
+amazon-shop/data/*.csv
+amazon-shop/output/
