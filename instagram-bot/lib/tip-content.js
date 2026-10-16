@@ -23,9 +23,10 @@ ${avoid}
 - category: 短い分野名(例「ポジショニング」「キャッチング」「1対1」「メンタル」「フットワーク」「クロス対応」など)
 - title: 一目で得するとわかる見出し(20文字前後、キャッチーに)
 - body: 本文。最大~240文字。まず要点を1〜2文、続けて具体策を行頭"- "の箇条書き2〜3個、最後に一言のまとめ。段落は改行で区切る。
+- question: 読者がコメントしたくなる短い問いかけ(1文)。経験や意見を聞く形(例「あなたは1対1でどう構えてる?」)。はい/いいえで終わらない、答えやすい問い。
 
 出力JSON(この形のみ):
-{ "category": "…", "title": "…", "body": "…" }`;
+{ "category": "…", "title": "…", "body": "…", "question": "…" }`;
 }
 
 function extractJson(text) {
@@ -66,5 +67,8 @@ export function tipCaption(tip) {
     "#Just4Keepers", "#ZERO", "#ゴールキーパー", "#GK", "#GK豆知識",
     "#GKトレーニング", "#サッカー", "#キーパー", "#守護神", "#育成年代",
   ];
-  return `【${tip.category}】${tip.title}\n\n${plain}\n\n保存して練習前に見返そう。\n${tags.join(" ")}`;
+  // A question CTA drives comments (our weakest engagement signal); saves are
+  // already strong, so we keep prompting saves too.
+  const question = (tip.question || "あなたはどう意識してる?").trim();
+  return `【${tip.category}】${tip.title}\n\n${plain}\n\n💬 ${question}\nコメントで教えてください👇\n\n保存して練習前に見返そう。\n${tags.join(" ")}`;
 }
