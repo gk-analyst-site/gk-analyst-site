@@ -7,7 +7,8 @@
   "scripts": {
     "post": "node post.js",
     "post:zero": "node post-zero.js",
-    "post:card": "node post-card.js"
+    "post:card": "node post-card.js",
+    "post:reel": "node post-reel.js"
   },
   "engines": {
     "node": ">=20"

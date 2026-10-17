@@ -85,3 +85,38 @@ export async function publishImage({ igUserId, accessToken, imageUrl, caption })
     }
   }
 }
+
+/**
+ * Publish a Reel (vertical video) from a publicly-reachable MP4 URL.
+ * Video containers take longer to process than images, so we poll longer.
+ * @returns {Promise<string>} the published media ID.
+ */
+export async function publishReel({ igUserId, accessToken, videoUrl, caption, shareToFeed = true }) {
+  const container = await graphPost(`${igUserId}/media`, {
+    media_type: "REELS",
+    video_url: videoUrl,
+    caption,
+    share_to_feed: shareToFeed ? "true" : "false",
+    access_token: accessToken,
+  });
+
+  // Video processing can take a while — poll up to ~5 minutes.
+  await waitUntilReady(container.id, accessToken, { attempts: 60, delayMs: 5000 });
+
+  for (let attempt = 0; attempt < 6; attempt++) {
+    try {
+      const published = await graphPost(`${igUserId}/media_publish`, {
+        creation_id: container.id,
+        access_token: accessToken,
+      });
+      return published.id;
+    } catch (err) {
+      const notReady = err.apiError?.code === 9007;
+      if (notReady && attempt < 5) {
+        await sleep(6000);
+        continue;
+      }
+      throw err;
+    }
+  }
+}
