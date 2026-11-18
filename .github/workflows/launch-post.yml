@@ -7,6 +7,10 @@ on:
         description: "Validate only (do not post)"
         type: boolean
         default: false
+      post_file:
+        description: "Which launch config to post"
+        type: string
+        default: "content/launch/post.json"
 
 permissions:
   contents: write
@@ -39,4 +43,5 @@ jobs:
           GITHUB_REPOSITORY: ${{ github.repository }}
           GITHUB_SHA: ${{ github.sha }}
           DRY_RUN: ${{ inputs.dry_run }}
+          POST_FILE: ${{ inputs.post_file }}
         run: node post-launch.js

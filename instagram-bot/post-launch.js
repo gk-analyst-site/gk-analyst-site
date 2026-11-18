@@ -9,7 +9,8 @@ import { publishImage } from "./lib/instagram.js";
 // fixed, hand-written caption, from content/launch/post.json. Idempotent: once
 // posted it records the media id and will not post again.
 const HERE = path.dirname(fileURLToPath(import.meta.url));
-const POST_PATH = path.join(HERE, "content", "launch", "post.json");
+const POST_FILE = process.env.POST_FILE || "content/launch/post.json";
+const POST_PATH = path.join(HERE, POST_FILE);
 const DRY_RUN = process.env.DRY_RUN === "true";
 
 function requireEnv(name) {
@@ -65,7 +66,7 @@ async function main() {
   post.posted = mediaId;
   post.postedAt = new Date().toISOString();
   await writeFile(POST_PATH, JSON.stringify(post, null, 2) + "\n", "utf8");
-  commitPush("content/launch/post.json", `chore(launch): record ZERO XTENSION PRO launch post [skip ci]`);
+  commitPush(POST_FILE, `chore(launch): record launch post ${POST_FILE} [skip ci]`);
 }
 
 main().catch((err) => {
