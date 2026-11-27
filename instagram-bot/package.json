@@ -8,7 +8,8 @@
     "post": "node post.js",
     "post:zero": "node post-zero.js",
     "post:card": "node post-card.js",
-    "post:reel": "node post-reel.js"
+    "post:reel": "node post-reel.js",
+    "post:launch-queue": "node post-launch-queue.js"
   },
   "engines": {
     "node": ">=20"
